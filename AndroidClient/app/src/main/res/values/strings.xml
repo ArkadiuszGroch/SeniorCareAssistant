@@ -1,0 +1,33 @@
+<resources>
+    <!--Configuration-->
+    <!--<string name="urlService">https://senior1.herokuapp.com/</string>-->
+    <string name="urlService">http://192.168.1.108:8090/</string>
+    <!--Login screen-->
+    <string name="app_name">Senior</string>
+    <string name="register">Zarejestruj</string>
+    <string name="signIn">Zaloguj</string>
+    <string name="login">Login</string>
+    <string name="password">Haslo</string>
+    <string name="invalidLoginOrPassword">Nieprawidłowy login lub hasło</string>
+
+    <!--Register screen-->
+    <string name="confirmPassword">Powtórz hasło</string>
+    <string name="firstName">Imie</string>
+    <string name="lastName">Nazwisko</string>
+    <string name="phoneNumber">Numer telefonu</string>
+    <string name="failedRegister">Rejestracja niepomyślna</string>
+    <string name="doneRegister">Rejestracja przebiegła pomyślnie</string>
+    <string name="passwordNotMatch">Hasła różnią się od siebie</string>
+    <string name="compleatAllFields">Uzupełnij wszystkie pola</string>
+
+    <!--Messages-->
+    <string name="messageErrorTitle">Błąd</string>
+    <string name="connectionProblem">Błąd połączenia</string>
+
+    <!--Menu-->
+    <string name="saveCurrentLocalization">Zapisz aktualną pozycję</string>
+
+    <!--Save localization-->
+    <string name="nameOfLocalization">Nazwa</string>
+    <string name="saveLocalization">Zapisz</string>
+</resources>
