@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @org.hibernate.annotations.Proxy(lazy = false)
@@ -34,7 +36,7 @@ public class CareAssistant implements Serializable {
 	@org.hibernate.annotations.Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE,
 			org.hibernate.annotations.CascadeType.LOCK })
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-	private java.util.Set care = new java.util.HashSet();
+	private Set care = new HashSet();
 
 	private void setId(int value) {
 		this.id = value;

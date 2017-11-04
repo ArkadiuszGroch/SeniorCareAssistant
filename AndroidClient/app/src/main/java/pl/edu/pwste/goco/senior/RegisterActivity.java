@@ -87,7 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
     //    ======================== SERVICES ===========================
     class RESTRegister extends AsyncTask<Senior, String, ResponseEntity<String>> {
         String url = getResources().getString(R.string.urlService) + "account/senior/register";
-        RestTemplate restTemplate = new RestTemplate();
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {
@@ -110,14 +109,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
-            if (stringResponseEntity.getStatusCode().value() == 204) {
-                String infoTitle = getResources().getString(R.string.messageErrorTitle);
-                String infoMessage = getResources().getString(R.string.failedRegister);
+            if (stringResponseEntity.getStatusCode().value() == 200) {
+                String infoTitle = getResources().getString(R.string.doneRegister);
+                String infoMessage = stringResponseEntity.getBody();
                 showMessage(infoTitle, infoMessage);
             } else {
                 //// TODO: 05.10.2017 Open main activities
-                String infoTitle = getResources().getString(R.string.doneRegister);
-                String infoMessage = stringResponseEntity.getBody().toString();
+                String infoTitle = getResources().getString(R.string.messageErrorTitle);
+                String infoMessage = getResources().getString(R.string.failedRegister);
                 showMessage(infoTitle, infoMessage);
             }
         }

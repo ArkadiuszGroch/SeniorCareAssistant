@@ -1,7 +1,7 @@
 <resources>
     <!--Configuration-->
     <!--<string name="urlService">https://senior1.herokuapp.com/</string>-->
-    <string name="urlService">http://192.168.1.108:8090/</string>
+    <string name="urlService">http://192.168.1.103:8090/</string>
     <!--Login screen-->
     <string name="app_name">Senior</string>
     <string name="register">Zarejestruj</string>
