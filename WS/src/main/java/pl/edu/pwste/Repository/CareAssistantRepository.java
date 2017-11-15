@@ -7,7 +7,7 @@ import pl.edu.pwste.Entity.User;
 
 @Repository
 public interface CareAssistantRepository extends CrudRepository<CareAssistant, Long> {
-	
+
 	public CareAssistant findCareAssistantByUser(User user);
 	
 }

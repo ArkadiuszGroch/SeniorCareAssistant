@@ -46,7 +46,7 @@ public class User {
     @Column(name = "Phone", nullable = false, length = 12)
     private String phone;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Email(message = "*Wprowadz prawidlowy adres email")
     @NotEmpty(message = "*Wprowadz adres email")
     private String email;
@@ -63,7 +63,6 @@ public class User {
     @OneToOne(mappedBy = "user", targetEntity = CareAssistant.class, fetch = FetchType.LAZY)
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.LOCK})
     private CareAssistant careAssistant;
-
 
     @ManyToMany(cascade = javax.persistence.CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

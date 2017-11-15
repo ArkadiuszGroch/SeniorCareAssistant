@@ -1,4 +1,4 @@
-package pl.edu.pwste.Controller;
+package pl.edu.pwste.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +26,7 @@ public class AccountController {
 					  "user": {
 					    "login": "Login",
 					    "password": "Password",
+					    "email":"jan@wp.pl",
 					    "firstName": "FirstName",
 					    "lastName": "LastName",
 					    "phone": "100200300"
@@ -34,7 +35,7 @@ public class AccountController {
 	 *  Output: HTTP Status No_CONTENT (204) if register failed
 	 *  		HTTP Status Ok (200) and JSON created Senior object if register successful
 	 * */
-	@RequestMapping(value = "/senior/register", method = RequestMethod.POST)
+	@RequestMapping(value = "/senior/register", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody ResponseEntity<String> registerSenior(@RequestBody Senior senior) {
 		try{
 			accountService.registerSenior(senior);
@@ -45,7 +46,7 @@ public class AccountController {
 			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 		}
 	}
-	
+
 	
 	/* Login senior 
 	 * 	Method: POST
@@ -79,6 +80,7 @@ public class AccountController {
 					  "user": {
 					    "login": "CareAssistantLogin2",
 					    "password": "Password",
+					    "email": "email@wp.pl",
 					    "firstName": "First Name",
 					    "lastName": "Last Name",
 					    "phone": "300200100"

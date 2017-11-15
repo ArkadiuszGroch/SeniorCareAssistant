@@ -7,6 +7,7 @@ import pl.edu.pwste.Entity.Role;
 import pl.edu.pwste.Entity.Senior;
 import pl.edu.pwste.Entity.User;
 import pl.edu.pwste.Repository.CareAssistantRepository;
+import pl.edu.pwste.Repository.RoleRepository;
 import pl.edu.pwste.Repository.SeniorRepository;
 import pl.edu.pwste.Repository.UserRepository;
 import pl.edu.pwste.SecurityStringGenerator;
@@ -27,23 +28,36 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	CareAssistantRepository careAssistantRepository;
-	
+
+	@Autowired
+	RoleRepository roleRepository;
+
 	@Override
 	@Transactional
 	public void registerSenior(Senior senior) {
-		Role role = new Role();
-		role.setRole("Senior");
-
-		Set<Role> roles = new HashSet<Role>();
-		roles.add(role);
 
 		User user = senior.getUser();
-		user.setRoles(roles);
+		this.setRoleSenior(user);
 
 		generateSecurityStringForUser(user);
 
 		userRepository.save(user);
 		seniorRepository.save(senior);
+	}
+
+	public void setRoleSenior(User user)
+	{
+		Role role = new Role();
+		role.setRole("Senior");
+
+		Role rl = roleRepository.findByRole("Senior");
+		if(rl==null){
+			roleRepository.save(role);
+		}
+
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(role);
+		user.setRoles(roles);
 	}
 
 	@Override
@@ -83,10 +97,10 @@ public class AccountServiceImpl implements AccountService {
 		return careAssistantRepository.findCareAssistantByUser(user).getUser().getSecurityString();
 	}
 
-	
+
 	private void generateSecurityStringForUser(User user){
 		SecurityStringGenerator securityStringGenerator = new SecurityStringGenerator(30);
 		String securityString = securityStringGenerator.generate();
-		user.setSecurityString(securityString);		
+		user.setSecurityString(securityString);
 	}
 }

@@ -1,4 +1,4 @@
-package pl.edu.pwste.Controller;
+package pl.edu.pwste.RestController;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

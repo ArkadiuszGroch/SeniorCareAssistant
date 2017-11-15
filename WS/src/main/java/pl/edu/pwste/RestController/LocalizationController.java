@@ -1,4 +1,4 @@
-package pl.edu.pwste.Controller;
+package pl.edu.pwste.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class LocalizationController {
 	 *  Output: HTTP Status No_CONTENT (204) if not added
 	 *  		HTTP Status Ok (200) if added
 	 * */
-	@RequestMapping(value = "/{seniorLogin}/addCurrentLocalization", method = RequestMethod.POST)
+	@RequestMapping(value = "/{SeniorSecurityString}/addCurrentLocalization", method = RequestMethod.POST)
 	public ResponseEntity<Localization> addCurrentLocalization(@PathVariable(value = "SeniorSecurityString") String seniorSecurityString,
 			@RequestBody Localization localization) {
 		try {
