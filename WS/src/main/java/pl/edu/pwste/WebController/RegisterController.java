@@ -35,12 +35,12 @@ public class RegisterController {
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request) {
 
         // Lookup user in database by e-mail
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByEmailOrLogin(user.getEmail(),user.getLogin());
 
         System.out.println(userExists);
 
         if (userExists != null) {
-            modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
+            modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email or login provided.");
             modelAndView.setViewName("register");
             bindingResult.reject("email");
         }

@@ -20,86 +20,79 @@ import java.util.Set;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-	@Autowired
-	UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-	@Autowired
-	SeniorRepository seniorRepository;
+    @Autowired
+    SeniorRepository seniorRepository;
 
-	@Autowired
-	CareAssistantRepository careAssistantRepository;
+    @Autowired
+    CareAssistantRepository careAssistantRepository;
 
-	@Autowired
-	RoleRepository roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
-	@Override
-	@Transactional
-	public void registerSenior(Senior senior) {
+    @Override
+    @Transactional
+    public void registerSenior(Senior senior) {
 
-		User user = senior.getUser();
-		this.setRoleSenior(user);
+        User user = senior.getUser();
+        setRole(user, "SENIOR");
+        generateSecurityStringForUser(user);
 
-		generateSecurityStringForUser(user);
-
-		userRepository.save(user);
-		seniorRepository.save(senior);
-	}
-
-	public void setRoleSenior(User user)
-	{
-		Role role = roleRepository.findByRole("SENIOR");
-		if(role==null){
-			roleRepository.save(role);
-		}
-		role = new Role();
-		role.setRole("SENIOR");
-
-		Set<Role> roles = new HashSet<Role>();
-		roles.add(role);
-		user.setRoles(roles);
-	}
-
-	@Override
-	public String loginSenior(Senior senior) {
-		User user = userRepository.findUserByLoginAndPassword(senior.getUser().getLogin(),
-				senior.getUser().getPassword());
-		generateSecurityStringForUser(user);
-		userRepository.save(user);
-		return seniorRepository.findSeniorByUser(user).getUser().getSecurityString();
-	}
-
-	
-	@Override
-	@Transactional
-	public void registerCareAssistant(CareAssistant careAssistant) {
-		Role role = new Role();
-		role.setRole("SENIOR");
-
-		Set<Role> roles = new HashSet<Role>();
-		roles.add(role);
-
-		User user = careAssistant.getUser();
-		user.setRoles(roles);
-		generateSecurityStringForUser(user);
-
-		userRepository.save(user);
-		careAssistantRepository.save(careAssistant);
-	}
+        userRepository.save(user);
+        seniorRepository.save(senior);
+    }
 
 
-	@Override
-	public String loginCareAssistant(CareAssistant careAssistant) {
-		User user = userRepository.findUserByLoginAndPassword(careAssistant.getUser().getLogin(),
-				careAssistant.getUser().getPassword());
-		generateSecurityStringForUser(user);
-		userRepository.save(user);
-		return careAssistantRepository.findCareAssistantByUser(user).getUser().getSecurityString();
-	}
+    @Override
+    public String loginSenior(Senior senior) {
+        User user = userRepository.findUserByLoginAndPassword(senior.getUser().getLogin(),
+                senior.getUser().getPassword());
+        generateSecurityStringForUser(user);
+        userRepository.save(user);
+        return seniorRepository.findSeniorByUser(user).getUser().getSecurityString();
+    }
 
 
-	private void generateSecurityStringForUser(User user){
-		SecurityStringGenerator securityStringGenerator = new SecurityStringGenerator(30);
-		String securityString = securityStringGenerator.generate();
-		user.setSecurityString(securityString);
-	}
+    @Override
+    @Transactional
+    public void registerCareAssistant(CareAssistant careAssistant) {
+        User user = careAssistant.getUser();
+        setRole(user, "CAREASSISTANT");
+
+        userRepository.save(user);
+        careAssistantRepository.save(careAssistant);
+    }
+
+
+    @Override
+    public String loginCareAssistant(CareAssistant careAssistant) {
+        User user = userRepository.findUserByLoginAndPassword(careAssistant.getUser().getLogin(),
+                careAssistant.getUser().getPassword());
+        generateSecurityStringForUser(user);
+        userRepository.save(user);
+        return careAssistantRepository.findCareAssistantByUser(user).getUser().getSecurityString();
+    }
+
+    private void generateSecurityStringForUser(User user) {
+        SecurityStringGenerator securityStringGenerator = new SecurityStringGenerator(30);
+        String securityString = securityStringGenerator.generate();
+        user.setSecurityString(securityString);
+    }
+
+    public void setRole(User user, String roleName) {
+        Role role = roleRepository.findByRole(roleName);
+        if (role == null) {
+            role = new Role();
+            role.setRole(roleName);
+            roleRepository.save(role);
+        }
+
+        Set<Role> roles = user.getRoles();
+        if(roles == null)
+            roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
+    }
 }
