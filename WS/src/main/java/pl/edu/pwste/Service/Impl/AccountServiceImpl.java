@@ -47,13 +47,12 @@ public class AccountServiceImpl implements AccountService {
 
 	public void setRoleSenior(User user)
 	{
-		Role role = new Role();
-		role.setRole("Senior");
-
-		Role rl = roleRepository.findByRole("Senior");
-		if(rl==null){
+		Role role = roleRepository.findByRole("SENIOR");
+		if(role==null){
 			roleRepository.save(role);
 		}
+		role = new Role();
+		role.setRole("SENIOR");
 
 		Set<Role> roles = new HashSet<Role>();
 		roles.add(role);
@@ -74,7 +73,7 @@ public class AccountServiceImpl implements AccountService {
 	@Transactional
 	public void registerCareAssistant(CareAssistant careAssistant) {
 		Role role = new Role();
-		role.setRole("Senior");
+		role.setRole("SENIOR");
 
 		Set<Role> roles = new HashSet<Role>();
 		roles.add(role);

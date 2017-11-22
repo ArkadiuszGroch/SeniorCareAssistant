@@ -29,7 +29,7 @@ public class User {
     private String login;
 
     @Column(name = "Password")
-    @NotEmpty(message = "*Wprowadz adres email")
+    @NotEmpty(message = "*Wprowadz haslo")
     @Length(min = 5, message = "*Twoje haslo musi miec wiecej niz 5 znakow")
     private String password;
 

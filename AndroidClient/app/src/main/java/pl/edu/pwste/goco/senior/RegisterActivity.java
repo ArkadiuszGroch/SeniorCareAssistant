@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 return senior;
             } else {
-                //password and confirm password is different
+                //password field and confirm password field is different
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);
                 String infoMessage = getResources().getString(R.string.passwordNotMatch);
                 showMessage(infoTitle, infoMessage);

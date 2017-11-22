@@ -9,13 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
+import Configuration.RestConfiguration;
+import RestClient.AnswerTemplate;
 import RestClient.Entity.Senior;
 import RestClient.Entity.User;
+import RestClient.Service.LoginService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,21 +25,59 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signInClick(View view) {
-//        get value from form
+//get value from form
         EditText etLogin = (EditText) findViewById(R.id.etLogin);
         String login = etLogin.getText().toString();
 
         EditText etPassword = (EditText) findViewById(R.id.etPassword);
         String password = etPassword.getText().toString();
 
-//        prepare object
+//prepare object
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
         Senior senior = new Senior();
         senior.setUser(user);
-//        execute service
-        new RESTLogin().execute(senior);
+//execute service
+        //new RESTLogin().execute(senior);
+        executeLogin(senior);
+    }
+
+    private void executeLogin(Senior senior) {
+        RestService restService = new RestService();
+        restService.doInBackground(senior);
+
+        Thread thread = new Thread() {
+            public void run() {
+                LoginService loginService = new LoginService(senior);
+                AnswerTemplate answer = loginService.execute();
+                if(answer.getErrorCode() != AnswerTemplate.ErrorCode.CONNECTION_ERROR){
+                    if(answer.getCode() == 200)
+                    {
+                        RestConfiguration.SECURITY_STRING = (String) answer.getObject();
+                        openMainActivity();
+                    }
+                    else{
+                        String infoTitle = getResources().getString(R.string.messageErrorTitle);
+                        String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
+                        showMessage(infoTitle, infoMessage);
+                    }
+                }
+                else {
+                    String infoTitle = getResources().getString(R.string.messageErrorTitle);
+                    String infoMessage = getResources().getString(R.string.connectionProblem);
+                    showMessage(infoTitle, infoMessage);
+                }
+            }
+        };
+    }
+    class RestService extends AsyncTask<Senior, AnswerTemplate, AnswerTemplate> {
+
+        @Override
+        protected AnswerTemplate doInBackground(Senior... seniors) {
+            LoginService loginService = new LoginService(seniors[0]);
+            return loginService.execute();
+        }
     }
 
     public void registerClick(View view) {
@@ -57,10 +93,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-//    ======================== SERVICES ===========================
+/*    ======================== SERVICES ===========================
     class RESTLogin extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        String url = getResources().getString(R.string.urlService) + "account/senior/login";
-        RestTemplate restTemplate = new RestTemplate();
+        String url = RestConfiguration.LOGIN;
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {
@@ -87,14 +122,12 @@ public class LoginActivity extends AppCompatActivity {
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
                 showMessage(infoTitle, infoMessage);
             } else {
-                //// TODO: 10.10.2017 Save secstr to file
+                RestConfiguration.SECURITY_STRING = stringResponseEntity.getBody().toString();
                 openMainActivity();
-                String infoMessage = stringResponseEntity.getBody().toString();
             }
-
         }
     }
-
+*/
     public void showMessage(String title, String message) {
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
         dlgAlert.setMessage(message);

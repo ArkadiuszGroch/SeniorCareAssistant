@@ -7,5 +7,6 @@ import pl.edu.pwste.Entity.User;
  */
 public interface UserService {
     public User findUserByEmail(String email);
+    public User findUserByEmailOrLogin(String email, String login);
     public void saveUser(User user);
 }

@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class  UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findUserByEmailOrLogin(String email, String login) {
+        return null;
     }
 
     @Override

@@ -16,8 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+public class SpringSecurityDialect extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
@@ -45,26 +44,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/", "/home", "/about").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER")
-                .anyRequest().authenticated()
+                    .formLogin()
+                    .loginPage("/login.html")
+                    .failureUrl("/login-error.html")
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                    .logout()
+                    .logoutSuccessUrl("/index.html")
                 .and()
-                .logout()
-                .permitAll()
+                    .authorizeRequests()
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/user/**").hasRole("USER")
+                    .antMatchers("/shared/**").hasAnyRole("USER","ADMIN")
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-    }
+                    .exceptionHandling()
+                    .accessDeniedPage("/403.html");
+        }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/src/main/WEB-INF/static/**", "/css/**", "/js/**", "/images/**");
-    }
 }
