@@ -53,7 +53,7 @@ public class SpringSecurityDialect extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/user/**").hasRole("USER")
+                    .antMatchers("/careAssistnat/**").hasRole("CAREASSISTANT")
                     .antMatchers("/shared/**").hasAnyRole("USER","ADMIN")
                 .and()
                     .exceptionHandling()

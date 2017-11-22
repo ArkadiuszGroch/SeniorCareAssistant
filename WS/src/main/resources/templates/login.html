@@ -1,36 +1,77 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Spring Security Tutorial</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Senior Care Assistant!</title>
+
+    <meta name="description" content="Application for care of seniors.">
+    <meta name="author" content="Arkadiusz Groch">
+
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+
 </head>
-
 <body>
-<form th:action="@{/registration}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
-</form>
+<div th:replace="fragments/header :: header"></div>
+<div class="container-fluid">
 
-<div class="container">
-    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
-    <form th:action="@{/login}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading" th:text="Welcome"></h3>
-        <br/>
+    <div class="col-md-4 col-md-offset-4">
+        <div class="middle-box text-center loginscreen animated fadeInDown">
+            <div>
 
-        <input type="text" id="email" name="email"  th:placeholder="Email"
-               class="form-control" /> <br/>
-        <input type="password"  th:placeholder="Password"
-               id="password" name="password" class="form-control" /> <br />
+                <h4>New User Registration</h4>
 
-        <div align="center" th:if="${param.error}">
-            <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+                <form autocomplete="off" action="#" th:action="@{/login}"
+                      method="post" class="m-t" role="form">
+
+                    <div th:if="${confirmationMessage}" class="alert alert-success"
+                         role="alert" th:text=${confirmationMessage}></div>
+
+                    <div th:if="${errorMessage}"
+                         class="alert alert-danger" role="alert"
+                         th:text="${errorMessage}"></div>
+
+                    <!-- LOGIN-->
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </span>
+
+                        <input type="text" name = "login"
+                               placeholder="Login" class="form-control" required/>
+                        <span class="glyphicon form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+
+                    <!--PASSWORD-->
+                    <div class="form-group input-group has-feedback">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-lock"></span>
+                        </span>
+
+                        <input type="password" name = "password"
+                               placeholder="Password" class="form-control" required/>
+                        <span class="glyphicon form-control-feedback"
+                              aria-hidden="true"></span>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary block full-width m-b">Register
+                    </button>
+
+                </form>
+            </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
-    </form>
+    </div>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>

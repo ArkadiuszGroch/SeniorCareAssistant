@@ -30,7 +30,6 @@ public class RegisterController {
         return modelAndView;
     }
 
-    // Process form input data
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid User user, BindingResult bindingResult, HttpServletRequest request) {
 

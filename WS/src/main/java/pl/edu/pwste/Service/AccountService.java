@@ -12,4 +12,6 @@ public interface AccountService {
 	public void registerCareAssistant(CareAssistant careAssistant);
 
 	public String loginCareAssistant(CareAssistant careAssistant);
+
+	public CareAssistant findCareAssistantByLoginOrEmail(String login, String password);
 }

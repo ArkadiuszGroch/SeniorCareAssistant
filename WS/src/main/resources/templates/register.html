@@ -79,8 +79,6 @@
 
                     <!--PASSWORD-->
                     <div class="form-group input-group has-feedback">
-                        <label th:if="${#fields.hasErrors('password')}"
-                               th:errors="*{password}" class="validation-message"></label>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-lock"></span>
                         </span>
@@ -94,8 +92,6 @@
 
                     <!--FIRST NAME-->
                     <div class="form-group input-group has-feedback">
-                        <label th:if="${#fields.hasErrors('firstName')}"
-                               th:errors="*{firstName}" class="validation-message"></label>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-user"></span>
                         </span>

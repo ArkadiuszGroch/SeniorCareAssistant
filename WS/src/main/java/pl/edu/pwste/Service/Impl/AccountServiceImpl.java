@@ -75,6 +75,15 @@ public class AccountServiceImpl implements AccountService {
         return careAssistantRepository.findCareAssistantByUser(user).getUser().getSecurityString();
     }
 
+    @Override
+    public CareAssistant findCareAssistantByLoginOrEmail(String login, String password) {
+        User user = userRepository.findUserByLoginAndPassword(login, password);
+        CareAssistant careAssistant = null;
+        if(user != null)
+            careAssistant = careAssistantRepository.findCareAssistantByUser(user);
+        return careAssistant;
+    }
+
     private void generateSecurityStringForUser(User user) {
         SecurityStringGenerator securityStringGenerator = new SecurityStringGenerator(30);
         String securityString = securityStringGenerator.generate();
@@ -90,7 +99,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         Set<Role> roles = user.getRoles();
-        if(roles == null)
+        if (roles == null)
             roles = new HashSet<>();
         roles.add(role);
         user.setRoles(roles);
