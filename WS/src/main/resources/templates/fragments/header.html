@@ -13,7 +13,11 @@
         </a>
     </div>
     <div class="col-md-8">
-        <div style="float: right;">
+
+
+
+        <!--Login or register buttons-->
+        <div th:if="${session.user == null}" style="float: right;">
             <a href="#" data-toggle="modal" data-target="#login-modal">
                 <button type="button" class="btn btn-primary"><b>Sign In</b>
                 </button>
@@ -21,6 +25,15 @@
             or
             <a href="/register" th:href="@{/register}">
                 <button type="button" class="btn btn-primary"><b>Register</b>
+                </button>
+            </a>
+        </div>
+
+        <!--Logged user-->
+        <div th:if="${session.user != null}" style="float: right;">
+            <span th:text="${session.user.user.login}" th:unless="${session == null}"></span>
+            <a href="/logout" th:href="@{/logout}">
+                <button type="button" class="btn btn-primary"><b>Logout</b>
                 </button>
             </a>
         </div>

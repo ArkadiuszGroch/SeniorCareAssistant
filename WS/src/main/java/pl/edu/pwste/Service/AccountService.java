@@ -13,5 +13,7 @@ public interface AccountService {
 
 	public String loginCareAssistant(CareAssistant careAssistant);
 
-	public CareAssistant findCareAssistantByLoginOrEmail(String login, String password);
+	public CareAssistant findCareAssistantByLoginOrPassword(String login, String password);
+
+	public CareAssistant findCareAssistantByLoginOrEmail(String login, String email);
 }

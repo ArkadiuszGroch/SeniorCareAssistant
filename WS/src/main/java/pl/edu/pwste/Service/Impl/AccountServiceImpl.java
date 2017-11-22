@@ -76,8 +76,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public CareAssistant findCareAssistantByLoginOrEmail(String login, String password) {
+    public CareAssistant findCareAssistantByLoginOrPassword(String login, String password) {
         User user = userRepository.findUserByLoginAndPassword(login, password);
+        CareAssistant careAssistant = null;
+        if(user != null)
+            careAssistant = careAssistantRepository.findCareAssistantByUser(user);
+        return careAssistant;
+    }
+
+    @Override
+    public CareAssistant findCareAssistantByLoginOrEmail(String login, String email) {
+        User user = userRepository.findUserByLoginOrEmail(login, email);
         CareAssistant careAssistant = null;
         if(user != null)
             careAssistant = careAssistantRepository.findCareAssistantByUser(user);

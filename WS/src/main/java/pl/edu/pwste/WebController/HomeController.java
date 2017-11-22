@@ -13,9 +13,15 @@ public class HomeController {
         return "redirect:/home";
     }
 
+    @RequestMapping("/index")
+    public String indexPage()
+    {
+        return "redirect:/home";
+    }
+
     @RequestMapping("/home")
     public String home() {
-        return "home";
+        return "index";
     }
 
 }
