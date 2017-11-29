@@ -19,16 +19,16 @@ import java.util.List;
 public class LocalizationServiceImpl implements LocalizationService {
 
 	@Autowired
-	SeniorRepository seniorRepository;
+	private SeniorRepository seniorRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	LocalizationRepository localizationRepository;
+	private LocalizationRepository localizationRepository;
 
 	@Autowired
-	SavedLocalizationRepository savedlocalizationRepository;
+	private SavedLocalizationRepository savedlocalizationRepository;
 
 	@Override
 	public void addCurrentLocation(Localization localization, String seniorSecurityString) {

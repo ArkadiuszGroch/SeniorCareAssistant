@@ -12,35 +12,51 @@ import pl.edu.pwste.Repository.SeniorRepository;
 import pl.edu.pwste.Repository.UserRepository;
 import pl.edu.pwste.Service.CareService;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class CareServiceImpl implements CareService {
 
-	@Autowired
-	UserRepository userRepository;
-	
-	@Autowired
-	SeniorRepository seniorRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	CareAssistantRepository careAssistantRepository;
+    @Autowired
+    private SeniorRepository seniorRepository;
 
-	@Autowired
-	CareRepository careRepository;
+    @Autowired
+    private CareAssistantRepository careAssistantRepository;
 
-	@Override
-	public void addSeniorToCareAssistant(String seniorLogin, String careAssistantLogin) {
-		User seniorUser = userRepository.findUserByLogin(seniorLogin);
-		Senior s = seniorRepository.findSeniorByUser(seniorUser);
-		
-		User careAssistantUser = userRepository.findUserByLogin(careAssistantLogin);
-		CareAssistant ca = careAssistantRepository.findCareAssistantByUser(careAssistantUser);
+    @Autowired
+    private CareRepository careRepository;
 
-		Care care = new Care();
-		care.setSenior(s);
-		care.setCareAssistant(ca);
+    @Override
+    public void addSeniorToCareAssistant(String seniorLogin, String careAssistantLogin) {
+        User seniorUser = userRepository.findUserByLogin(seniorLogin);
+        Senior s = seniorRepository.findSeniorByUser(seniorUser);
 
-		careRepository.save(care);
+        User careAssistantUser = userRepository.findUserByLogin(careAssistantLogin);
+        CareAssistant ca = careAssistantRepository.findCareAssistantByUser(careAssistantUser);
 
-	}
+        Care care = new Care();
+        care.setSenior(s);
+        care.setCareAssistant(ca);
+
+        careRepository.save(care);
+
+    }
+
+    @Override
+    public List<Senior> findAllSeniorsForCareAssistant(CareAssistant careAssistant) {
+        Set result = careRepository.findByCareAssistant(careAssistant);
+        List<Care> listOfCare = new ArrayList<>();
+        listOfCare.addAll(result);
+        List<Senior> listOfSeniors = new ArrayList<>();
+        for (Care care : listOfCare) {
+            listOfSeniors.add(care.getSenior());
+        }
+        return listOfSeniors;
+    }
 
 }

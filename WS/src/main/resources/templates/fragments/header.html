@@ -9,11 +9,10 @@
 <div class="row" th:fragment="header">
     <div class=" col-md-4">
         <a href="/home" th:href="@{/home}">
-            <img src="images/baner.jpg" title="Logo Care Assistant" alt="Logo Care Assistant"/>
+            <img src="/images/baner.jpg" title="Logo Care Assistant" alt="Logo Care Assistant"/>
         </a>
     </div>
     <div class="col-md-8">
-
 
 
         <!--Login or register buttons-->
@@ -31,7 +30,8 @@
 
         <!--Logged user-->
         <div th:if="${session.user != null}" style="float: right;">
-            <span th:text="${session.user.user.login}" th:unless="${session == null}"></span>
+            <a href="/careAssistant" th:href="@{/careAssistant}"><span th:text="${session.user.user.login}"
+                                                                       th:unless="${session == null}"></span></a>
             <a href="/logout" th:href="@{/logout}">
                 <button type="button" class="btn btn-primary"><b>Logout</b>
                 </button>
@@ -39,7 +39,8 @@
         </div>
 
         <!--Login form-->
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="loginmodal-container">
                     <h1>Login to Your Account</h1><br>

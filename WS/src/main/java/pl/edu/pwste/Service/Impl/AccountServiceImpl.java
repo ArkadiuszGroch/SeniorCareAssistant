@@ -21,13 +21,13 @@ import java.util.Set;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    SeniorRepository seniorRepository;
+    private SeniorRepository seniorRepository;
 
     @Autowired
-    CareAssistantRepository careAssistantRepository;
+    private CareAssistantRepository careAssistantRepository;
 
     @Autowired
     RoleRepository roleRepository;

@@ -36,15 +36,18 @@ public class LoginController {
         if (careAssistant == null) {
             modelAndView.addObject("errorMessage", "Invalid login or email.");
             modelAndView.setViewName("login");
+            modelAndView = new ModelAndView("redirect:/login");
         } else {
             if (careAssistant.getUser().getPassword().equals(password)) {
-                modelAndView.setViewName("careAssistant");
                 session.setAttribute("user", careAssistant);
-                System.out.println("Login complete");
+                System.out.println("Logged - " + careAssistant.getUser().getLogin());
+                modelAndView = new ModelAndView("redirect:/careAssistant/dashboard/chooseSenior");
+
             } else {
                 modelAndView.addObject("errorMessage", "Invalid password.");
                 modelAndView.setViewName("login");
-                System.out.println("Invalid password.");
+                modelAndView = new ModelAndView("redirect:/login");
+                System.out.println("Invalid password - " + careAssistant.getUser().getLogin());
             }
         }
 
@@ -52,8 +55,7 @@ public class LoginController {
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpSession session)
-    {
+    public String logout(HttpSession session) {
         session.removeAttribute("user");
         return "redirect:/";
     }

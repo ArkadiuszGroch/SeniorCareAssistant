@@ -16,13 +16,13 @@ import java.util.List;
 public class ContactServiceImpl implements ContactService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
-	SeniorRepository seniorRepository;
+	private SeniorRepository seniorRepository;
 	
-	@Autowired 
-	ContactRepository contactRepository;
+	@Autowired
+	private ContactRepository contactRepository;
 	
 	@Override
 	public void addContact(Contact contact, String seniorSecurityString) {
