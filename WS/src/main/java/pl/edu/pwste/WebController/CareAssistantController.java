@@ -35,14 +35,14 @@ public class CareAssistantController {
         CareAssistant loggedUser = (CareAssistant) session.getAttribute("user");
         List<Senior> listOfSeniors = careService.findAllSeniorsForCareAssistant(loggedUser);
         List<String> listOfNameSeniors = new ArrayList<>();
-        for (Senior senior : listOfSeniors) {
-            listOfNameSeniors.add("(" + senior.getUser().getLogin() + ")" + senior.getUser().getFirstName() + " " + senior.getUser().getLastName());
-        }
+//        for (Senior senior : listOfSeniors) {
+//            listOfNameSeniors.add("(" + senior.getUser().getLogin() + ")" + senior.getUser().getFirstName() + " " + senior.getUser().getLastName());
+//        }
         if (loggedUser != null) {
             modelAndView.setViewName("chooseSenior");
             modelAndView.addObject("user", loggedUser.getUser());
             if (!listOfSeniors.isEmpty()) {
-                modelAndView.addObject("listOfSeniors", listOfNameSeniors);
+                modelAndView.addObject("listOfSeniors", listOfSeniors);
             } else {
                 //TODO empty list, add senior to list
             }

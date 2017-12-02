@@ -14,6 +14,10 @@
     <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
@@ -21,26 +25,29 @@
     <div class="row">
         <div class="col-md-12">
             <!--LIST OF SENIORS-->
-            <div class="btn-group"  th:if="${listOfSeniors != null}">
-
-                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                    List of Seniors
-                    <span class="caret"></span>
-                </button>
-
+            <div class="dropdown" th:if="${listOfSeniors != null}">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">List of Seniors
+                    <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                    <li th:each="senior : ${listOfSeniors}" th:text="${senior}" class="active">txt
-                        <a href="#">Another action</a>
+                    <li th:each="senior : ${listOfSeniors}"
+                        th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
+                        <a th:href="${/senior.id}">links</a>
                     </li>
                     <li class="divider">
                     </li>
                     <li>
-                        <a href="#">Manage the list of seniors</a>
+                        <a th:href="@{manage}">Manage the list of seniors</a>
                     </li>
                 </ul>
             </div>
+            <!--LIST OF SENIRS IS EMPTY-->
+            <div class="dropdown" th:if="${listOfSeniors == null}">
+                Please add senior to list!
+            </div>
+
         </div>
     </div>
+
 
     <div th:replace="fragments/footer :: footer"></div>
 
