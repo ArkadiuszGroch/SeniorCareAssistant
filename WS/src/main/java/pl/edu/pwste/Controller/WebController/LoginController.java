@@ -1,19 +1,15 @@
-package pl.edu.pwste.WebController;
+package pl.edu.pwste.Controller.WebController;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import pl.edu.pwste.Entity.CareAssistant;
-import pl.edu.pwste.Repository.CareAssistantRepository;
 import pl.edu.pwste.Service.AccountService;
 import pl.edu.pwste.Service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller

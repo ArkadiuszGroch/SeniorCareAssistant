@@ -1,4 +1,4 @@
-package pl.edu.pwste.RestController;
+package pl.edu.pwste.Controller.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

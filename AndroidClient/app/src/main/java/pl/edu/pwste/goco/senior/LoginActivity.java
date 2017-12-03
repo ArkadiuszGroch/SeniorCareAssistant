@@ -1,30 +1,42 @@
 package pl.edu.pwste.goco.senior;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import Configuration.RestConfiguration;
-import RestClient.AnswerTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import RestClient.Entity.Senior;
 import RestClient.Entity.User;
-import RestClient.Service.LoginService;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        sharedPreferences = this.getSharedPreferences("pl.edu.pwste.goco.senior", Context.MODE_PRIVATE);
+
     }
 
     public void signInClick(View view) {
+
 //get value from form
         EditText etLogin = (EditText) findViewById(R.id.etLogin);
         String login = etLogin.getText().toString();
@@ -39,46 +51,13 @@ public class LoginActivity extends AppCompatActivity {
         Senior senior = new Senior();
         senior.setUser(user);
 //execute service
-        //new RESTLogin().execute(senior);
-        executeLogin(senior);
+
+        sharedPreferences.edit().putString("login", login).apply();
+        sharedPreferences.edit().putString("password", password).apply();
+        new RESTLogin().execute(senior);
+
     }
 
-    private void executeLogin(Senior senior) {
-        RestService restService = new RestService();
-        restService.doInBackground(senior);
-
-        Thread thread = new Thread() {
-            public void run() {
-                LoginService loginService = new LoginService(senior);
-                AnswerTemplate answer = loginService.execute();
-                if(answer.getErrorCode() != AnswerTemplate.ErrorCode.CONNECTION_ERROR){
-                    if(answer.getCode() == 200)
-                    {
-                        RestConfiguration.SECURITY_STRING = (String) answer.getObject();
-                        openMainActivity();
-                    }
-                    else{
-                        String infoTitle = getResources().getString(R.string.messageErrorTitle);
-                        String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
-                        showMessage(infoTitle, infoMessage);
-                    }
-                }
-                else {
-                    String infoTitle = getResources().getString(R.string.messageErrorTitle);
-                    String infoMessage = getResources().getString(R.string.connectionProblem);
-                    showMessage(infoTitle, infoMessage);
-                }
-            }
-        };
-    }
-    class RestService extends AsyncTask<Senior, AnswerTemplate, AnswerTemplate> {
-
-        @Override
-        protected AnswerTemplate doInBackground(Senior... seniors) {
-            LoginService loginService = new LoginService(seniors[0]);
-            return loginService.execute();
-        }
-    }
 
     public void registerClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -86,14 +65,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void openMainActivity()
-    {
+    private void openMainActivity() {
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
 
-/*    ======================== SERVICES ===========================
     class RESTLogin extends AsyncTask<Senior, String, ResponseEntity<String>> {
         String url = RestConfiguration.LOGIN;
 
@@ -117,29 +95,51 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
-            if (stringResponseEntity.getStatusCode().value() == 204) {
+            if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
+                sharedPreferences.edit().putString("secStr", stringResponseEntity.getBody().toString()).apply();
+                openMainActivity();
+
+            } else {
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
-                showMessage(infoTitle, infoMessage);
-            } else {
-                RestConfiguration.SECURITY_STRING = stringResponseEntity.getBody().toString();
-                openMainActivity();
+                //showMessage(infoTitle, infoMessage);
             }
         }
     }
-*/
+
     public void showMessage(String title, String message) {
-        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        dlgAlert.setMessage(message);
-        dlgAlert.setTitle(title);
-        dlgAlert.setPositiveButton("OK", null);
-        dlgAlert.setCancelable(true);
-        dlgAlert.create().show();
-        dlgAlert.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dismiss the dialog
-                    }
-                });
+        final Context mContext = this;
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+        //Setting Dialog Title
+        alertDialog.setTitle(title);
+
+        //Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        //On Pressing Setting button
+        alertDialog.setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                mContext.startActivity(intent);
+            }
+        });
+
+        //On pressing cancel button
+        alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.cancel();
+            }
+        });
+
+        alertDialog.show();
+        Log.i("CON", title + ") " + message)
+        ;
     }
 }

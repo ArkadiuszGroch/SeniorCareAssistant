@@ -23,7 +23,8 @@
             android:id="@+id/btnSaveLocalization"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/saveCurrentLocalization" />
+            android:text="@string/saveCurrentLocalization"
+            android:onClick="saveCurrentLocation"/>
 
         <Button
             android:id="@+id/button2"

@@ -4,71 +4,71 @@ import java.io.Serializable;
 
 
 public class SavedLocalization implements Serializable {
-	public SavedLocalization() {
-	}
+    public SavedLocalization() {
+    }
 
-	private int id;
+    private int id;
 
-	private String name;
+    private String name;
 
-	private java.math.BigDecimal latitude;
+    private double latitude;
 
-	private java.math.BigDecimal longitude;
+    private double longitude;
 
-	private Senior senior;
+    private Senior senior;
 
-	private void setId(int value) {
-		this.id = value;
-	}
+    private void setId(int value) {
+        this.id = value;
+    }
 
-	 
-	public int getId() {
-		return id;
-	}
 
-	 
-	public int getORMID() {
-		return getId();
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setName(String value) {
-		this.name = value;
-	}
 
-	 
-	public String getName() {
-		return name;
-	}
+    public int getORMID() {
+        return getId();
+    }
 
-	public void setLatitude(java.math.BigDecimal value) {
-		this.latitude = value;
-	}
+    public void setName(String value) {
+        this.name = value;
+    }
 
-	 
-	public java.math.BigDecimal getLatitude() {
-		return latitude;
-	}
 
-	public void setLongitude(java.math.BigDecimal value) {
-		this.longitude = value;
-	}
+    public String getName() {
+        return name;
+    }
 
-	 
-	public java.math.BigDecimal getLongitude() {
-		return longitude;
-	}
+    public void setLatitude(double value) {
+        this.latitude = value;
+    }
 
-	public void setSenior(Senior value) {
-		this.senior = value;
-	}
 
-	 
-	public Senior getSenior() {
-		return senior;
-	}
+    public double getLatitude() {
+        return latitude;
+    }
 
-	public String toString() {
-		return String.valueOf(getId());
-	}
+    public void setLongitude(double value) {
+        this.longitude = value;
+    }
+
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setSenior(Senior value) {
+        this.senior = value;
+    }
+
+
+    public Senior getSenior() {
+        return senior;
+    }
+
+    public String toString() {
+        return String.valueOf(getId());
+    }
 
 }

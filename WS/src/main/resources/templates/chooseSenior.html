@@ -29,6 +29,7 @@
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">List of Seniors
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu">
+
                     <li th:each="senior : ${listOfSeniors}"
                         th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
                         <a th:href="${/senior.id}">links</a>
@@ -40,6 +41,7 @@
                     </li>
                 </ul>
             </div>
+
             <!--LIST OF SENIRS IS EMPTY-->
             <div class="dropdown" th:if="${listOfSeniors == null}">
                 Please add senior to list!

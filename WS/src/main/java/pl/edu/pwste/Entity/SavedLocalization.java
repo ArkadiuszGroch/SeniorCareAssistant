@@ -20,10 +20,10 @@ public class SavedLocalization implements Serializable {
 	private String name;
 
 	@Column(name = "Latitude", nullable = false, precision = 9, scale = 6)
-	private java.math.BigDecimal latitude;
+	private double latitude;
 
 	@Column(name = "Longitude", nullable = false, precision = 9, scale = 6)
-	private java.math.BigDecimal longitude;
+	private double longitude;
 
 	@ManyToOne(targetEntity = Senior.class, fetch = FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({ org.hibernate.annotations.CascadeType.LOCK })
@@ -53,21 +53,21 @@ public class SavedLocalization implements Serializable {
 		return name;
 	}
 
-	public void setLatitude(java.math.BigDecimal value) {
+	public void setLatitude(double value) {
 		this.latitude = value;
 	}
 
 	 
-	public java.math.BigDecimal getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLongitude(java.math.BigDecimal value) {
+	public void setLongitude(double value) {
 		this.longitude = value;
 	}
 
 	 
-	public java.math.BigDecimal getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 

@@ -49,9 +49,12 @@ public class AccountServiceImpl implements AccountService {
     public String loginSenior(Senior senior) {
         User user = userRepository.findUserByLoginAndPassword(senior.getUser().getLogin(),
                 senior.getUser().getPassword());
-        generateSecurityStringForUser(user);
-        userRepository.save(user);
-        return seniorRepository.findSeniorByUser(user).getUser().getSecurityString();
+        if (user != null) {
+            generateSecurityStringForUser(user);
+            userRepository.save(user);
+            return seniorRepository.findSeniorByUser(user).getUser().getSecurityString();
+        }else
+            return null;
     }
 
 
@@ -79,7 +82,7 @@ public class AccountServiceImpl implements AccountService {
     public CareAssistant findCareAssistantByLoginOrPassword(String login, String password) {
         User user = userRepository.findUserByLoginAndPassword(login, password);
         CareAssistant careAssistant = null;
-        if(user != null)
+        if (user != null)
             careAssistant = careAssistantRepository.findCareAssistantByUser(user);
         return careAssistant;
     }
@@ -88,7 +91,7 @@ public class AccountServiceImpl implements AccountService {
     public CareAssistant findCareAssistantByLoginOrEmail(String login, String email) {
         User user = userRepository.findUserByLoginOrEmail(login, email);
         CareAssistant careAssistant = null;
-        if(user != null)
+        if (user != null)
             careAssistant = careAssistantRepository.findCareAssistantByUser(user);
         return careAssistant;
     }

@@ -30,4 +30,12 @@
     <!--Save localization-->
     <string name="nameOfLocalization">Nazwa</string>
     <string name="saveLocalization">Zapisz</string>
+
+    <string name="GPSAlertDialogTitle">GPSAlertDialogTitle</string>
+    <string name="GPSAlertDialogMessage">GPSAlertDialogMessage</string>
+    <string name="action_settings">action_settings</string>
+    <string name="cancel">cancel</string>
+    
+    <string name="errorDuringSaveLocation">Błąd podczas zapisywania lokalizacji</string>
+    <string name="locationSaved">Lokalizacja zapisana pomyślnie!</string>
 </resources>

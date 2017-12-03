@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.edu.pwste.goco.senior.SaveLocalizationActivity">
+    tools:context="pl.edu.pwste.goco.senior.SaveLocationActivity">
 
     <LinearLayout
-        android:layout_width="304dp"
-        android:layout_height="437dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">

@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Login"
+            android:text="senior1"
             android:textSize="24sp" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="Password"
+            android:text="senior123"
             android:textSize="24sp" />
 
         <LinearLayout
