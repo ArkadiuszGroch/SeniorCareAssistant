@@ -23,22 +23,25 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-2 col-md-offset-5">
             <!--LIST OF SENIORS-->
             <div class="dropdown" th:if="${listOfSeniors != null}">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">List of Seniors
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu">
 
-                    <li th:each="senior : ${listOfSeniors}"
-                        th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
-                        <a th:href="${/senior.id}">links</a>
-                    </li>
+                    <a class="list-group-item list-group-item-info" th:each="senior : ${listOfSeniors}" th:href="${senior.id}">
+                        <li th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
+
+                        </li>
+                    </a>
+
                     <li class="divider">
                     </li>
-                    <li>
-                        <a th:href="@{manage}">Manage the list of seniors</a>
-                    </li>
+                    <a class="list-group-item list-group-item-warning" th:href="@{/manage}">
+                        <li th:text="${'Manage the list of seniors'}">
+                        </li>
+                    </a>
                 </ul>
             </div>
 
