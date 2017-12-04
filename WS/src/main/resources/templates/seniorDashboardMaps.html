@@ -66,11 +66,12 @@
         <!-- right panel with menu -->
         <div class="row">
             <div class="col-md-2">
+                <h3 th:text="${senior.user.firstName + ' ' + senior.user.lastName}">
+                    First name and last name senior
+                </h3>
                 <div class="list-group">
-                    <div class="list-group-item active">
-                        First name and last name senior
-                    </div>
-                    <a href="#" class="list-group-item"><span class="badge">14</span> <em
+
+                    <a href="@{__${#httpServletRequest.requestURI}__/store/__${store.name}__}" class="list-group-item active"><span class="badge" th:text="${numberOfNotifications}"></span> <em
                             class="glyphicon glyphicon-bell">Notifications</em></a>
                     <a href="#" class="list-group-item"><em class="glyphicon glyphicon-map-marker">Localization</em></a>
                     <a href="#" class="list-group-item"><em class="glyphicon glyphicon-info-sign">Help</em></a>
@@ -83,9 +84,6 @@
                     <thead>
                     <tr>
                         <th>
-                            #
-                        </th>
-                        <th>
                             Title
                         </th>
                         <th>
@@ -97,101 +95,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            1
+                    <tr th:each="notification : ${listOfNotifications}">
+                        <td th:text="${notification.name}">
+                            name
                         </td>
-                        <td>
-                            TB - Monthly
+                        <td th:text="${notification.content}">
+                            content
                         </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Default
-                        </td>
-                    </tr>
-                    <tr class="active">
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            01/04/2012
-                        </td>
-                        <td>
-                            Approved
-                        </td>
-                    </tr>
-                    <tr class="success">
-                        <td>
-                            2
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            02/04/2012
-                        </td>
-                        <td>
-                            Declined
-                        </td>
-                    </tr>
-                    <tr class="warning">
-                        <td>
-                            3
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            03/04/2012
-                        </td>
-                        <td>
-                            Pending
-                        </td>
-                    </tr>
-                    <tr class="danger">
-                        <td>
-                            4
-                        </td>
-                        <td>
-                            TB - Monthly
-                        </td>
-                        <td>
-                            04/04/2012
-                        </td>
-                        <td>
-                            Call in to confirm
+                        <td th:text="${notification.time}">
+                            date
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <ul class="pagination">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>

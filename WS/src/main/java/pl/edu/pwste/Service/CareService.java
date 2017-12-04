@@ -12,4 +12,6 @@ public interface CareService {
 
 	public List<Senior> findAllSeniorsForCareAssistant(CareAssistant careAssistant);
 
+	public Care findCareBySeniorAndCareAssistant(Senior senior, CareAssistant careAssistant);
+
 }

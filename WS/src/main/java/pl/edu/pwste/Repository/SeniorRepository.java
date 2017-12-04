@@ -9,5 +9,6 @@ import pl.edu.pwste.Entity.User;
 public interface SeniorRepository extends CrudRepository<Senior, Long> {
 	
 	public Senior findSeniorByUser(User user);
+	public Senior findSeniorById(int id);
 	
 }

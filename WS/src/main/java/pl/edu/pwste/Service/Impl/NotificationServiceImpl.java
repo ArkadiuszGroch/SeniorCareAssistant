@@ -38,4 +38,10 @@ public class NotificationServiceImpl implements NotificationService {
             return listOfNotification;
         }
     }
+
+    @Override
+    public List<Notification> getNotificationForCare(Care care) {
+        List<Notification> listOfNotifications = notificationRepository.getNotificationsByCare(care);
+        return listOfNotifications;
+    }
 }

@@ -30,11 +30,14 @@
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu">
 
-                    <a class="list-group-item list-group-item-info" th:each="senior : ${listOfSeniors}" th:href="${senior.id}">
-                        <li th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
+                    <b>
+                        <a class="list-group-item list-group-item-info" th:each="senior : ${listOfSeniors}"
+                           th:href="${senior.id + '/notifications'}">
+                            <li th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
 
-                        </li>
-                    </a>
+                            </li>
+                        </a>
+                    </b>
 
                     <li class="divider">
                     </li>

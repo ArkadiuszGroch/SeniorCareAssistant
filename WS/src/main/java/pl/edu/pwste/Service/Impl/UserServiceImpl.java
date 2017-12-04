@@ -64,6 +64,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Senior findSeniorById(int id) {
+        return seniorRepository.findSeniorById(id);
+    }
+
+    @Override
     public CareAssistant findCareAssistantByLogin(String login) {
         User user = findUserByLogin(login);
         CareAssistant careAssistant = null;

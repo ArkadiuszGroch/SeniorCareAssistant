@@ -10,5 +10,6 @@ public interface UserService {
     public void saveUser(User user);
     public User findUserByLogin(String login);
     public Senior findSeniorByLogin(String login);
+    public Senior findSeniorById(int id);
     public CareAssistant findCareAssistantByLogin(String login);
 }

@@ -60,6 +60,11 @@ public class CareServiceImpl implements CareService {
         return listOfSeniors;
     }
 
+    @Override
+    public Care findCareBySeniorAndCareAssistant(Senior senior, CareAssistant careAssistant) {
+        return careRepository.findByCareAssistantAndSenior(careAssistant,senior);
+    }
+
     private void hideSensitiveData(List<Senior> listOfSeniors) {
         for (Senior senior : listOfSeniors) {
             if (senior.getUser().getPassword() != null) senior.getUser().setPassword(null);
