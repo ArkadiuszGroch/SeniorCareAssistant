@@ -2,14 +2,8 @@ package pl.edu.pwste.Service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.pwste.Entity.Care;
-import pl.edu.pwste.Entity.CareAssistant;
-import pl.edu.pwste.Entity.Senior;
-import pl.edu.pwste.Entity.User;
-import pl.edu.pwste.Repository.CareAssistantRepository;
-import pl.edu.pwste.Repository.CareRepository;
-import pl.edu.pwste.Repository.SeniorRepository;
-import pl.edu.pwste.Repository.UserRepository;
+import pl.edu.pwste.Entity.*;
+import pl.edu.pwste.Repository.*;
 import pl.edu.pwste.Service.CareService;
 
 import java.util.ArrayList;
@@ -30,6 +24,9 @@ public class CareServiceImpl implements CareService {
 
     @Autowired
     private CareRepository careRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     @Override
     public void addSeniorToCareAssistant(String seniorLogin, String careAssistantLogin) {
@@ -63,6 +60,16 @@ public class CareServiceImpl implements CareService {
     @Override
     public Care findCareBySeniorAndCareAssistant(Senior senior, CareAssistant careAssistant) {
         return careRepository.findByCareAssistantAndSenior(careAssistant,senior);
+    }
+
+    @Override
+    public void removeCare(Care care) {
+        List<Notification> listOfNotification = new ArrayList<>();
+        listOfNotification.addAll(care.getNotification());
+        for (Notification notification:listOfNotification) {
+            notificationRepository.delete(notification);
+        }
+        careRepository.delete(care);
     }
 
     private void hideSensitiveData(List<Senior> listOfSeniors) {
