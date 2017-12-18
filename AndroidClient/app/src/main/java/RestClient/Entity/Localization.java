@@ -8,9 +8,9 @@ public class Localization implements Serializable {
 
 	private int id;
 
-	private java.math.BigDecimal latitude;
+	private double latitude;
 
-	private java.math.BigDecimal longitude;
+	private double longitude;
 
 	private java.sql.Timestamp time;
 
@@ -30,21 +30,21 @@ public class Localization implements Serializable {
 		return getId();
 	}
 
-	public void setLatitude(java.math.BigDecimal value) {
+	public void setLatitude(double value) {
 		this.latitude = value;
 	}
 
 	 
-	public java.math.BigDecimal getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLongitude(java.math.BigDecimal value) {
+	public void setLongitude(double value) {
 		this.longitude = value;
 	}
 
 	 
-	public java.math.BigDecimal getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
