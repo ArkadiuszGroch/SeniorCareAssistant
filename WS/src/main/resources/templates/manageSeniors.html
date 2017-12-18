@@ -28,6 +28,19 @@
             <div class="alert alert-success" th:if="${message != null}">
                 <span th:text="${message}"/>
             </div>
+            <!--ADD SENIOR TO LIST-->
+            <div class="col-md-4 col-md-offset-4">
+                <form class="form-inline" action="#" th:action="@{/add}" th:object="${seedStarter}" method="post">
+                    <div class="form-group">
+                        <label for="seniorLoginOrEmail">Email address:</label>
+                        <input type="text" name="loginOrEmail" id="seniorLoginOrEmail"/>
+                    </div>
+                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add
+                        senior
+                    </button>
+
+                </form>
+            </div>
             <!--LIST OF SENIORS-->
             <table class="table">
                 <thead>
