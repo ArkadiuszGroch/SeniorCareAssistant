@@ -24,7 +24,7 @@ public class Localization implements Serializable {
 	@Column(name = "Longitude", nullable = false, precision = 9, scale = 6)
 	private java.math.BigDecimal longitude;
 
-	@Column(name = "Time", nullable = false)
+	@Column(name = "Time", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private java.sql.Timestamp time;
 
 	@JsonIgnore

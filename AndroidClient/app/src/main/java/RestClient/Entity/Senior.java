@@ -127,7 +127,7 @@ public class Senior {
     }
 
     public String toString() {
-        return String.valueOf(getId());
+        return getUser().getLogin() + "\n" + getUser().getPassword();
     }
 
 }

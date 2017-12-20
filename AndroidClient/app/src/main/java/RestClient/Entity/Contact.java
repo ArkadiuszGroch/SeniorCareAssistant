@@ -1,56 +1,57 @@
 package RestClient.Entity;
 
 import java.io.Serializable;
-//TODO set unique to seniorId and phone
+
 public class Contact implements Serializable {
-	public Contact() {
-	}
-	private int id;
+    public Contact() {
+    }
 
-	private String name;
+    private int id;
 
-	private String phone;
+    private String name;
 
-	private Senior senior;
+    private String phone;
 
-	private void setId(int value) {
-		this.id = value;
-	}
+    private Senior senior;
 
-	 
-	public int getId() {
-		return id;
-	}
+    private void setId(int value) {
+        this.id = value;
+    }
 
-	 
-	public void setName(String value) {
-		this.name = value;
-	}
 
-	public String getName() {
-		return name;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setPhone(String value) {
-		this.phone = value;
-	}
 
-	 
-	public String getPhone() {
-		return phone;
-	}
+    public void setName(String value) {
+        this.name = value;
+    }
 
-	public void setSenior(Senior value) {
-		this.senior = value;
-	}
+    public String getName() {
+        return name;
+    }
 
-	 
-	public Senior getSenior() {
-		return senior;
-	}
+    public void setPhone(String value) {
+        this.phone = value;
+    }
 
-	public String toString() {
-		return String.valueOf(getId());
-	}
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setSenior(Senior value) {
+        this.senior = value;
+    }
+
+
+    public Senior getSenior() {
+        return senior;
+    }
+
+    public String toString() {
+        return String.valueOf(getId());
+    }
 
 }

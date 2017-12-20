@@ -1,8 +1,6 @@
 package pl.edu.pwste.goco.senior;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 
 import org.springframework.http.HttpEntity;
@@ -21,7 +20,6 @@ import RestClient.Entity.SavedLocalization;
 
 public class SaveLocationActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
     private String securityString;
     private double longitude;
     private double latitude;
@@ -31,9 +29,9 @@ public class SaveLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_location);
 
-        // Shared preference to get sec str
-        sharedPreferences = this.getSharedPreferences("pl.edu.pwste.goco.senior", Context.MODE_PRIVATE);
-        securityString = sharedPreferences.getString("secStr","");
+        securityString = DataManager.loadSecurityString();
+
+
 
         // check if GPS enabled
         GPSTracker gpsTracker = new GPSTracker(this);

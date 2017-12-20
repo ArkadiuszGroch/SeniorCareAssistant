@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -18,21 +17,17 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import RestClient.Entity.Senior;
 import RestClient.Entity.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private SharedPreferences sharedPreferences;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        sharedPreferences = this.getSharedPreferences("pl.edu.pwste.goco.senior", Context.MODE_PRIVATE);
-
     }
 
     public void signInClick(View view) {
@@ -52,8 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         senior.setUser(user);
 //execute service
 
-        sharedPreferences.edit().putString("login", login).apply();
-        sharedPreferences.edit().putString("password", password).apply();
+        DataManager dataManager = new DataManager();
+        dataManager.saveData(senior);
+
         new RESTLogin().execute(senior);
 
     }
@@ -96,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
             if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
-                sharedPreferences.edit().putString("secStr", stringResponseEntity.getBody().toString()).apply();
+                DataManager.saveSecurityString(stringResponseEntity.getBody().toString());
                 openMainActivity();
 
             } else {
@@ -121,8 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
 
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
             }
@@ -132,8 +127,7 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
