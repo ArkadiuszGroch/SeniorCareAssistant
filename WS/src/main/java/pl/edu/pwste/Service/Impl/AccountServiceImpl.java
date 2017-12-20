@@ -39,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
         User user = senior.getUser();
         setRole(user, "SENIOR");
         generateSecurityStringForUser(user);
-
+        senior.setSafeDistance(500);
         userRepository.save(user);
         seniorRepository.save(senior);
     }

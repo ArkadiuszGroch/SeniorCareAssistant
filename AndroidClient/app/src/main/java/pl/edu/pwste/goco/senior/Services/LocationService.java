@@ -1,4 +1,4 @@
-package pl.edu.pwste.goco.senior;
+package pl.edu.pwste.goco.senior.Services;
 
 import android.Manifest;
 import android.app.Service;
@@ -30,6 +30,7 @@ public class LocationService extends Service {
     public LocationManager locationManager;
     public MyLocationListener listener;
     public Location previousBestLocation = null;
+    private boolean isNotificationCreated = false;
 
     Intent intent;
     int counter = 0;
@@ -126,7 +127,6 @@ public class LocationService extends Service {
                 try {
                     runnable.run();
                 } finally {
-
                 }
             }
         };
@@ -140,7 +140,7 @@ public class LocationService extends Service {
         public void onLocationChanged(final Location loc) {
             Log.i("loc", "Location changed");
             Double prevLongitude = (double) Math.round(loc.getLongitude() * 1000) / 1000;
-            Double prevLatitude = (double) Math.round(loc.getLatitude() * 1000) / 1000;
+            Double prevLatitude = (double) Math.round(loc.getLatitude() * 1000) / 100;
             if (isBetterLocation(loc, previousBestLocation)) {
                 loc.getLatitude();
                 loc.getLongitude();
@@ -213,4 +213,6 @@ public class LocationService extends Service {
             }
         }
     }
+
+
 }

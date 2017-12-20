@@ -14,6 +14,7 @@
     <string name="confirmPassword">Powtórz hasło</string>
     <string name="firstName">Imie</string>
     <string name="lastName">Nazwisko</string>
+    <string name="email">Email</string>
     <string name="phoneNumber">Numer telefonu</string>
     <string name="failedRegister">Rejestracja niepomyślna</string>
     <string name="doneRegister">Rejestracja przebiegła pomyślnie</string>

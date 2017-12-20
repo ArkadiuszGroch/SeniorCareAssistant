@@ -30,8 +30,13 @@ public class DataManager {
         List<String> listSaveText = new ArrayList<>();
         listSaveText.add(senior.getUser().getLogin());
         listSaveText.add(senior.getUser().getPassword());
+        listSaveText.add(Integer.toString(senior.getSafeDistance()));
         if (senior.getUser().getSecurityString() != null)
             listSaveText.add(senior.getUser().getSecurityString());
+        else listSaveText.add(" ");
+
+        //add empty record - no null pointer exception when new settings are saved
+        for (int i=0; i<10; i++) listSaveText.add(" ");
 
         String[] saveText = new String[listSaveText.size()];
         saveText = listSaveText.toArray(saveText);
@@ -40,18 +45,8 @@ public class DataManager {
     }
 
     public static void saveSecurityString(String securityString) {
-        String[] loadText = load();
-        String[] textToSave;
-        if (loadText.length <= 3) {
-            textToSave = new String[3];
-            textToSave[0] = loadText[0];
-            textToSave[1] = loadText[1];
-        } else {
-            textToSave = loadText;
-        }
-
-        textToSave[2] = securityString;
-
+        String[] textToSave = load();
+        textToSave[3] = securityString;
         save(textToSave);
 
         Log.i("data", "Saved secStr - " + securityString);
@@ -62,8 +57,7 @@ public class DataManager {
         User user = new User();
         user.setLogin(loadText[0]);
         user.setPassword(loadText[1]);
-        if (loadText[2] != null) user.setSecurityString(loadText[2]);
-
+        if (loadText[3] != null) user.setSecurityString(loadText[3]);
 
         Log.i("data", "Loaded data - " + loadText);
         return user;
@@ -71,16 +65,27 @@ public class DataManager {
 
     public static String loadSecurityString() {
         String[] loadText = load();
-        if (loadText[2] != null) {
-            Log.i("data", "Loaded secStr - " + loadText[2]);
-            return loadText[2];
+        if (loadText[3] != null) {
+            Log.i("data", "Loaded secStr - " + loadText[3]);
+            return loadText[3];
         } else {
-
             Log.i("data", "Loaded secStr - Empty");
             return null;
         }
     }
 
+    public static int loadSafeDistance() {
+        String[] loadText = load();
+        if (loadText[2] != null) {
+            Log.i("data", "Loaded safe distance - " + loadText[2]);
+            return Integer.parseInt(loadText[2]);
+        } else {
+            Log.i("data", "Loaded safe distance  - Empty");
+            return 0;
+        }
+    }
+
+    //todo to compleat
     public static boolean isSavedUser() {
         if (load() != null) return true;
         else return false;

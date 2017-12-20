@@ -22,8 +22,8 @@ public class Senior {
     private Timestamp lastModification;
     @JsonIgnore
     private Time locationUpdateFrequency;
-
     private User user;
+    private int safeDistance;
     @JsonIgnore
     private Set localization = new HashSet();
     @JsonIgnore
@@ -130,4 +130,12 @@ public class Senior {
         return getUser().getLogin() + "\n" + getUser().getPassword();
     }
 
+    public void setSafeDistance(int safeDistance) {
+        this.safeDistance = safeDistance;
+    }
+
+    public int getSafeDistance() {
+        return safeDistance;
+
+    }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import RestClient.Entity.Senior;
 import RestClient.Entity.User;
+import pl.edu.pwste.goco.senior.Configuration.DataManager;
+import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -29,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         Senior senior = validAndGetSeniorFromForm();
         if (senior != null) {
             new RESTRegister().execute(senior);
+            DataManager.saveData(senior);
             //open main activities
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -55,7 +59,10 @@ public class RegisterActivity extends AppCompatActivity {
         EditText etPhone = (EditText) findViewById(R.id.etPhone);
         String phone = etPhone.getText().toString();
 
-        if (login.length() > 0 && password.length() > 0 && confirmPassword.length() > 0 && firstName.length() > 0 && lastName.length() > 0 && phone.length() > 0) {
+        EditText etEmail = (EditText) findViewById(R.id.etEmail);
+        String email = etEmail.getText().toString();
+
+        if (login.length() > 0 && password.length() > 0 && confirmPassword.length() > 0 && firstName.length() > 0 && lastName.length() > 0 && phone.length() > 0 && email.length() > 0) {
             if (password.equals(confirmPassword)) {
                 //prepare object
                 User user = new User();
@@ -63,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setPassword(password);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
+                user.setEmail(email);
                 user.setPhone(phone);
 
                 Senior senior = new Senior();
@@ -86,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //    ======================== SERVICES ===========================
     class RESTRegister extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        String url = getResources().getString(R.string.urlService) + "account/senior/register";
+        String url = RestConfiguration.REGISTER;
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {
@@ -112,7 +120,8 @@ public class RegisterActivity extends AppCompatActivity {
             if (stringResponseEntity.getStatusCode().value() == 200) {
                 String infoTitle = getResources().getString(R.string.doneRegister);
                 String infoMessage = stringResponseEntity.getBody();
-                showMessage(infoTitle, infoMessage);
+                DataManager.saveSecurityString(stringResponseEntity.getBody());
+                Log.i("REG", "Register compleat");
             } else {
                 //// TODO: 05.10.2017 Open main activities
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);

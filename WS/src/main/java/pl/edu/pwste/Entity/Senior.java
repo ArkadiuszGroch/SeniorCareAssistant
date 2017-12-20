@@ -15,7 +15,7 @@ public class Senior {
     public Senior() {
         this.lastModification = new Timestamp(System.currentTimeMillis());
         this.lastSynchronization = new Timestamp(System.currentTimeMillis());
-        this.locationUpdateFrequency = new Time(20000);
+        this.locationUpdateFrequency = new Time(2000);
     }
 
     @Column(name = "Id", nullable = false, length = 10)
@@ -68,6 +68,18 @@ public class Senior {
     @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
             org.hibernate.annotations.CascadeType.LOCK})
     private Set medicine = new HashSet();
+
+    @Column(name = "SafeDistance", nullable = false)
+    private int safeDistance;
+
+    public int getSafeDistance() {
+        return safeDistance;
+    }
+
+    public void setSafeDistance(int safeDistance) {
+        this.safeDistance = safeDistance;
+    }
+
 
     private void setId(int value) {
         this.id = value;

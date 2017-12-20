@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import pl.edu.pwste.goco.senior.Services.LocationService;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

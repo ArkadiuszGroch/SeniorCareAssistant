@@ -67,4 +67,24 @@ public class LocalizationServiceImpl implements LocalizationService {
 		return localizationList;
 	}
 
+	@Override
+	public Double getDistanceFromHome(double latitudeHome, double longitudeHome, double latitudeCurrent, double longitudeCurrent) {
+		double R = 6378.137; // Radius of earth in KM
+		double dLat = latitudeCurrent * Math.PI / 180 - latitudeHome * Math.PI / 180;
+		double dLon = longitudeCurrent * Math.PI / 180 - longitudeHome * Math.PI / 180;
+		double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.cos(latitudeHome * Math.PI / 180) * Math.cos(latitudeCurrent * Math.PI / 180) *
+						Math.sin(dLon/2) * Math.sin(dLon/2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+		double d = R * c;
+		return d * 1000; // meters
+	}
+
+	@Override
+	public boolean isNotification(Senior senior) {
+		return false;
+	}
+
+
+
 }
