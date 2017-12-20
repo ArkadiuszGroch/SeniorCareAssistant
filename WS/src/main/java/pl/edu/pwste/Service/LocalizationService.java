@@ -17,6 +17,4 @@ public interface LocalizationService {
 
 	public Double getDistanceFromHome(double latitudeHome, double longitudeHome,double latitudeCurrent,double longitudeCurrent);
 
-	public boolean isNotification(Senior senior);
-
 }

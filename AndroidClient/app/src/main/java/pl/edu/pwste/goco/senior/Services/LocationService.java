@@ -30,6 +30,9 @@ public class LocationService extends Service {
     public LocationManager locationManager;
     public MyLocationListener listener;
     public Location previousBestLocation = null;
+
+    private Double savedLong = 0d;
+    private Double savedLat = 0d;
     private boolean isNotificationCreated = false;
 
     Intent intent;
@@ -139,8 +142,6 @@ public class LocationService extends Service {
 
         public void onLocationChanged(final Location loc) {
             Log.i("loc", "Location changed");
-            Double prevLongitude = (double) Math.round(loc.getLongitude() * 1000) / 1000;
-            Double prevLatitude = (double) Math.round(loc.getLatitude() * 1000) / 100;
             if (isBetterLocation(loc, previousBestLocation)) {
                 loc.getLatitude();
                 loc.getLongitude();
@@ -149,16 +150,32 @@ public class LocationService extends Service {
                 intent.putExtra("Provider", loc.getProvider());
                 Toast.makeText(getApplicationContext(), loc.getLatitude() + "," + loc.getLongitude(), Toast.LENGTH_LONG).show();
 
-                Double longitude = (double) Math.round(loc.getLongitude() * 1000) / 1000;
-                Double latitude = (double) Math.round(loc.getLatitude() * 1000) / 1000;
+                Double longitude = loc.getLongitude();
+                Double latitude = loc.getLatitude();
 
-                if (!longitude.equals(prevLongitude) || !latitude.equals(prevLatitude)) {
+                //save location when is different between prev location more than 10m
+                double distance = getDistanceFromHome(savedLat, savedLong, latitude, longitude);
+                if (distance > 10) {
+                    savedLat = latitude;
+                    savedLong = longitude;
                     new SendLocationService().execute(longitude, latitude);
                 }
+
                 sendBroadcast(intent);
             }
         }
 
+        private Double getDistanceFromHome(double latitudeHome, double longitudeHome, double latitudeCurrent, double longitudeCurrent) {
+            double R = 6378.137; // Radius of earth in KM
+            double dLat = latitudeCurrent * Math.PI / 180 - latitudeHome * Math.PI / 180;
+            double dLon = longitudeCurrent * Math.PI / 180 - longitudeHome * Math.PI / 180;
+            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(latitudeHome * Math.PI / 180) * Math.cos(latitudeCurrent * Math.PI / 180) *
+                            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            double d = R * c;
+            return d * 1000; // meters
+        }
 
         public void onProviderDisabled(String provider) {
             Toast.makeText(getApplicationContext(), "Gps Disabled", Toast.LENGTH_SHORT).show();

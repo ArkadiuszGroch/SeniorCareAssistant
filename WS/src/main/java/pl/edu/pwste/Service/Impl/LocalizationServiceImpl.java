@@ -79,12 +79,4 @@ public class LocalizationServiceImpl implements LocalizationService {
 		double d = R * c;
 		return d * 1000; // meters
 	}
-
-	@Override
-	public boolean isNotification(Senior senior) {
-		return false;
-	}
-
-
-
 }
