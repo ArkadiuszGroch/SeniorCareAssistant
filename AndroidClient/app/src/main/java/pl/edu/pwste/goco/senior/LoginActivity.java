@@ -28,6 +28,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Senior senior = new Senior();
+        senior.setUser(DataManager.loadUserData());
+        try {
+            //try login with saved info
+            new RESTLogin().execute(senior);
+        }
+        catch (Exception e)
+        {
+            //error during connection with web service or invalid saved info
+        }
+
     }
 
     public void signInClick(View view) {
@@ -98,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
-                //showMessage(infoTitle, infoMessage);
+                showMessage(infoTitle, infoMessage);
             }
         }
     }
@@ -113,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         //Setting Dialog Message
         alertDialog.setMessage(message);
 
-        //On Pressing Setting button
+       /* //On Pressing Setting button
         alertDialog.setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
 
             @Override
@@ -121,10 +133,10 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
             }
-        });
+        });*/
 
         //On pressing cancel button
-        alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(R.string.action_settings, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {

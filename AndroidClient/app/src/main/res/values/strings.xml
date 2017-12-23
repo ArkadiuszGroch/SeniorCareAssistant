@@ -34,8 +34,8 @@
 
     <string name="GPSAlertDialogTitle">GPSAlertDialogTitle</string>
     <string name="GPSAlertDialogMessage">GPSAlertDialogMessage</string>
-    <string name="action_settings">action_settings</string>
-    <string name="cancel">cancel</string>
+    <string name="action_settings">OK</string>
+    <string name="cancel">Cancel</string>
     
     <string name="errorDuringSaveLocation">Błąd podczas zapisywania lokalizacji</string>
     <string name="locationSaved">Lokalizacja zapisana pomyślnie!</string>

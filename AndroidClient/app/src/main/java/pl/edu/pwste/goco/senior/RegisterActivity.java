@@ -33,10 +33,15 @@ public class RegisterActivity extends AppCompatActivity {
         if (senior != null) {
             new RESTRegister().execute(senior);
             DataManager.saveData(senior);
-            //open main activities
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+
         }
+    }
+
+    public void startMainActivity()
+    {
+        //open main activities
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private Senior validAndGetSeniorFromForm() {
@@ -121,12 +126,13 @@ public class RegisterActivity extends AppCompatActivity {
                 String infoTitle = getResources().getString(R.string.doneRegister);
                 String infoMessage = stringResponseEntity.getBody();
                 DataManager.saveSecurityString(stringResponseEntity.getBody());
-                Log.i("REG", "Register compleat");
+                Log.i("REG", "Register completed");
+                startMainActivity();
             } else {
-                //// TODO: 05.10.2017 Open main activities
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);
                 String infoMessage = getResources().getString(R.string.failedRegister);
                 showMessage(infoTitle, infoMessage);
+                Log.i("REG", "Register failed");
             }
         }
     }
