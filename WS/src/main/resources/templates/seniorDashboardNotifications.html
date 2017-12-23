@@ -20,95 +20,34 @@
 
 <div class="container-fluid">
     <div class="col-md-12">
-        <!-- options in header -->
-        <div class="btn-group">
-            <!--REFRESH-->
-            <button class="btn btn-default" type="button">
-                <em class="glyphicon glyphicon-refresh"></em> Refresh
-            </button>
-
-            <!--ADD SENIOR-->
-            <button class="btn btn-default" type="button">
-                <em class="glyphicon glyphicon-plus"></em> Add senior
-            </button>
-
-            <!--SETTINGS-->
-            <button class="btn btn-default" type="button">
-                <em class="glyphicon glyphicon-wrench"></em> Settings
-            </button>
-
-            <!--ABOUT SENIOR-->
-            <button class="btn btn-default" type="button">
-                <em class="glyphicon glyphicon-info-sign"></em> About senior
-            </button>
-
-            <!--LIST OF SENIORS-->
-            <div class="btn-group">
-
-                <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
-                    List of Seniors
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-
-                    <li th:each="senior : ${listOfSeniors}" th:text="${senior.firstName}" class="active">
-                        <a href="#">Another action</a>
-                    </li>
-                    <li class="divider">
-                    </li>
-                    <li>
-                        <a href="#">Manage the list of seniors</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
         <!-- right panel with menu -->
         <div class="row">
-            <div class="col-md-2">
-                <h3 th:text="${senior.user.firstName + ' ' + senior.user.lastName}">
+            <center>
+                <h2 th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="text-primary">
                     First name and last name senior
-                </h3>
+                </h2></center>
+            <div class="col-md-3">
                 <div class="list-group">
-
-                    <a href="@{__${#httpServletRequest.requestURI}__/store/__${store.name}__}" class="list-group-item active"><span class="badge" th:text="${numberOfNotifications}"></span> <em
+                    <a href="@{__${#httpServletRequest.requestURI}__/store/__${store.name}__}"
+                       class="list-group-item active"><span class="badge" th:text="${numberOfNotifications}"></span> <em
                             class="glyphicon glyphicon-bell">Notifications</em></a>
-                    <a href="#" class="list-group-item"><em class="glyphicon glyphicon-map-marker">Localization</em></a>
-                    <a href="#" class="list-group-item"><em class="glyphicon glyphicon-info-sign">Help</em></a>
+                    <a href="#" class="list-group-item"><em class="glyphicon glyphicon-map-marker">
+                        Localization</em></a>
+                    <a href="#" class="list-group-item"><em class="glyphicon glyphicon-wrench"> Settings</em></a>
+                    <a href="#" class="list-group-item"><em class="glyphicon glyphicon-info-sign"> Help</em></a>
                 </div>
             </div>
 
-            <!-- table with informations -->
-            <div class="col-md-10">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Title
-                        </th>
-                        <th>
-                            Message
-                        </th>
-                        <th>
-                            Date
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="notification : ${listOfNotifications}">
-                        <td th:text="${notification.name}">
-                            name
-                        </td>
-                        <td th:text="${notification.content}">
-                            content
-                        </td>
-                        <td th:text="${notification.time}">
-                            date
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+
+            <!--table with notifications-->
+            <div th:replace="fragments/notificationsFragment :: tableNotification"></div>
+            <!--localization-->
+            <div th:replace="fragments/locationFragment :: location"></div>
+            <!--settings-->
+            <div th:replace="fragments/settingsFragment :: settings"></div>
+            <!--help-->
+            <div th:replace="fragments/helpFragment :: help"></div>
+
         </div>
     </div>
 </div>
@@ -118,5 +57,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scripts.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </body>
 </html>

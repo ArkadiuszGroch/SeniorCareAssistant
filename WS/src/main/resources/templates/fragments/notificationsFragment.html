@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="col-md-9" th:fragment="tableNotification">
+    <!-- table with informations -->
+    <table class="table">
+        <thead>
+        <tr class="bg-primary">
+            <th>Title</th>
+            <th>Message</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notification : ${listOfNotifications}">
+            <td th:text="${notification.name}">
+                name
+            </td>
+            <td th:text="${notification.content}">
+                content
+            </td>
+            <td th:text="${notification.time}">
+                date
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

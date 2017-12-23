@@ -49,7 +49,7 @@ public class CareAssistantController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/dashboard/{seniorId}/notifications")
+    @GetMapping(value = "/dashboard/{seniorId}")
     public ModelAndView showNotifications(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "seniorId") int seniorId) {
         try {
             CareAssistant loggedUser = (CareAssistant) session.getAttribute("user");
@@ -57,11 +57,18 @@ public class CareAssistantController {
 
             Care care = careService.findCareBySeniorAndCareAssistant(senior, loggedUser);
 
+//Notifications
             List<Notification> listOfNotifications = notificationService.getNotificationForCare(care);
             modelAndView.addObject("listOfNotifications", listOfNotifications);
             modelAndView.addObject("numberOfNotifications", listOfNotifications.size());
             modelAndView.addObject("senior", senior);
             modelAndView.setViewName("seniorDashboardNotifications");
+//Location
+            //todo add list of date to locations and today locations
+//Settings
+            modelAndView.addObject("safeDistance", senior.getSafeDistance());
+            modelAndView.addObject("locationUpdateFrequency", senior.getLocationUpdateFrequency());
+            modelAndView.addObject("phone",senior.getUser().getPhone());
 
         } catch (Exception e) {
             modelAndView.setViewName("error");

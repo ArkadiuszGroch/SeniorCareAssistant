@@ -36,7 +36,7 @@
                 <ul class="dropdown-menu btn-block">
                     <center><b>
                         <a class="list-group-item list-group-item-info" th:each="senior : ${listOfSeniors}"
-                           th:href="${senior.id + '/notifications'}">
+                           th:href="${senior.id}">
                             <li th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
 
                             </li>
