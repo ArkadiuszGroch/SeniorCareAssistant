@@ -51,7 +51,7 @@ public class User {
     @NotEmpty(message = "*Wprowadz adres email")
     private String email;
 
-    @Column(name = "SecurityString", nullable = false, length = 30, unique = true)
+    @Column(name = "SecurityString", length = 30, unique = true)
     private String securityString;
 
     @JsonIgnore

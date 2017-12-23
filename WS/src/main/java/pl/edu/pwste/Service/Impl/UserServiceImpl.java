@@ -77,6 +77,15 @@ public class UserServiceImpl implements UserService {
         return careAssistant;
     }
 
+    @Override
+    public Senior findSeniorByEmail(String email) {
+        User user = findUserByEmail(email);
+        Senior senior = null;
+        if (user != null)
+            senior = (Senior) findAccountByEmail(email);
+        return senior;
+    }
+
     private Object findAccountByLogin(String login) {
         Object object = null;
         User user = userRepository.findUserByLogin(login);
@@ -87,8 +96,19 @@ public class UserServiceImpl implements UserService {
                 object=seniorRepository.findSeniorByUser(user);
             }
         }
-
         return object;
     }
 
+    private Object findAccountByEmail(String email) {
+        Object object = null;
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            object = careAssistantRepository.findCareAssistantByUser(user);
+            if(object==null)
+            {
+                object=seniorRepository.findSeniorByUser(user);
+            }
+        }
+        return object;
+    }
 }

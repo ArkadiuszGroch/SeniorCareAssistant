@@ -23,21 +23,25 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 col-md-offset-5">
+        <div class="col-md-4 col-md-offset-4">
             <!--LIST OF SENIORS-->
             <div class="dropdown" th:if="${listOfSeniors != null}">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">List of Seniors
+                <!--Infor choose senior-->
+                <div class="alert alert-info">
+                    <center>Choose senior from below list.</a>.</center>
+                </div>
+                <!--List of seniors-->
+                <button class="btn btn-primary dropdown-toggle btn-block" type="button" data-toggle="dropdown">List of Seniors
                     <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-
-                    <b>
+                <ul class="dropdown-menu btn-block">
+                    <center><b>
                         <a class="list-group-item list-group-item-info" th:each="senior : ${listOfSeniors}"
                            th:href="${senior.id + '/notifications'}">
                             <li th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="active">txt
 
                             </li>
                         </a>
-                    </b>
+                    </b></center>
 
                     <li class="divider">
                     </li>
@@ -48,9 +52,30 @@
                 </ul>
             </div>
 
+            <!--Message section-->
+            <div class="alert alert-success" th:if="${messageSuccess != null}">
+                <center><span th:text="${messageSuccess}"/></center>
+            </div>
+            <div class="alert alert-danger" th:if="${messageFail != null}">
+                <center><span th:text="${messageFail}"/></center>
+            </div>
+
             <!--LIST OF SENIRS IS EMPTY-->
             <div class="dropdown" th:if="${listOfSeniors == null}">
-                Please add senior to list!
+                <div class="alert alert-info"><center>Please add senior to list!</center></div>
+                <!--ADD SENIOR TO LIST-->
+                <div>
+                    <form class="form-inline" action="#" th:action="@{/manage/add}" method="post">
+                        <div class="form-group">
+                            <label for="loginOrEmail">Email or login:</label>
+                            <input type="text" name="loginOrEmail" id="loginOrEmail"/>
+                        </div>
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add
+                            senior
+                        </button>
+
+                    </form>
+                </div>
             </div>
 
         </div>
