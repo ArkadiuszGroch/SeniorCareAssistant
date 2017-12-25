@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Senior Care Assistant!</title>
+
+    <meta name="description" content="Application for care of seniors.">
+    <meta name="author" content="Arkadiusz Groch">
+
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+
+    <script src="js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid">
+    <div class="col-md-12">
+        <!-- right panel with menu -->
+        <div class="row">
+            <center>
+                <h2 th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="text-primary">
+                    First name and last name senior
+                </h2></center>
+            <div class="row">
+                <ul class="tabs">
+                    <li class="bg-primary"><a href="#notification"><em
+                            class="glyphicon glyphicon-bell">Notifications</em></a></li>
+                    <li class="bg-primary"><a href="#location"><em
+                            class="glyphicon glyphicon-map-marker">Locatlization</em></a></li>
+                    <li class="bg-primary"><a href="#settings"><em
+                            class="glyphicon glyphicon-wrench">Settings</em></a></li>
+                    <li class="bg-primary"><a href="#help"><em
+                            class="glyphicon glyphicon-info-sign">Help</em></a></li>
+                </ul>
+            </div>
+
+            <div class="tab-content">
+                <!--table with notifications-->
+                <div class="col-md-9" th:replace="fragments/notificationsFragment :: tableNotification"></div>
+                <!--localization-->
+                <div class="col-md-9" th:replace="fragments/locationFragment :: location"></div>
+                <!--settings-->
+                <div class="col-md-9" th:replace="fragments/settingsFragment :: settings"></div>
+                <!--help-->
+                <div class="col-md-9" th:replace="fragments/helpFragment :: help"></div>
+            </div>
+            <script th:inline="javascript">
+            /*<![CDATA[*/
+            var tabs = $('.tabs');
+
+            $('.tab').hide();
+
+            tabs.find('a').on('click', function(e){
+                e.preventDefault();
+                $(this).addClass('current');
+                $(this.hash).show().siblings().hide();
+            });
+
+            /*]]>*/
+
+            </script>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+
+</body>
+</html>

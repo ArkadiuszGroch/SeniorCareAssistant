@@ -62,7 +62,7 @@ public class CareAssistantController {
             modelAndView.addObject("listOfNotifications", listOfNotifications);
             modelAndView.addObject("numberOfNotifications", listOfNotifications.size());
             modelAndView.addObject("senior", senior);
-            modelAndView.setViewName("seniorDashboardNotifications");
+            modelAndView.setViewName("seniorDashboard");
 //Location
             //todo add list of date to locations and today locations
 //Settings
