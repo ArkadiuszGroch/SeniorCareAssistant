@@ -66,9 +66,6 @@ public class DashboardController {
             modelAndView.addObject("numberOfNotifications", listOfNotifications.size());
             modelAndView.addObject("senior", senior);
             modelAndView.setViewName("seniorDashboard");
-//Location
-            List<Localization> localizationList = localizationService.getLocalizationsForSenior(seniorId);
-            modelAndView.addObject("localizations", localizationList);
 //Settings
             modelAndView.addObject("safeDistance", senior.getSafeDistance());
             modelAndView.addObject("locationUpdateFrequency", senior.getLocationUpdateFrequency().getTime());
@@ -76,6 +73,15 @@ public class DashboardController {
 //Contacts
             List<Contact> contacts = contactService.getAllSeniorContact(senior.getUser().getLogin());
             modelAndView.addObject("contacts", contacts);
+//Location
+            List<Localization> localizationList = localizationService.getLocalizationsForSenior(seniorId);
+            modelAndView.addObject("localizations", localizationList);
+
+ //Saved Location
+            List<SavedLocalization> savedlocalizationList = localizationService.getSavedLocalizationsForSenior(seniorId);
+            modelAndView.addObject("savedLocalizations", savedlocalizationList);
+
+
         } catch (Exception e) {
             modelAndView.setViewName("error");
             modelAndView.addObject("error", e.toString());

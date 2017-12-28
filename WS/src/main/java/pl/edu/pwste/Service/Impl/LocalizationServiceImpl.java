@@ -28,7 +28,7 @@ public class LocalizationServiceImpl implements LocalizationService {
 	private LocalizationRepository localizationRepository;
 
 	@Autowired
-	private SavedLocalizationRepository savedlocalizationRepository;
+	private SavedLocalizationRepository savedLocalizationRepository;
 
 	@Override
 	public void addCurrentLocation(Localization localization, String seniorSecurityString) {
@@ -52,7 +52,7 @@ public class LocalizationServiceImpl implements LocalizationService {
 		Senior senior = seniorRepository.findSeniorByUser(user);
 
 		savedLocalization.setSenior(senior);
-		savedlocalizationRepository.save(savedLocalization);
+		savedLocalizationRepository.save(savedLocalization);
 
 	}
 
@@ -84,5 +84,11 @@ public class LocalizationServiceImpl implements LocalizationService {
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 		double d = R * c;
 		return d * 1000; // meters
+	}
+
+	@Override
+	public List<SavedLocalization> getSavedLocalizationsForSenior(int seniorId) {
+		Senior senior = seniorRepository.findSeniorById(seniorId);
+		return savedLocalizationRepository.getSavedLocalizationBySenior(senior);
 	}
 }

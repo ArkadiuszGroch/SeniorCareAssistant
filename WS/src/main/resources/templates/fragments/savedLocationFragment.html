@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="../../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="tab" id="savedLocation" th:fragment="savedLocation">
+    <!-- table with localizations -->
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table">
+            <thead>
+            <tr class="bg-primary">
+                <th style="width: 30%">Lattitude</th>
+                <th style="width: 30%">Longitude</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="localization : ${savedLocalizations}">
+                <td th:text="${localization.latitude}">
+                    name
+                </td>
+                <td th:text="${localization.longitude}">
+                    content
+                </td>
+                <td th:text="${localization.name}">
+                    date
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

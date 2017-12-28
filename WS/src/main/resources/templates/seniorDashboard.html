@@ -26,26 +26,30 @@
             <!--menu-->
             <div class="row">
                 <ul class="tabs">
-                    <li class="bg-primary btn" style="width:24%"><a href="#notification"><em
+                    <li class="bg-primary btn" style="width:19%"><a href="#notification"><em
                             class="glyphicon glyphicon-bell">Notifications</em></a></li>
-                    <li class="bg-primary btn" style="width:24%"><a href="#location"><em
-                            class="glyphicon glyphicon-map-marker">Locatlization</em></a></li>
-                    <li class="bg-primary btn" style="width:24%"><a href="#settings"><em
+                    <li class="bg-primary btn" style="width:19%"><a href="#settings"><em
                             class="glyphicon glyphicon-wrench">Settings</em></a></li>
-                    <li class="bg-primary btn" style="width:24%"><a href="#contacts"><em
+                    <li class="bg-primary btn" style="width:19%"><a href="#contacts"><em
                             class="glyphicon glyphicon-earphone">Contacts</em></a></li>
+                    <li class="bg-primary btn" style="width:19%"><a href="#location"><em
+                            class="glyphicon glyphicon-map-marker">Locatlization</em></a></li>
+                    <li class="bg-primary btn" style="width:19%"><a href="#savedLocation"><em
+                            class="glyphicon glyphicon-flag">SavedLocation</em></a></li>
                 </ul>
             </div>
 
             <div class="tab-content">
                 <!--table with notifications-->
                 <div class="col-md-9" th:replace="fragments/notificationsFragment :: tableNotification"></div>
-                <!--localization-->
-                <div class="col-md-9" th:replace="fragments/locationFragment :: location"></div>
                 <!--settings-->
                 <div class="col-md-9" th:replace="fragments/settingsFragment :: settings"></div>
                 <!--contact-->
                 <div class="col-md-9" th:replace="fragments/contactFragment :: help"></div>
+                <!--localization-->
+                <div class="col-md-9" th:replace="fragments/locationFragment :: location"></div>
+                <!--saved location-->
+                <div class="col-md-9" th:replace="fragments/savedLocationFragment :: savedLocation"></div>
             </div>
             <script th:inline="javascript">
             /*<![CDATA[*/
