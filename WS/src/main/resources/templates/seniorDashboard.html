@@ -16,14 +16,14 @@
                 </h2></center>
             <div class="row">
                 <ul class="tabs">
-                    <li class="bg-primary"><a href="#notification"><em
+                    <li class="bg-primary btn" style="width:24%"><a href="#notification"><em
                             class="glyphicon glyphicon-bell">Notifications</em></a></li>
-                    <li class="bg-primary"><a href="#location"><em
+                    <li class="bg-primary btn" style="width:24%"> <a href="#location"><em
                             class="glyphicon glyphicon-map-marker">Locatlization</em></a></li>
-                    <li class="bg-primary"><a href="#settings"><em
+                    <li class="bg-primary btn" style="width:24%"><a href="#settings"><em
                             class="glyphicon glyphicon-wrench">Settings</em></a></li>
-                    <li class="bg-primary"><a href="#help"><em
-                            class="glyphicon glyphicon-info-sign">Help</em></a></li>
+                    <li class="bg-primary btn" style="width:24%"><a href="#contacts"><em
+                            class="glyphicon glyphicon-earphone">Contacts</em></a></li>
                 </ul>
             </div>
 
@@ -34,8 +34,8 @@
                 <div class="col-md-9" th:replace="fragments/locationFragment :: location"></div>
                 <!--settings-->
                 <div class="col-md-9" th:replace="fragments/settingsFragment :: settings"></div>
-                <!--help-->
-                <div class="col-md-9" th:replace="fragments/helpFragment :: help"></div>
+                <!--contact-->
+                <div class="col-md-9" th:replace="fragments/contactFragment :: help"></div>
             </div>
             <script th:inline="javascript">
             /*<![CDATA[*/
@@ -47,7 +47,7 @@
                 e.preventDefault();
                 $(this).addClass('current');
                 $(this.hash).show().siblings().hide();
-            });
+            }).first().click();
 
             /*]]>*/
 

@@ -96,6 +96,11 @@ public class AccountServiceImpl implements AccountService {
         return careAssistant;
     }
 
+    @Override
+    public void updateSenior(Senior senior) {
+        seniorRepository.save(senior);
+    }
+
     private void generateSecurityStringForUser(User user) {
         SecurityStringGenerator securityStringGenerator = new SecurityStringGenerator(30);
         String securityString = securityStringGenerator.generate();

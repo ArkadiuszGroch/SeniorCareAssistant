@@ -16,4 +16,6 @@ public interface AccountService {
 	public CareAssistant findCareAssistantByLoginOrPassword(String login, String password);
 
 	public CareAssistant findCareAssistantByLoginOrEmail(String login, String email);
+
+	public void updateSenior(Senior senior);
 }
