@@ -10,6 +10,7 @@ import pl.edu.pwste.Service.*;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Scope("session")
@@ -27,6 +28,9 @@ public class DashboardController {
     private AccountService accountService;
     @Autowired
     private ContactService contactService;
+    @Autowired
+    private LocalizationService localizationService;
+
 
     @GetMapping(value = "/dashboard/chooseSenior")
     public ModelAndView chooseSenior(ModelAndView modelAndView, HttpSession session) {
@@ -63,7 +67,8 @@ public class DashboardController {
             modelAndView.addObject("senior", senior);
             modelAndView.setViewName("seniorDashboard");
 //Location
-            //todo add list of date to locations and today locations
+            List<Localization> localizationList = localizationService.getLocalizationsForSenior(seniorId);
+            modelAndView.addObject("localizations", localizationList);
 //Settings
             modelAndView.addObject("safeDistance", senior.getSafeDistance());
             modelAndView.addObject("locationUpdateFrequency", senior.getLocationUpdateFrequency().getTime());

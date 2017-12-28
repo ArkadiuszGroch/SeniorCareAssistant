@@ -5,6 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.edu.pwste.Entity.Localization;
+import pl.edu.pwste.Entity.Senior;
 import pl.edu.pwste.Entity.User;
 
 import java.sql.Date;
@@ -20,4 +21,6 @@ public interface LocalizationRepository extends CrudRepository<Localization, Lon
 			+ " AND l.senior.user = :user")
 	public List<Localization> getLocalizationByDateAndUser(	@Param("date") Date date,
 															@Param("user") User user);
+
+	public List<Localization> getLocalizationBySenior(Senior senior);
 }

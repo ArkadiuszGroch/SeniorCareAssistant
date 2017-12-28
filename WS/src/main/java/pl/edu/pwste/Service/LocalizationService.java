@@ -15,6 +15,8 @@ public interface LocalizationService {
 
 	public List<Localization> getLocalizationsOfDay(Date date, String seniorSecurityString);
 
+	public List<Localization> getLocalizationsForSenior(int seniorId);
+
 	public Double getDistanceFromHome(double latitudeHome, double longitudeHome,double latitudeCurrent,double longitudeCurrent);
 
 }

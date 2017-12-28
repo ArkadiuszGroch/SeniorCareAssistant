@@ -68,6 +68,12 @@ public class LocalizationServiceImpl implements LocalizationService {
 	}
 
 	@Override
+	public List<Localization> getLocalizationsForSenior(int seniorId) {
+		Senior senior = seniorRepository.findSeniorById(seniorId);
+		return localizationRepository.getLocalizationBySenior(senior);
+	}
+
+	@Override
 	public Double getDistanceFromHome(double latitudeHome, double longitudeHome, double latitudeCurrent, double longitudeCurrent) {
 		double R = 6378.137; // Radius of earth in KM
 		double dLat = latitudeCurrent * Math.PI / 180 - latitudeHome * Math.PI / 180;

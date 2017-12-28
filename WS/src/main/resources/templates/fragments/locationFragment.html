@@ -7,7 +7,31 @@
 <body>
 
 <div class="tab" id="location" th:fragment="location">
-    // todo localization
+    <!-- table with localizations -->
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table">
+            <thead>
+            <tr class="bg-primary">
+                <th style="width: 30%">Lattitude</th>
+                <th style="width: 30%">Longitude</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="localization : ${localizations}">
+                <td th:text="${localization.latitude}">
+                    name
+                </td>
+                <td th:text="${localization.longitude}">
+                    content
+                </td>
+                <td th:text="${localization.time}">
+                    date
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>
