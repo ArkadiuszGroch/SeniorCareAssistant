@@ -7,7 +7,34 @@
 <body>
 
 <div class="tab" id="contacts" th:fragment="help">
-    // todo help
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table table-text-center">
+            <thead>
+            <tr class="bg-primary">
+                <th style="width: 30%">Name of contact</th>
+                <th>phone number</th>
+                <th style="width: 15%">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contact : ${contacts}">
+                <td th:text="${contact.name}">
+                    name
+                </td>
+                <td th:text="${contact.phone}">
+                    content
+                </td>
+                <td>
+                    <form method="post" th:action="@{removeContact}">
+                        <input type="hidden" name="contactToDelete" th:value="${contact.id}">
+                        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span>Remove
+                    </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 </body>

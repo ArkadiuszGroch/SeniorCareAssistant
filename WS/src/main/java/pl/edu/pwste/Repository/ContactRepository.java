@@ -12,4 +12,6 @@ public interface ContactRepository extends CrudRepository<Contact, Long> {
 	
 	public List<Contact> findBySenior(Senior senior);
 
+	public Contact findById(Integer id);
+
 }

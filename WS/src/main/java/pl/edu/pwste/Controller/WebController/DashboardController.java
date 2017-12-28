@@ -5,16 +5,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import pl.edu.pwste.Entity.Care;
-import pl.edu.pwste.Entity.CareAssistant;
-import pl.edu.pwste.Entity.Notification;
-import pl.edu.pwste.Entity.Senior;
-import pl.edu.pwste.Service.AccountService;
-import pl.edu.pwste.Service.CareService;
-import pl.edu.pwste.Service.NotificationService;
-import pl.edu.pwste.Service.UserService;
+import pl.edu.pwste.Entity.*;
+import pl.edu.pwste.Service.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
 import java.util.List;
@@ -25,15 +18,15 @@ import java.util.List;
 public class DashboardController {
 
     @Autowired
-    CareService careService;
+    private CareService careService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    NotificationService notificationService;
+    private NotificationService notificationService;
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
     @Autowired
-    private HttpServletRequest context;
+    private ContactService contactService;
 
     @GetMapping(value = "/dashboard/chooseSenior")
     public ModelAndView chooseSenior(ModelAndView modelAndView, HttpSession session) {
@@ -56,6 +49,8 @@ public class DashboardController {
     @GetMapping(value = "/dashboard/{seniorId}")
     public ModelAndView showDashboard(ModelAndView modelAndView, HttpSession session, @PathVariable(value = "seniorId") int seniorId) {
         try {
+            session.setAttribute("senior", seniorId);
+
             CareAssistant loggedUser = (CareAssistant) session.getAttribute("user");
             Senior senior = userService.findSeniorById(seniorId);
 
@@ -74,7 +69,8 @@ public class DashboardController {
             modelAndView.addObject("locationUpdateFrequency", senior.getLocationUpdateFrequency().getTime());
             modelAndView.addObject("phone", senior.getUser().getPhone());
 //Contacts
-            //todo add list of contacts
+            List<Contact> contacts = contactService.getAllSeniorContact(senior.getUser().getLogin());
+            modelAndView.addObject("contacts", contacts);
         } catch (Exception e) {
             modelAndView.setViewName("error");
             modelAndView.addObject("error", e.toString());
@@ -90,6 +86,7 @@ public class DashboardController {
         try {
             String errorMessage = null;
             CareAssistant loggedUser = (CareAssistant) session.getAttribute("user");
+            session.setAttribute("senior", seniorId);
             Senior senior = userService.findSeniorById(seniorId);
 
             //check safe distance
@@ -138,5 +135,20 @@ public class DashboardController {
         int minutes = (totalSecs % 3600) / 60;
         int seconds = totalSecs % 60;
         return Time.valueOf(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+    }
+
+    @PostMapping(value = "/dashboard/removeContact")
+    public ModelAndView removeContact(ModelAndView modelAndView, HttpSession session,
+                                     @RequestParam(value = "contactToDelete") Integer contactToDelete) {
+        try {
+            contactService.deleteContact(contactToDelete);
+            Integer seniorId = (Integer) session.getAttribute("senior");
+            showDashboard(modelAndView, session, seniorId);
+
+        } catch (Exception e) {
+            modelAndView.addObject("error", e.toString());
+            modelAndView.setViewName("error");
+        }
+        return modelAndView;
     }
 }

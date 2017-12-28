@@ -1,3 +1,6 @@
+.table-text-center th, .table-text-center td {
+    text-align: center;
+}
 body{
     font-family: Ganeva, Tahoma, sans-serif;
 }

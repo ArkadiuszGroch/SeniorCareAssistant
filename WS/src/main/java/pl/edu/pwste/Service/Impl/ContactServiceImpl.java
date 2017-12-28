@@ -41,9 +41,14 @@ public class ContactServiceImpl implements ContactService {
 		Senior senior = seniorRepository.findSeniorByUser(user);
 		
 		List<Contact> listOfContacts = contactRepository.findBySenior(senior);
-		
-		System.out.println("Wykonane " + listOfContacts.size());
+
 		return listOfContacts;
+	}
+
+	@Override
+	public void deleteContact(Integer id) {
+		Contact contact = contactRepository.findById(id);
+		contactRepository.delete(contact);
 	}
 
 }

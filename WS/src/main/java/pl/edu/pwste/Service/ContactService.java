@@ -10,4 +10,6 @@ public interface ContactService {
 
 	public List<Contact> getAllSeniorContact(String seniorLogin);
 
+	public void deleteContact(Integer id);
+
 }
