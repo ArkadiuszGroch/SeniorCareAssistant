@@ -26,14 +26,13 @@
 
                             </li>
                         </a>
-                    </b></center>
-
-                    <li class="divider">
-                    </li>
-                    <a class="list-group-item list-group-item-warning" th:href="@{/manage}">
-                        <li th:text="${'Manage the list of seniors'}">
+                    </b>
+                        <li class="divider">
                         </li>
-                    </a>
+                        <a class="list-group-item list-group-item-warning" th:href="@{/manage}">
+                            <li th:text="${'Manage the list of seniors'}">
+                            </li>
+                        </a></center>
                 </ul>
             </div>
 
@@ -51,8 +50,8 @@
                     <center>Please add senior to list!</center>
                 </div>
                 <!--ADD SENIOR TO LIST-->
-                <div class="form-inline">
-                    <form  action="#" th:action="@{/manage/add}" method="post">
+                <div>
+                    <form class="form-inline" action="#" th:action="@{/manage/add}" method="post">
                         <div class="form-group">
                             <label for="loginOrEmail">Email or login:</label>
                             <input type="text" name="loginOrEmail" id="loginOrEmail"/>

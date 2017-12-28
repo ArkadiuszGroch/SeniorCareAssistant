@@ -8,12 +8,22 @@
 
 <div class="container-fluid">
     <div class="col-md-12">
-        <!-- right panel with menu -->
         <div class="row">
             <center>
                 <h2 th:text="${senior.user.firstName + ' ' + senior.user.lastName}" class="text-primary">
                     First name and last name senior
                 </h2></center>
+            <!--Messages-->
+            <center>
+            <div th:if="${confirmationMessage}" class="alert alert-success"
+                 role="alert" th:text=${confirmationMessage}></div>
+
+            <div th:if="${errorMessage}"
+                 class="alert alert-danger" role="alert"
+                 th:text="${errorMessage}"></div>
+            </center>
+
+            <!--menu-->
             <div class="row">
                 <ul class="tabs">
                     <li class="bg-primary btn" style="width:24%"><a href="#notification"><em

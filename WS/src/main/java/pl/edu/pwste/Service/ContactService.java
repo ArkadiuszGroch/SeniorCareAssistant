@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface ContactService {
 
-	public void addContact(Contact contacts, String seniorSecurityString);
+	public void addContact(Contact contact, String seniorSecurityString);
+
+	public void addContact(Contact contact, Integer seniorId);
 
 	public List<Contact> getAllSeniorContact(String seniorLogin);
 

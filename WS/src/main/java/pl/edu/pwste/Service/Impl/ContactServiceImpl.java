@@ -34,6 +34,14 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
+	public void addContact(Contact contact, Integer seniorId) { ;
+		Senior senior = seniorRepository.findSeniorById(seniorId);
+
+		contact.setSenior(senior);
+		contactRepository.save(contact);
+	}
+
+	@Override
 	public List<Contact> getAllSeniorContact(String seniorLogin) {
 		User user = userRepository.findUserByLogin(seniorLogin);		
 		if(user == null) throw new NullPointerException();

@@ -121,11 +121,15 @@ public class DashboardController {
             //check if senior must be updated
             if (errorMessage == null || errorMessage.isEmpty()) {
                 accountService.updateSenior(senior);
+                modelAndView.addObject("confirmationMessage", "Settings saved!");
             }
+            else
+                modelAndView.addObject("errorMessage", errorMessage);
+
             showDashboard(modelAndView, session, seniorId);
         } catch (Exception e) {
-            modelAndView.setViewName("error");
-            modelAndView.addObject("error", e.toString());
+
+            modelAndView.addObject("errorMessage", "Settings cant be saved!");
         }
         return modelAndView;
     }
@@ -143,11 +147,34 @@ public class DashboardController {
         try {
             contactService.deleteContact(contactToDelete);
             Integer seniorId = (Integer) session.getAttribute("senior");
+
+            modelAndView.addObject("confirmationMessage", "Contact removed!");
+
+            showDashboard(modelAndView, session, seniorId);
+        } catch (Exception e) {
+
+            modelAndView.addObject("errorMessage", "Contact cant be removed!");
+        }
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/dashboard/addContact")
+    public ModelAndView addContact(ModelAndView modelAndView, HttpSession session,
+                                      @RequestParam(value = "name") String name, @RequestParam(value = "number") Integer phone) {
+        try {
+            Contact contact = new Contact();
+            contact.setName(name);
+            contact.setPhone(phone.toString());
+
+            Integer seniorId = (Integer) session.getAttribute("senior");
+
+            contactService.addContact(contact, seniorId);
+
+            modelAndView.addObject("confirmationMessage", "Contact added!");
             showDashboard(modelAndView, session, seniorId);
 
         } catch (Exception e) {
-            modelAndView.addObject("error", e.toString());
-            modelAndView.setViewName("error");
+            modelAndView.addObject("errorMessage", "Contact cant be added!");
         }
         return modelAndView;
     }

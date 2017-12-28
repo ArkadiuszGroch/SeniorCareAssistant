@@ -12,23 +12,38 @@
             <thead>
             <tr class="bg-primary">
                 <th style="width: 30%">Name of contact</th>
-                <th>phone number</th>
+                <th>Phone number</th>
                 <th style="width: 15%">Options</th>
             </tr>
             </thead>
             <tbody>
+            <form method="post" th:action="@{addContact}">
+                <tr>
+                    <td>
+                        <input type="text" name="name" placeholder="Name of contact" class="form-control">
+                    </td>
+                    <td>
+                        <input type="number" name="number" placeholder="Phone number" class="form-control">
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add
+                        </button>
+
+                    </td>
+                </tr>
+            </form>
             <tr th:each="contact : ${contacts}">
                 <td th:text="${contact.name}">
                     name
                 </td>
                 <td th:text="${contact.phone}">
-                    content
+                    phone
                 </td>
                 <td>
                     <form method="post" th:action="@{removeContact}">
                         <input type="hidden" name="contactToDelete" th:value="${contact.id}">
                         <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span>Remove
-                    </button>
+                        </button>
                     </form>
                 </td>
             </tr>

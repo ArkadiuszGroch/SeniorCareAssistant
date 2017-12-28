@@ -16,7 +16,6 @@
                 <span th:text="${messageFail}"/>
             </div>
             <!--ADD SENIOR TO LIST-->
-            <div class="col-md-4 col-md-offset-4">
                 <form class="form-inline" action="#" th:action="@{/manage/add}" th:object="${seedStarter}" method="post">
                     <div class="form-group">
                         <label for="seniorLoginOrEmail">Email address:</label>
@@ -25,13 +24,11 @@
                     <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add
                         senior
                     </button>
-
                 </form>
-            </div>
             <!--LIST OF SENIORS-->
             <table class="table">
                 <thead>
-                <tr class="info">
+                <tr class="bg-primary">
                     <th>Login</th>
                     <th>Firstname</th>
                     <th>Lastname</th>
@@ -45,7 +42,7 @@
                     <td th:text="${senior.user.lastName}">Lastname</td>
                     <td>
                         <a th:href="${'manage/remove/' + senior.user.login}">
-                            <button type="button" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger btn-block">
                                 <span class="glyphicon glyphicon-remove"></span> Remove
                             </button>
                         </a>

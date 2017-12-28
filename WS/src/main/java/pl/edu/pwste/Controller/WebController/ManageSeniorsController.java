@@ -101,7 +101,8 @@ public class ManageSeniorsController {
                 modelAndView.setViewName("chooseSenior");
             }
 
-
+            //show main frame
+            manageSeniors(modelAndView,session);
         } catch (Exception e) {
             modelAndView.addObject("error", e.toString());
             modelAndView.setViewName("error");
