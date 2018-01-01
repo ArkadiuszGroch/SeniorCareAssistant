@@ -1,12 +1,13 @@
 package pl.edu.pwste.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 //TODO set unique to seniorId and phone
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
+@Proxy(lazy = false)
 @Table(name = "Contact", uniqueConstraints = { @UniqueConstraint(columnNames = { "SeniorId", "Phone" }) })
 public class Contact implements Serializable {
 	public Contact() {
