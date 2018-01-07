@@ -86,6 +86,12 @@ public class UserServiceImpl implements UserService {
         return senior;
     }
 
+    @Override
+    public Senior findSeniorBySecStr(String securityString) {
+        User user = userRepository.findUserBySecurityString(securityString);
+        return seniorRepository.findSeniorByUser(user);
+    }
+
     private Object findAccountByLogin(String login) {
         Object object = null;
         User user = userRepository.findUserByLogin(login);

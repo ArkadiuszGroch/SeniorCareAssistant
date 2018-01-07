@@ -1,5 +1,7 @@
 package pl.edu.pwste.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,7 +11,7 @@ import java.io.Serializable;
 public class SavedLocalization implements Serializable {
 	public SavedLocalization() {
 	}
-
+	@JsonIgnore
 	@Column(name = "Id", nullable = false, length = 10)
 	@Id
 	@GeneratedValue(generator = "SAVEDLOCALIZATION_ID_GENERATOR")
@@ -25,6 +27,7 @@ public class SavedLocalization implements Serializable {
 	@Column(name = "Longitude", nullable = false, precision = 9, scale = 6)
 	private double longitude;
 
+	@JsonIgnore
 	@ManyToOne(targetEntity = Senior.class, fetch = FetchType.LAZY)
 	@org.hibernate.annotations.Cascade({ org.hibernate.annotations.CascadeType.LOCK })
 	@JoinColumns({ @JoinColumn(name = "SeniorId", referencedColumnName = "Id", nullable = false) })
@@ -34,12 +37,12 @@ public class SavedLocalization implements Serializable {
 		this.id = value;
 	}
 
-	 
+	@JsonIgnore
 	public int getId() {
 		return id;
 	}
 
-	 
+	@JsonIgnore
 	public int getORMID() {
 		return getId();
 	}

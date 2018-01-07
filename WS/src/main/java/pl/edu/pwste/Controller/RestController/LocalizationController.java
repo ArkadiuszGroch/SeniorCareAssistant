@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwste.Entity.Localization;
 import pl.edu.pwste.Entity.SavedLocalization;
-import pl.edu.pwste.Service.AccountService;
+import pl.edu.pwste.Entity.Senior;
 import pl.edu.pwste.Service.LocalizationService;
 import pl.edu.pwste.Service.UserService;
 
@@ -119,6 +119,38 @@ public class LocalizationController {
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<SavedLocalization>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+/*  Get saved locations for senior
+ * 	Method: GET
+ *  URL: address: /localization/(seniorSecurityString)/getSavedLocations
+ *  Input: JSON SavedLocalization Array
+ *  JSON Example: [
+        {
+            "name": "domek",
+            "latitude": 50.0323376,
+            "longitude": 22.0327753
+        },
+        {
+            "name": "sklep",
+            "latitude": 50.0323028,
+            "longitude": 22.032787
+        }]
+ *  Output: HTTP Status No_CONTENT (204) if exception
+ *  		HTTP Status Ok (200) if ok
+ */
+    @RequestMapping(value = "/{seniorSecurityString}/getSavedLocations", method = RequestMethod.GET)
+    public ResponseEntity<List<SavedLocalization>> getSavedLocalizations(@PathVariable(value = "seniorSecurityString") String seniorSecurityString
+                                                                   ) {
+        try {
+            Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
+            List<SavedLocalization> savedLocalizationList = localizationService.getSavedLocalizationsForSenior(senior.getId());
+
+            return new ResponseEntity<List<SavedLocalization>>(savedLocalizationList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<SavedLocalization>>(HttpStatus.NO_CONTENT);
         }
     }
 

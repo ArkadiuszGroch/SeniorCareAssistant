@@ -13,4 +13,5 @@ public interface UserService {
     public Senior findSeniorById(int id);
     public CareAssistant findCareAssistantByLogin(String login);
     public Senior findSeniorByEmail(String email);
+    public Senior findSeniorBySecStr(String securityString);
 }
