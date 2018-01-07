@@ -25,6 +25,7 @@
 
     <!--Menu-->
     <string name="saveCurrentLocalization">Save current location</string>
+    <string name="navigateToLocation">Navigate to place</string>
 
     <!--Save localization-->
     <string name="nameOfLocalization">Name</string>
@@ -37,6 +38,7 @@
 
     <string name="errorDuringSaveLocation">Error during saving location!</string>
     <string name="locationSaved">Location saved correctly!</string>
+
 
     <!---->
     <!--&lt;!&ndash;Configuration&ndash;&gt;-->

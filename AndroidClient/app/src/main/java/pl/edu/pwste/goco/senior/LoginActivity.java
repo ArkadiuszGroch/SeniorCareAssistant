@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     class RESTLogin extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        String url = RestConfiguration.getURLToLogin();
+        String url = RestConfiguration.LOGIN;
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {

@@ -198,8 +198,7 @@ public class LocationService extends Service {
         protected ResponseEntity<String> doInBackground(Double... params) {
             try {
                 //get url with sec str
-                String url = RestConfiguration.getURLToSaveCurrentLocation(DataManager.loadSecurityString());
-
+                String url = new RestConfiguration().getURLToGetSavedLocations();
                 Double longitude = params[0];
                 Double latitude = params[1];
 

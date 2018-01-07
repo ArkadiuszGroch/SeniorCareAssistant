@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
@@ -24,11 +25,13 @@ public class SaveLocationActivity extends AppCompatActivity {
     private String securityString;
     private double longitude;
     private double latitude;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_location);
+        this.bundle = savedInstanceState;
 
         securityString = DataManager.loadSecurityString();
 
@@ -48,7 +51,7 @@ public class SaveLocationActivity extends AppCompatActivity {
             savedLocalization.setName(nameOfLocalization);
             savedLocalization.setLatitude(LocationService.savedLat);
             savedLocalization.setLongitude(LocationService.savedLong);
-            new SaveLocationActivity.RESTRegister().execute(savedLocalization);
+            new RESTGetSavedLocations().execute(savedLocalization);
         }
     }
 
@@ -59,9 +62,9 @@ public class SaveLocationActivity extends AppCompatActivity {
     }
 
     //    ======================== SERVICES ===========================
-    class RESTRegister extends AsyncTask<SavedLocalization, String, ResponseEntity<String>> {
+    class RESTGetSavedLocations extends AsyncTask<SavedLocalization, String, ResponseEntity<String>> {
 
-        String url = RestConfiguration.getURLToSaveLocation(securityString);
+        String url = new RestConfiguration().getURLToGetSavedLocations();
         RestTemplate restTemplate = new RestTemplate();
 
         @Override
@@ -86,32 +89,18 @@ public class SaveLocationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
             if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
+                Toast.makeText(getApplicationContext(), getString(R.string.locationSaved), Toast.LENGTH_LONG).show();
                 openMainActivity();
-
-            //todo location saved
-
-
             } else {
-                //todo error during saved
-                String infoTitle = getResources().getString(R.string.messageErrorTitle);
-                String infoMessage = getResources().getString(R.string.errorDuringSaveLocation);
+                Toast.makeText(getApplicationContext(), getString(R.string.errorDuringSaveLocation), Toast.LENGTH_LONG).show();
             }
         }
     }
 
     public void showMessage(String title, String message) {
         Log.i("LOCATION", title + " " + message);
-//        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-//        dlgAlert.setMessage(message);
-//        dlgAlert.setTitle(title);
-//        dlgAlert.setPositiveButton("OK", null);
-//        dlgAlert.setCancelable(true);
-//        dlgAlert.create().show();
-//        dlgAlert.setPositiveButton("Ok",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        //dismiss the dialog
-//                    }
-//                });
+
     }
+
+
 }

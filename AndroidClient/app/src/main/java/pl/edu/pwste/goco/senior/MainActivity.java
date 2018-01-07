@@ -27,4 +27,8 @@ public class MainActivity extends AppCompatActivity {
         LoginActivity.isLogout = true;
         startActivity(intent);
     }
+
+    public void showNavigateToPlace(View view) {
+
+    }
 }
