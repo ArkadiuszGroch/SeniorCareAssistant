@@ -36,12 +36,12 @@
             android:onClick="saveCurrentLocation"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnNavigateToLocation"
             style="@style/buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/navigateToLocation"
-            android:onClick="showNavigateToPlace"/>
+            android:onClick="showNavigateToPlace"
+            android:text="@string/navigateToLocation" />
 
         <Button
             style="@style/buttons"

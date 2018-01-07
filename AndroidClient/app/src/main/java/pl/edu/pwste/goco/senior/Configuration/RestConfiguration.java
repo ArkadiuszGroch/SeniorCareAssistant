@@ -6,7 +6,6 @@ package pl.edu.pwste.goco.senior.Configuration;
 
 public class RestConfiguration {
     public RestConfiguration() {
-        this.SECURITY_STRING = DataManager.loadSecurityString();
     }
 
     public static String SENIOR_LOGIN;
@@ -30,27 +29,27 @@ public class RestConfiguration {
 
     public String getURLToAddContact() {
         loadSecurityString();
-        return ADD_CONTACT;
+        return URL + "/" + SECURITY_STRING + "/addContact";
     }
 
     public String getURLToGetContacts() {
         loadSecurityString();
-        return GET_CONTACTS;
+        return GET_CONTACTS = URL + "/getAllContacts/" + SECURITY_STRING;
     }
 
     public String getURLToGetSavedLocations() {
         loadSecurityString();
-        return GET_SAVED_LOCATIONS;
+        return URL + "/localization/" + SECURITY_STRING + "/getSavedLocations";
     }
 
     public String getURLSendLocation() {
         loadSecurityString();
-        return SEND_LOCATION;
+        return URL + "/localization/" + SECURITY_STRING + "/addCurrentLocalization";
     }
 
     public String getURLToSaveLocation() {
         loadSecurityString();
-        return SAVE_LOCATION;
+        return URL + "/localization/" + SECURITY_STRING + "/addCurrentLocalization";
     }
 
 
