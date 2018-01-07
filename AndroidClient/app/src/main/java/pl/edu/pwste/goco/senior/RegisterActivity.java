@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         } else {
             String infoTitle = getResources().getString(R.string.messageErrorTitle);
-            String infoMessage = getResources().getString(R.string.compleatAllFields);
+            String infoMessage = getResources().getString(R.string.completeAllFields);
             showMessage(infoTitle, infoMessage);
             return null;
         }

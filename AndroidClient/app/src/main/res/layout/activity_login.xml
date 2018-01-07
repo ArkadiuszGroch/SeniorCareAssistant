@@ -11,7 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/baner" />
 
         <TextView
             android:id="@+id/tvLogin"
@@ -55,22 +62,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="1.0">>
+            android:weightSum="1.0">
+
 
             <Button
+                style="@style/buttons"
                 android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:onClick="registerClick"
+                android:padding="5dp"
                 android:text="@string/register" />
 
             <Button
+                style="@style/buttons"
                 android:id="@+id/btnSignIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".5"
                 android:onClick="signInClick"
+                android:padding="5dp"
                 android:text="@string/signIn" />
         </LinearLayout>
 

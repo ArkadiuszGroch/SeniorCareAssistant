@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import RestClient.Entity.SavedLocalization;
+import pl.edu.pwste.goco.senior.Services.LocationService;
 
 public class SaveLocationActivity extends AppCompatActivity {
 
@@ -31,44 +32,6 @@ public class SaveLocationActivity extends AppCompatActivity {
 
         securityString = DataManager.loadSecurityString();
 
-
-
-        // check if GPS enabled
-        GPSTracker gpsTracker = new GPSTracker(this);
-
-        if (gpsTracker.getIsGPSTrackingEnabled()) {
-            latitude = gpsTracker.latitude;
-            longitude = gpsTracker.longitude;
-
-//            String stringLatitude = String.valueOf(gpsTracker.latitude);
-//            textview = (TextView)findViewById(R.id.fieldLatitude);
-//            textview.setText(stringLatitude);
-//
-//            String stringLongitude = String.valueOf(gpsTracker.longitude);
-//            textview = (TextView)findViewById(R.id.fieldLongitude);
-//            textview.setText(stringLongitude);
-//
-//            String country = gpsTracker.getCountryName(this);
-//            textview = (TextView)findViewById(R.id.fieldCountry);
-//            textview.setText(country);
-//
-//            String city = gpsTracker.getLocality(this);
-//            textview = (TextView)findViewById(R.id.fieldCity);
-//            textview.setText(city);
-//
-//            String postalCode = gpsTracker.getPostalCode(this);
-//            textview = (TextView)findViewById(R.id.fieldPostalCode);
-//            textview.setText(postalCode);
-//
-//            String addressLine = gpsTracker.getAddressLine(this);
-//            textview = (TextView)findViewById(R.id.fieldAddressLine);
-//            textview.setText(addressLine);
-        } else {
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
-            gpsTracker.showSettingsAlert();
-        }
     }
 
     public void saveLocalization(View view) {
@@ -77,15 +40,14 @@ public class SaveLocationActivity extends AppCompatActivity {
 
         if (nameOfLocalization.length() == 0) {
             String messageTitle = getResources().getString(R.string.messageErrorTitle);
-            String messageContext = getResources().getString(R.string.compleatAllFields);
+            String messageContext = getResources().getString(R.string.completeAllFields);
 
-            this.showMessage(messageTitle, messageTitle);
+            this.showMessage(messageTitle, messageContext);
         } else {
-
             SavedLocalization savedLocalization = new SavedLocalization();
             savedLocalization.setName(nameOfLocalization);
-            savedLocalization.setLatitude(latitude);
-            savedLocalization.setLongitude(longitude);
+            savedLocalization.setLatitude(LocationService.savedLat);
+            savedLocalization.setLongitude(LocationService.savedLong);
             new SaveLocationActivity.RESTRegister().execute(savedLocalization);
         }
     }
@@ -126,15 +88,13 @@ public class SaveLocationActivity extends AppCompatActivity {
             if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
                 openMainActivity();
 
-                String infoTitle = getResources().getString(R.string.locationSaved);
-                String infoMessage = stringResponseEntity.getBody().toString();
-                showMessage(infoTitle, infoMessage);
+            //todo location saved
 
 
             } else {
+                //todo error during saved
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);
                 String infoMessage = getResources().getString(R.string.errorDuringSaveLocation);
-                showMessage(infoTitle, infoMessage);
             }
         }
     }

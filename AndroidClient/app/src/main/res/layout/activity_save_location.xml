@@ -11,7 +11,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/saveCurrentLocalization"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/location" />
 
         <TextView
             android:id="@+id/tvNameOfLocalization"
@@ -24,10 +39,12 @@
             android:id="@+id/etNameOfLocalization"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <Button
+            style="@style/buttons"
             android:id="@+id/btnSaveLocalization"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

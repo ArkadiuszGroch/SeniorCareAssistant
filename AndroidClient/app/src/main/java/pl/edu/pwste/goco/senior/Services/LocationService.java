@@ -31,9 +31,8 @@ public class LocationService extends Service {
     public MyLocationListener listener;
     public Location previousBestLocation = null;
 
-    private Double savedLong = 0d;
-    private Double savedLat = 0d;
-    private boolean isNotificationCreated = false;
+    public static Double savedLong = 0d;
+    public static Double savedLat = 0d;
 
     Intent intent;
     int counter = 0;
@@ -53,7 +52,6 @@ public class LocationService extends Service {
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 4000, 0, listener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 0, listener);
-
     }
 
     @Override
