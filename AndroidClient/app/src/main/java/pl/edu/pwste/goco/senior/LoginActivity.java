@@ -23,6 +23,7 @@ import RestClient.Entity.Senior;
 import RestClient.Entity.User;
 
 public class LoginActivity extends AppCompatActivity {
+    public static boolean isLogout = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +32,24 @@ public class LoginActivity extends AppCompatActivity {
 
         Senior senior = new Senior();
         senior.setUser(DataManager.loadUserData());
-        try {
-            //try login with saved info
-            new RESTLogin().execute(senior);
-        }
-        catch (Exception e)
-        {
-            //error during connection with web service or invalid saved info
+
+        if (isLogout) {
+            if (senior.getUser().getLogin().length() > 0 && senior.getUser().getPassword().length() > 0) {
+                EditText etLogin = (EditText) findViewById(R.id.etLogin);
+                etLogin.setText(senior.getUser().getLogin());
+
+                EditText etPassword = (EditText) findViewById(R.id.etPassword);
+                etPassword.setText(senior.getUser().getPassword());
+            }
+        } else {
+
+            try {
+                //try login with saved info
+                new RESTLogin().execute(senior);
+            } catch (Exception e) {
+                //error during connection with web service or invalid saved info
+                Log.i("CON", "error during connection with web service or invalid saved info");
+            }
         }
 
     }
@@ -81,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     class RESTLogin extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        String url = RestConfiguration.LOGIN;
+        String url = RestConfiguration.getURLToLogin();
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {

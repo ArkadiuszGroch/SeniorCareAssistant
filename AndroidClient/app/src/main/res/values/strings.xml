@@ -3,12 +3,13 @@
     <!--<string name="urlService">https://senior1.herokuapp.com/</string>-->
     <string name="urlService">http://192.168.1.103:8090/</string>
     <!--Login screen-->
-    <string name="app_name">Senior</string>
+    <string name="app_name">Care Assistant</string>
     <string name="register">Zarejestruj</string>
     <string name="signIn">Zaloguj</string>
     <string name="login">Login</string>
     <string name="password">Haslo</string>
     <string name="invalidLoginOrPassword">Nieprawidłowy login lub hasło</string>
+    <string name="logout">Wyloguj</string>
 
     <!--Register screen-->
     <string name="confirmPassword">Powtórz hasło</string>

@@ -21,4 +21,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SaveLocationActivity.class);
         startActivity(intent);
     }
+
+    public void btnLogoutClick(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        LoginActivity.isLogout = true;
+        startActivity(intent);
+    }
 }
