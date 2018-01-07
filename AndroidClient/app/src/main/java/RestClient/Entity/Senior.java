@@ -126,10 +126,6 @@ public class Senior {
         return medicine;
     }
 
-    public String toString() {
-        return getUser().getLogin() + "\n" + getUser().getPassword();
-    }
-
     public void setSafeDistance(int safeDistance) {
         this.safeDistance = safeDistance;
     }
