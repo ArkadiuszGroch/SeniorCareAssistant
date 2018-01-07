@@ -24,8 +24,16 @@ import RestClient.Entity.User;
 
 public class DataManager {
 
-    public static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/data.txt";
+    /**
+     * Path to file where value should be saved
+     */
+    private static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/data.txt";
 
+    /**
+     * Method saves data to file
+     *
+     * @param senior
+     */
     public static void saveData(Senior senior) {
         List<String> listSaveText = new ArrayList<>();
         listSaveText.add(senior.getUser().getLogin());
@@ -36,7 +44,7 @@ public class DataManager {
         else listSaveText.add(" ");
 
         //add empty record - no null pointer exception when new settings are saved
-        for (int i=0; i<10; i++) listSaveText.add(" ");
+        for (int i = 0; i < 10; i++) listSaveText.add(" ");
 
         String[] saveText = new String[listSaveText.size()];
         saveText = listSaveText.toArray(saveText);
@@ -44,6 +52,11 @@ public class DataManager {
         Log.i("data", "Saved data - " + saveText);
     }
 
+    /**
+     * Method saves security string to file
+     *
+     * @param securityString
+     */
     public static void saveSecurityString(String securityString) {
         String[] textToSave = load();
         textToSave[3] = securityString;
@@ -52,6 +65,11 @@ public class DataManager {
         Log.i("data", "Saved secStr - " + securityString);
     }
 
+    /**
+     * Method loads object user from file
+     *
+     * @return User object
+     */
     public static User loadUserData() {
         String[] loadText = load();
         User user = new User();
@@ -63,6 +81,11 @@ public class DataManager {
         return user;
     }
 
+    /**
+     * Method loads security string from file
+     *
+     * @return security string
+     */
     public static String loadSecurityString() {
         String[] loadText = load();
         if (loadText[3] != null) {
@@ -74,6 +97,11 @@ public class DataManager {
         }
     }
 
+    /**
+     * Method load safe distance from file
+     *
+     * @return safe distance
+     */
     public static int loadSafeDistance() {
         String[] loadText = load();
         if (loadText[2] != null) {
@@ -91,8 +119,12 @@ public class DataManager {
         else return false;
     }
 
-    //    File method
-    public static void save(String[] data) {
+    /**
+     * Method to save data to file
+     *
+     * @param data to save to file
+     */
+    private static void save(String[] data) {
 
         File file = new File(path);
         FileOutputStream fos = null;
@@ -121,7 +153,11 @@ public class DataManager {
         }
     }
 
-
+    /**
+     * Method load data from file
+     *
+     * @return content of file as string array
+     */
     public static String[] load() {
         File file = new File(path);
         FileInputStream fis = null;
