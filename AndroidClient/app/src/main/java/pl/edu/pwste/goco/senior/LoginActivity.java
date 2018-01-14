@@ -1,6 +1,7 @@
 package pl.edu.pwste.goco.senior;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -93,10 +94,20 @@ public class LoginActivity extends AppCompatActivity {
 
 
     class RESTLogin extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        String url = RestConfiguration.LOGIN;
+        private String url = RestConfiguration.LOGIN;
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setMessage("Pobieranie danych, proszę czekać");
+            progressDialog.show();
+        }
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {
+
             try {
                 Senior senior = params[0];
                 RestTemplate restTemplate = new RestTemplate();
@@ -106,9 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         .exchange(url, HttpMethod.POST, request, String.class);
                 return response;
             } catch (Exception ex) {
-                String infoTitle = getResources().getString(R.string.messageErrorTitle);
-                String infoMessage = getResources().getString(R.string.connectionProblem);
-                showMessage(infoTitle, infoMessage);
+                Log.e("LOGIN", ex.toString());
                 return null;
             }
         }
@@ -119,45 +128,50 @@ public class LoginActivity extends AppCompatActivity {
                 DataManager.saveSecurityString(stringResponseEntity.getBody().toString());
                 openMainActivity();
 
-            } else {
+            } else if(stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 204) {
                 String infoTitle = getResources().getString(R.string.messageErrorTitle);
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
                 showMessage(infoTitle, infoMessage);
             }
+            else{
+                String infoTitle = getResources().getString(R.string.messageErrorTitle);
+                String infoMessage = getResources().getString(R.string.connectionProblem);
+                showMessage(infoTitle, infoMessage);
+            }
+            progressDialog.dismiss();
         }
     }
 
     public void showMessage(String title, String message) {
-        final Context mContext = this;
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        new showMessageAsync().execute(message);
+    }
 
-        //Setting Dialog Title
-        alertDialog.setTitle(title);
+    private class showMessageAsync extends AsyncTask<String, Void, String> {
+        AlertDialog.Builder builder;
 
-        //Setting Dialog Message
-        alertDialog.setMessage(message);
+        @Override
+        protected String doInBackground(String... strings) {
+            return strings[0];
+        }
 
-       /* //On Pressing Setting button
-        alertDialog.setPositiveButton(R.string.action_settings, new DialogInterface.OnClickListener() {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            builder = new AlertDialog.Builder(LoginActivity.this);
+        }
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
-        });*/
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
 
-        //On pressing cancel button
-        alertDialog.setNegativeButton(R.string.action_settings, new DialogInterface.OnClickListener() {
+            builder.setMessage(result);
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+            // add a button
+            builder.setPositiveButton("OK", null);
 
-        alertDialog.show();
-        Log.i("CON", title + ") " + message)
-        ;
+            // create and show the alert dialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
     }
 }
