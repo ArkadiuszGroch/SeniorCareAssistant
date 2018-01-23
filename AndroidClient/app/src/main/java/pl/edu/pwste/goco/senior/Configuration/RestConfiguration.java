@@ -10,7 +10,7 @@ public class RestConfiguration {
 
     public static String SENIOR_LOGIN;
     public static String SECURITY_STRING;
-    public static String PORT = "8080";
+    public static String PORT = "8090";
     public static String URL = "http://192.168.1.105" + ":" + PORT;
 //    public static String URL = "https://seniorservice.herokuapp.com" + ":" + PORT;
 

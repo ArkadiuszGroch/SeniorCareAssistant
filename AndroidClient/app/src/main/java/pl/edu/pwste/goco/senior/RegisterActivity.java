@@ -33,12 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
         if (senior != null) {
             new RESTRegister().execute(senior);
             DataManager.saveData(senior);
-
         }
     }
 
-    public void startMainActivity()
-    {
+    public void startMainActivity() {
         //open main activities
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -67,7 +65,12 @@ public class RegisterActivity extends AppCompatActivity {
         EditText etEmail = (EditText) findViewById(R.id.etEmail);
         String email = etEmail.getText().toString();
 
-        if (login.length() > 0 && password.length() > 0 && confirmPassword.length() > 0 && firstName.length() > 0 && lastName.length() > 0 && phone.length() > 0 && email.length() > 0) {
+        if (login.length() > 0 && password.length() > 0
+                && confirmPassword.length() > 0
+                && firstName.length() > 0
+                && lastName.length() > 0
+                && phone.length() > 0
+                && email.length() > 0) {
             if (password.equals(confirmPassword)) {
                 //prepare object
                 User user = new User();

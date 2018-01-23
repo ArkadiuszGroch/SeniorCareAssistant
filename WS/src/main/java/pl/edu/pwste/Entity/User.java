@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Proxy;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@org.hibernate.annotations.Proxy(lazy = false)
+@Proxy(lazy = false)
 @Table(name = "User")
 public class User {
     public User() {

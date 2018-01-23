@@ -70,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         user.setPassword(password);
         Senior senior = new Senior();
         senior.setUser(user);
-//execute service
 
+//execute service
         DataManager dataManager = new DataManager();
         dataManager.saveData(senior);
 
@@ -83,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
     public void registerClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-
     }
 
     private void openMainActivity() {
@@ -100,8 +99,9 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            String message = getResources().getString(R.string.logginInProgress);
             progressDialog = new ProgressDialog(LoginActivity.this);
-            progressDialog.setMessage("Pobieranie danych, proszę czekać");
+            progressDialog.setMessage(message);
             progressDialog.show();
         }
 
@@ -127,22 +127,18 @@ public class LoginActivity extends AppCompatActivity {
             if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
                 DataManager.saveSecurityString(stringResponseEntity.getBody().toString());
                 openMainActivity();
-
-            } else if(stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 204) {
-                String infoTitle = getResources().getString(R.string.messageErrorTitle);
+            } else if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 204) {
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
-                showMessage(infoTitle, infoMessage);
-            }
-            else{
-                String infoTitle = getResources().getString(R.string.messageErrorTitle);
+                showMessage(infoMessage);
+            } else {
                 String infoMessage = getResources().getString(R.string.connectionProblem);
-                showMessage(infoTitle, infoMessage);
+                showMessage(infoMessage);
             }
             progressDialog.dismiss();
         }
     }
 
-    public void showMessage(String title, String message) {
+    public void showMessage(String message) {
         new showMessageAsync().execute(message);
     }
 

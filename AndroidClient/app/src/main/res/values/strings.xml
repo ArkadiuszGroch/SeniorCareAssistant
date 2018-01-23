@@ -7,6 +7,7 @@
     <string name="password">Password</string>
     <string name="invalidLoginOrPassword">Incorrect login or password!</string>
     <string name="logout">Log Out</string>
+    <string name="logginInProgress">Login in progress</string>
 
     <!--Register screen-->
     <string name="confirmPassword">Repeat password</string>
