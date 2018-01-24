@@ -48,11 +48,6 @@ public class NavigateToLocationActivity extends AppCompatActivity {
         new RESTGetLocation().execute();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        new RESTGetLocation().execute();
-    }
 
     class RESTGetLocation extends AsyncTask<Void, String, ResponseEntity<String>> {
         private String url = new RestConfiguration().getURLToGetSavedLocations();

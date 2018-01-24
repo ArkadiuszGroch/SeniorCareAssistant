@@ -199,4 +199,16 @@ public class DataManager {
         }
         return array;
     }
+
+    public static String loadLogin() {
+        String[] loadText = load();
+        if (loadText[0] != null) {
+            Log.i("data", "Loaded login - " + loadText[0]);
+            return loadText[0];
+        } else {
+            Log.i("data", "Loaded login - Empty");
+            return null;
+        }
+
+    }
 }

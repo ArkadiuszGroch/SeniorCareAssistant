@@ -34,4 +34,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void callTo(View view) {
+        Intent intent = new Intent(this, CallToActivity.class);
+        LoginActivity.isLogout = true;
+        startActivity(intent);
+    }
 }

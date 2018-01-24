@@ -64,7 +64,7 @@ public class SaveLocationActivity extends AppCompatActivity {
     //    ======================== SERVICES ===========================
     class RESTGetSavedLocations extends AsyncTask<SavedLocalization, String, ResponseEntity<String>> {
 
-        String url = new RestConfiguration().getURLToGetSavedLocations();
+        String url = new RestConfiguration().getURLToSaveLocation();
         RestTemplate restTemplate = new RestTemplate();
 
         @Override

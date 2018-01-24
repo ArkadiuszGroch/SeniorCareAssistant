@@ -18,7 +18,7 @@ public class RestConfiguration {
     public static String LOGIN = URL + "/account/senior/login";
 
     private static String ADD_CONTACT = URL + "/" + SECURITY_STRING + "/addContact";
-    private static String GET_CONTACTS = URL + "/getAllContacts/" + SECURITY_STRING;
+    private static String GET_CONTACTS = URL + "/getAllContacts/" + LOGIN;
     private static String GET_SAVED_LOCATIONS = URL + "/localization/" + SECURITY_STRING + "/getSavedLocations";
     private static String SEND_LOCATION = URL + "/localization/" + SECURITY_STRING + "/addCurrentLocalization";
     private static String SAVE_LOCATION = URL + "/localization/" + SECURITY_STRING + "/saveLocalization";
@@ -28,6 +28,10 @@ public class RestConfiguration {
         this.SECURITY_STRING = DataManager.loadSecurityString();
     }
 
+    private void loadLogin() {
+        this.LOGIN = DataManager.loadLogin();
+    }
+
 
     public String getURLToAddContact() {
         loadSecurityString();
@@ -35,8 +39,8 @@ public class RestConfiguration {
     }
 
     public String getURLToGetContacts() {
-        loadSecurityString();
-        return GET_CONTACTS = URL + "/getAllContacts/" + SECURITY_STRING;
+        loadLogin();
+        return GET_CONTACTS = URL + "/contact/getAllContacts/" + LOGIN;
     }
 
     public String getURLToGetSavedLocations() {
@@ -51,7 +55,7 @@ public class RestConfiguration {
 
     public String getURLToSaveLocation() {
         loadSecurityString();
-        return URL + "/localization/" + SECURITY_STRING + "/addCurrentLocalization";
+        return URL + "/localization/" + SECURITY_STRING + "/saveLocalization";
     }
 
 
