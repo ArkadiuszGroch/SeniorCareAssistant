@@ -14,8 +14,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import javax.sql.DataSource;
 
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SpringSecurityDialect extends WebSecurityConfigurerAdapter {
 
     @Autowired
