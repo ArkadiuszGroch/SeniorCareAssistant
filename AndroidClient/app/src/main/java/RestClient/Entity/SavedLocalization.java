@@ -68,7 +68,7 @@ public class SavedLocalization implements Serializable {
     }
 
     public String toString() {
-        return String.valueOf(getId());
+        return name;
     }
 
 }
