@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -37,17 +38,16 @@
         <activity
             android:name=".SaveLocationActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".NavigateToLocationActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".Services.LocationService"
             android:enabled="true"
             android:exported="true" />
 
-
+        <activity android:name=".CallToActivity"></activity>
     </application>
 
 </manifest>

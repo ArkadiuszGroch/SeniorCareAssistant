@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     class RESTLogin extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        private String url = RestConfiguration.LOGIN;
+        private String url = new RestConfiguration().getURLTologin();
         private ProgressDialog progressDialog;
 
         @Override

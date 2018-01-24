@@ -15,7 +15,7 @@ public class RestConfiguration {
 //    public static String URL = "https://seniorservice.herokuapp.com" + ":" + PORT;
 
     public static String REGISTER = URL + "/account/senior/register";
-    public static String LOGIN = URL + "/account/senior/login";
+    public static String LOGIN;
 
     private static String ADD_CONTACT = URL + "/" + SECURITY_STRING + "/addContact";
     private static String GET_CONTACTS = URL + "/getAllContacts/" + LOGIN;
@@ -32,6 +32,10 @@ public class RestConfiguration {
         this.LOGIN = DataManager.loadLogin();
     }
 
+    public String getURLTologin()
+    {
+        return URL + "/account/senior/login";
+    }
 
     public String getURLToAddContact() {
         loadSecurityString();

@@ -25,7 +25,7 @@
     <string name="connectionProblem">Connection error</string>
 
     <!--Progress-->
-    <string name="loadingLocation" >Loading location...</string>
+    <string name="loadingLocation">Loading location...</string>
 
     <!--Menu-->
     <string name="saveCurrentLocalization">Save current location</string>
@@ -42,6 +42,11 @@
 
     <string name="errorDuringSaveLocation">Error during saving location!</string>
     <string name="locationSaved">Location saved correctly!</string>
+
+
+    <!--Call-->
+    <string name="callTo">Call to...</string>
+    <string name="loadingContacts">Loading contacts...</string>
 
 
     <!---->
