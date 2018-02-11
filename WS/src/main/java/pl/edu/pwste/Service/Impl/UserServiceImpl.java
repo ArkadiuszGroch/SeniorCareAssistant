@@ -1,7 +1,6 @@
 package pl.edu.pwste.Service.Impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.edu.pwste.Entity.CareAssistant;
 import pl.edu.pwste.Entity.Role;

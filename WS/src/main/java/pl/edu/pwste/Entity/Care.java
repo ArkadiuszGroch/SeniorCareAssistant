@@ -19,12 +19,12 @@ public class Care implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name = "CARE_ID_GENERATOR", strategy = "native")
 	private int id;
 
-	@ManyToOne(targetEntity = CareAssistant.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = CareAssistant.class)
 	@org.hibernate.annotations.Cascade({ org.hibernate.annotations.CascadeType.LOCK })
 	@JoinColumns({ @JoinColumn(name = "CareAssistantId", referencedColumnName = "Id", nullable = false) })
 	private CareAssistant careAssistant;
 
-	@ManyToOne(targetEntity = Senior.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Senior.class)
 	@org.hibernate.annotations.Cascade({ org.hibernate.annotations.CascadeType.LOCK })
 	@JoinColumns({ @JoinColumn(name = "SeniorId", referencedColumnName = "Id", nullable = false) })
 	private Senior senior;

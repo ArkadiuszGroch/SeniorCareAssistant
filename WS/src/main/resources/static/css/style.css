@@ -10,8 +10,8 @@ body{
 }
 .tabs{
     list-style: none !important;
-    margin 0 !important;
-    padding 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 .tabs li{
     display: inline-block !important;
@@ -34,10 +34,8 @@ body{
 .tab{
     background: White !important;
     border: 5px solid GhostWhite !important;
-    padding 1em !important;
+    padding: 1em !important;
 }
-
-
 
 #footer {
    position:absolute;
