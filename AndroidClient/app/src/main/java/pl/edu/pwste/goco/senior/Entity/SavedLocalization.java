@@ -1,16 +1,19 @@
-package RestClient.Entity;
+package pl.edu.pwste.goco.senior.Entity;
 
 import java.io.Serializable;
 
-public class Contact implements Serializable {
-    public Contact() {
+
+public class SavedLocalization implements Serializable {
+    public SavedLocalization() {
     }
 
     private int id;
 
     private String name;
 
-    private String phone;
+    private double latitude;
+
+    private double longitude;
 
     private Senior senior;
 
@@ -24,21 +27,35 @@ public class Contact implements Serializable {
     }
 
 
+    public int getORMID() {
+        return getId();
+    }
+
     public void setName(String value) {
         this.name = value;
     }
+
 
     public String getName() {
         return name;
     }
 
-    public void setPhone(String value) {
-        this.phone = value;
+    public void setLatitude(double value) {
+        this.latitude = value;
     }
 
 
-    public String getPhone() {
-        return phone;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLongitude(double value) {
+        this.longitude = value;
+    }
+
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public void setSenior(Senior value) {

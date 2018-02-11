@@ -1,4 +1,4 @@
-package RestClient.Entity;
+package pl.edu.pwste.goco.senior.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

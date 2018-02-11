@@ -51,5 +51,24 @@
             android:onClick="callTo"
             android:text="@string/callTo" />
 
+        <Button
+            android:id="@+id/btnTorchight"
+            style="@style/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="switchTorchLight"
+            android:text="@string/switchFlashlight" />
+
+        <Button
+            android:id="@+id/btnSOS"
+            style="@style/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:background="@color/alert"
+            android:onClick="sendSOS"
+            android:text="@string/SOS"
+            android:textSize="30dp"
+            android:textColor="@color/black" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

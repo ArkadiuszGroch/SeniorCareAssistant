@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,8 +21,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import RestClient.Entity.Localization;
-import pl.edu.pwste.goco.senior.Configuration.DataManager;
+import pl.edu.pwste.goco.senior.Entity.Localization;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 
 public class LocationService extends Service {
@@ -35,12 +35,24 @@ public class LocationService extends Service {
     public static Double savedLat = 0d;
 
     Intent intent;
-    int counter = 0;
 
     @Override
     public void onCreate() {
         super.onCreate();
         intent = new Intent(BROADCAST_ACTION);
+
+        //if gps is turned off prompt user to enable gps
+        int off = 0;
+        try {
+            off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
+            if (off == 0) {
+                Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(onGPS);
+            }
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

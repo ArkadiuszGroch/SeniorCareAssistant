@@ -1,6 +1,4 @@
-package RestClient.Entity;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package pl.edu.pwste.goco.senior.Entity;
 
 import java.io.Serializable;
 

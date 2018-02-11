@@ -30,6 +30,8 @@
     <!--Menu-->
     <string name="saveCurrentLocalization">Save current location</string>
     <string name="navigateToLocation">Navigate to place</string>
+    <string name="switchFlashlight">Turn on flashlight</string>
+    <string name="SOS">SOS</string>
 
     <!--Save localization-->
     <string name="nameOfLocalization">Name</string>
@@ -48,6 +50,10 @@
     <string name="callTo">Call to...</string>
     <string name="loadingContacts">Loading contacts...</string>
 
+
+    <!--Common-->
+    <string name="internetConnectionError">Internet connection error!</string>
+    <string name="title_activity_maps">Map</string>
 
     <!---->
     <!--&lt;!&ndash;Configuration&ndash;&gt;-->

@@ -15,8 +15,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import RestClient.Entity.Senior;
-import RestClient.Entity.User;
+import pl.edu.pwste.goco.senior.Entity.Senior;
+import pl.edu.pwste.goco.senior.Entity.User;
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 

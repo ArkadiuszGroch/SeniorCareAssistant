@@ -17,7 +17,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import RestClient.Entity.SavedLocalization;
+import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 import pl.edu.pwste.goco.senior.Services.LocationService;
 
 public class SaveLocationActivity extends AppCompatActivity {

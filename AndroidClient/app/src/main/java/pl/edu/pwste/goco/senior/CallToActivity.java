@@ -27,11 +27,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import RestClient.Entity.Contact;
-import RestClient.Entity.SavedLocalization;
-import RestClient.Entity.Senior;
+import pl.edu.pwste.goco.senior.Entity.Contact;
+import pl.edu.pwste.goco.senior.Entity.Senior;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
-import pl.edu.pwste.goco.senior.Services.LocationService;
 
 public class CallToActivity extends AppCompatActivity {
 
@@ -135,9 +133,6 @@ public class CallToActivity extends AppCompatActivity {
                 String phoneNumber = contactList.get((int) rowId).getPhone();
 
                 String uri = "tel:" + phoneNumber;
-//                Intent intent = new Intent(Intent.ACTION_DIAL);
-//                intent.setData(Uri.parse(uri));
-//                startActivity(intent);
 
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse(uri));

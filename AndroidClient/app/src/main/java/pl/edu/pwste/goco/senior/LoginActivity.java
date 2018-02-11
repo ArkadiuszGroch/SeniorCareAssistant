@@ -1,12 +1,13 @@
 package pl.edu.pwste.goco.senior;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,24 +17,57 @@ import android.widget.EditText;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
-import RestClient.Entity.Senior;
-import RestClient.Entity.User;
+import pl.edu.pwste.goco.senior.Entity.Senior;
+import pl.edu.pwste.goco.senior.Entity.User;
 
 public class LoginActivity extends AppCompatActivity {
     public static boolean isLogout = false;
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    /**
+     * Checks if the app has permission to write to device storage
+     * <p>
+     * If the app does not has permission then the user will be prompted to grant permissions
+     *
+     * @param activity
+     */
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        verifyStoragePermissions(this);
+
         Senior senior = new Senior();
         senior.setUser(DataManager.loadUserData());
 
+//      show activity after press Logout button
         if (isLogout) {
             if (senior.getUser().getLogin().length() > 0 && senior.getUser().getPassword().length() > 0) {
                 EditText etLogin = (EditText) findViewById(R.id.etLogin);
@@ -43,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                 etPassword.setText(senior.getUser().getPassword());
             }
         } else {
-
             try {
                 //try login with saved info
                 new RESTLogin().execute(senior);
@@ -116,6 +149,11 @@ public class LoginActivity extends AppCompatActivity {
                 ResponseEntity<String> response = restTemplate
                         .exchange(url, HttpMethod.POST, request, String.class);
                 return response;
+
+            } catch (ResourceAccessException exc) {
+                Log.e("LOGIN", exc.toString());
+                //showMessage(getResources().getString(R.string.internetConnectionError));
+                return null;
             } catch (Exception ex) {
                 Log.e("LOGIN", ex.toString());
                 return null;
@@ -131,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
                 showMessage(infoMessage);
             } else {
-                String infoMessage = getResources().getString(R.string.connectionProblem);
+                String infoMessage = getResources().getString(R.string.internetConnectionError);
                 showMessage(infoMessage);
             }
             progressDialog.dismiss();

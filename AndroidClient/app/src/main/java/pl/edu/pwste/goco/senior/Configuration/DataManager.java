@@ -1,6 +1,5 @@
 package pl.edu.pwste.goco.senior.Configuration;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
@@ -15,8 +14,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import RestClient.Entity.Senior;
-import RestClient.Entity.User;
+import pl.edu.pwste.goco.senior.Entity.Senior;
+import pl.edu.pwste.goco.senior.Entity.User;
 
 /**
  * Created by goco on 19.12.2017.
@@ -25,9 +24,9 @@ import RestClient.Entity.User;
 public class DataManager {
 
     /**
-     * Path to file where value should be saved
+     * File where value should be saved
      */
-    private static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/data.txt";
+    private static String fileName = "/data.txt";
 
     /**
      * Method saves data to file
@@ -71,14 +70,21 @@ public class DataManager {
      * @return User object
      */
     public static User loadUserData() {
-        String[] loadText = load();
-        User user = new User();
-        user.setLogin(loadText[0]);
-        user.setPassword(loadText[1]);
-        if (loadText[3] != null) user.setSecurityString(loadText[3]);
+        try {
+            String[] loadText = load();
+            User user = new User();
+            user.setLogin(loadText[0]);
+            user.setPassword(loadText[1]);
+            if (loadText[3] != null) user.setSecurityString(loadText[3]);
 
-        Log.i("data", "Loaded data - " + loadText);
-        return user;
+            Log.i("data", "Loaded data - " + loadText);
+            return user;
+        } catch (Exception e) {
+            Log.e("data", "error during load user data");
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     /**
@@ -126,7 +132,7 @@ public class DataManager {
      */
     private static void save(String[] data) {
 
-        File file = new File(path);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(file);
@@ -159,11 +165,21 @@ public class DataManager {
      * @return content of file as string array
      */
     public static String[] load() {
-        File file = new File(path);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fileName);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(file);
         } catch (FileNotFoundException e) {
+
+
             e.printStackTrace();
         }
         InputStreamReader isr = new InputStreamReader(fis);
@@ -209,6 +225,5 @@ public class DataManager {
             Log.i("data", "Loaded login - Empty");
             return null;
         }
-
     }
 }
