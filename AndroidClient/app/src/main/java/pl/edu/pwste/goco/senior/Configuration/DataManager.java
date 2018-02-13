@@ -1,5 +1,7 @@
 package pl.edu.pwste.goco.senior.Configuration;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 
@@ -14,6 +16,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.edu.pwste.goco.senior.Entity.CareAssistant;
 import pl.edu.pwste.goco.senior.Entity.Senior;
 import pl.edu.pwste.goco.senior.Entity.User;
 
@@ -27,6 +30,13 @@ public class DataManager {
      * File where value should be saved
      */
     private static String fileName = "/data.txt";
+
+
+    private static int LOGIN_ROW = 0;
+    private static int PASSWORD_ROW = 1;
+    private static int SECURITY_DISTANCE_ROW = 2;
+    private static int SECURITY_STRING_ROW = 3;
+    private static int CARE_ASSISTANTS_ROW = 4;
 
     /**
      * Method saves data to file
@@ -58,7 +68,7 @@ public class DataManager {
      */
     public static void saveSecurityString(String securityString) {
         String[] textToSave = load();
-        textToSave[3] = securityString;
+        textToSave[SECURITY_STRING_ROW] = securityString;
         save(textToSave);
 
         Log.i("data", "Saved secStr - " + securityString);
@@ -73,9 +83,9 @@ public class DataManager {
         try {
             String[] loadText = load();
             User user = new User();
-            user.setLogin(loadText[0]);
-            user.setPassword(loadText[1]);
-            if (loadText[3] != null) user.setSecurityString(loadText[3]);
+            user.setLogin(loadText[LOGIN_ROW]);
+            user.setPassword(loadText[PASSWORD_ROW]);
+            if (loadText[SECURITY_STRING_ROW] != null) user.setSecurityString(loadText[3]);
 
             Log.i("data", "Loaded data - " + loadText);
             return user;
@@ -84,7 +94,6 @@ public class DataManager {
             e.printStackTrace();
             return null;
         }
-
     }
 
     /**
@@ -94,9 +103,9 @@ public class DataManager {
      */
     public static String loadSecurityString() {
         String[] loadText = load();
-        if (loadText[3] != null) {
+        if (loadText[SECURITY_STRING_ROW] != null) {
             Log.i("data", "Loaded secStr - " + loadText[3]);
-            return loadText[3];
+            return loadText[SECURITY_STRING_ROW];
         } else {
             Log.i("data", "Loaded secStr - Empty");
             return null;
@@ -110,9 +119,9 @@ public class DataManager {
      */
     public static int loadSafeDistance() {
         String[] loadText = load();
-        if (loadText[2] != null) {
-            Log.i("data", "Loaded safe distance - " + loadText[2]);
-            return Integer.parseInt(loadText[2]);
+        if (loadText[SECURITY_DISTANCE_ROW] != null) {
+            Log.i("data", "Loaded safe distance - " + loadText[SECURITY_DISTANCE_ROW]);
+            return Integer.parseInt(loadText[SECURITY_DISTANCE_ROW]);
         } else {
             Log.i("data", "Loaded safe distance  - Empty");
             return 0;
@@ -218,12 +227,46 @@ public class DataManager {
 
     public static String loadLogin() {
         String[] loadText = load();
-        if (loadText[0] != null) {
+        if (loadText[LOGIN_ROW] != null) {
             Log.i("data", "Loaded login - " + loadText[0]);
-            return loadText[0];
+            return loadText[LOGIN_ROW];
         } else {
             Log.i("data", "Loaded login - Empty");
             return null;
         }
+    }
+
+    public static void saveCareAssistants(List<String> careAssistantsPhoneNumbers) {
+        if (careAssistantsPhoneNumbers != null || careAssistantsPhoneNumbers.size() == 0) {
+            String[] dataToSave = load();
+            String careAssistantsContactsToSave = new String();
+
+            for (int i = 0; i < careAssistantsPhoneNumbers.size(); i++) {
+                careAssistantsContactsToSave += careAssistantsPhoneNumbers.get(i);
+                if (i != careAssistantsPhoneNumbers.size() - 1) careAssistantsContactsToSave += "c";
+            }
+
+            //dont save the same value
+            if (!dataToSave[CARE_ASSISTANTS_ROW].equals(careAssistantsContactsToSave)) {
+                dataToSave[CARE_ASSISTANTS_ROW] = careAssistantsContactsToSave;
+                save(dataToSave);
+
+                Log.i("data", "Saved care assistants list - " + careAssistantsContactsToSave);
+            }
+        } else {
+            Log.i("data", "Care assistants list not saved - empty or null");
+        }
+    }
+
+    public static List<String> loadCareAssistantsPhones() {
+        String[] dataToSave = load();
+        String careAssistantsList = dataToSave[CARE_ASSISTANTS_ROW];
+        String[] careAssistantArray = careAssistantsList.split("c");
+        List<String> careAssistantList = new ArrayList<String>();
+
+        for (String s : careAssistantArray) {
+            careAssistantList.add(s);
+        }
+        return careAssistantList;
     }
 }

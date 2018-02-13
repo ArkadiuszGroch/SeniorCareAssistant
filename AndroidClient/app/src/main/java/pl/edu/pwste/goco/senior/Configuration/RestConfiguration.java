@@ -5,24 +5,22 @@ package pl.edu.pwste.goco.senior.Configuration;
  */
 
 public class RestConfiguration {
+
     public RestConfiguration() {
     }
 
-    public static String SENIOR_LOGIN;
-    public static String SECURITY_STRING;
-    public static String PORT = "8090";
+    private static String LOGIN;
+    private static String SECURITY_STRING;
+    private static String PORT = "8090";
 //    public static String URL = "https://seniorservice.herokuapp.com";
-    public static String URL = "http://192.168.0.8" + ":" + PORT;
+    private static String URL = "http://192.168.1.106" + ":" + PORT;
 
-    public static String REGISTER = URL + "/account/senior/register";
-    public static String LOGIN;
+    private static String REGISTER = URL + "/account/senior/register";
 
-    private static String ADD_CONTACT = URL + "/" + SECURITY_STRING + "/addContact";
-    private static String GET_CONTACTS = URL + "/getAllContacts/" + LOGIN;
-    private static String GET_SAVED_LOCATIONS = URL + "/localization/" + SECURITY_STRING + "/getSavedLocations";
-    private static String SEND_LOCATION = URL + "/localization/" + SECURITY_STRING + "/addCurrentLocalization";
-    private static String SAVE_LOCATION = URL + "/localization/" + SECURITY_STRING + "/saveLocalization";
-    private static String GET_CURRENT_MEDICINE = URL + "/getCurrentMedicine/" + SECURITY_STRING;
+
+
+
+    //Load
 
     private void loadSecurityString() {
         this.SECURITY_STRING = DataManager.loadSecurityString();
@@ -30,6 +28,11 @@ public class RestConfiguration {
 
     private void loadLogin() {
         this.LOGIN = DataManager.loadLogin();
+    }
+
+    //get url methods
+    public static String getURLToRegister() {
+        return URL + "/account/senior/register";
     }
 
     public String getURLTologin()
@@ -44,7 +47,7 @@ public class RestConfiguration {
 
     public String getURLToGetContacts() {
         loadLogin();
-        return GET_CONTACTS = URL + "/contact/getAllContacts/" + LOGIN;
+        return URL + "/contact/getAllContacts/" + LOGIN;
     }
 
     public String getURLToGetSavedLocations() {
@@ -60,6 +63,11 @@ public class RestConfiguration {
     public String getURLToSaveLocation() {
         loadSecurityString();
         return URL + "/localization/" + SECURITY_STRING + "/saveLocalization";
+    }
+
+    public String getURLToGetCareAssistantsPhones() {
+        loadLogin();
+        return URL + "/care/" + LOGIN + "/getCareAssistants";
     }
 
 

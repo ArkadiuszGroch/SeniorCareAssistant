@@ -6,4 +6,39 @@
     android:layout_height="match_parent"
     tools:context="pl.edu.pwste.goco.senior.SOSActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCounterSOS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="9"
+            android:textSize="100dp" />
+
+        <Button
+            android:id="@+id/btnSosSend"
+            style="@style/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="205dp"
+            android:background="@color/alert"
+            android:onClick="sendSos"
+            android:text="@string/SOS"
+            android:textColor="@color/black"
+            android:textSize="60dp" />
+
+        <Button
+            android:id="@+id/btnSosCancl"
+            style="@style/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="102dp"
+            android:onClick="canclSos"
+            android:text="@android:string/cancel"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+        />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

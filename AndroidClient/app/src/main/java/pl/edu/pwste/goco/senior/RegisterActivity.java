@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //    ======================== SERVICES ===========================
     class RESTRegister extends AsyncTask<Senior, String, ResponseEntity<String>> {
-        String url = RestConfiguration.REGISTER;
+        String url = RestConfiguration.getURLToRegister();
 
         @Override
         protected ResponseEntity<String> doInBackground(Senior... params) {

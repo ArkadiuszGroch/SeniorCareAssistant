@@ -40,7 +40,6 @@
     <string name="GPSAlertDialogTitle">GPSAlertDialogTitle</string>
     <string name="GPSAlertDialogMessage">GPSAlertDialogMessage</string>
     <string name="action_settings">OK</string>
-    <string name="cancel">Cancel</string>
 
     <string name="errorDuringSaveLocation">Error during saving location!</string>
     <string name="locationSaved">Location saved correctly!</string>
@@ -54,6 +53,7 @@
     <!--Common-->
     <string name="internetConnectionError">Internet connection error!</string>
     <string name="title_activity_maps">Map</string>
+    <string name="cancel">Cancel</string>
 
     <!---->
     <!--&lt;!&ndash;Configuration&ndash;&gt;-->

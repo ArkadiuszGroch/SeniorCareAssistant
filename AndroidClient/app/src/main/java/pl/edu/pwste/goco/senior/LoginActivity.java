@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import pl.edu.pwste.goco.senior.AsyncTasks.ReceiveCareAssistants;
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import pl.edu.pwste.goco.senior.Entity.Senior;
@@ -109,9 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         dataManager.saveData(senior);
 
         new RESTLogin().execute(senior);
-
     }
-
 
     public void registerClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -164,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
             if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
                 DataManager.saveSecurityString(stringResponseEntity.getBody().toString());
+                new ReceiveCareAssistants().execute();
                 openMainActivity();
             } else if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 204) {
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
