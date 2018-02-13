@@ -15,4 +15,6 @@ public interface CareService {
 	public Care findCareBySeniorAndCareAssistant(Senior senior, CareAssistant careAssistant);
 
 	public void removeCare(Care care);
+
+	public List<String> findCareAssistantsBySenior(String seniorLogin);
 }

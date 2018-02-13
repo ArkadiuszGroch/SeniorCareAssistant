@@ -72,15 +72,32 @@ public class CareServiceImpl implements CareService {
         careRepository.delete(care);
     }
 
+    @Override
+    public List<String> findCareAssistantsBySenior(String seniorLogin) {
+        Senior senior = seniorRepository.findSeniorByUser(userRepository.findUserByLogin(seniorLogin));
+        List<Care> listOfCare = careRepository.findBySenior(senior);
+        List<String> careAssistantList = new ArrayList<>();
+        for (Care care : listOfCare) {
+            CareAssistant careAssistant = care.getCareAssistant();
+            careAssistantList.add(careAssistant.getUser().getPhone());
+        }
+        return careAssistantList;
+    }
+
+    private void hideSensitiveDataForUser(User user)
+    {
+        if (user.getPassword() != null)user.setPassword(null);
+        if (user.getSecurityString() != null) user.setSecurityString(null);
+        if (user.getEmail() != null) user.setEmail(null);
+        if (user.getRoles() != null) user.setRoles(null);
+        if (user.getCareAssistant() != null) user.setCareAssistant(null);
+        if (user.getSenior() != null) user.setSenior(null);
+    }
     private void hideSensitiveData(List<Senior> listOfSeniors) {
         for (Senior senior : listOfSeniors) {
-            if (senior.getUser().getPassword() != null) senior.getUser().setPassword(null);
-            if (senior.getUser().getSecurityString() != null) senior.getUser().setSecurityString(null);
-            if (senior.getUser().getEmail() != null) senior.getUser().setEmail(null);
-            if (senior.getUser().getRoles() != null) senior.getUser().setRoles(null);
+            hideSensitiveDataForUser(senior.getUser());
+
             if (senior.getUser().getPhone() != null) senior.getUser().setPhone(null);
-            if (senior.getUser().getCareAssistant() != null) senior.getUser().setCareAssistant(null);
-            if (senior.getUser().getSenior() != null) senior.getUser().setSenior(null);
             if (senior.getCare() != null) senior.setCare(null);
             if (senior.getContacts() != null) senior.setContacts(null);
             if (senior.getLastModification() != null) senior.setLastModification(null);
