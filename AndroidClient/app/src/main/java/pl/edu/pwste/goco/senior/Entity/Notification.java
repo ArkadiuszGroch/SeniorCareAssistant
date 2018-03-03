@@ -1,9 +1,11 @@
 package pl.edu.pwste.goco.senior.Entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Notification implements Serializable {
 	public Notification() {
+		setTime(new Timestamp(System.currentTimeMillis()));
 	}
 
 	private int id;
@@ -13,7 +15,7 @@ public class Notification implements Serializable {
 
 	private String status;
 
-	private java.sql.Timestamp time;
+	private Timestamp time;
 
 	private Care care;
 
@@ -58,12 +60,12 @@ public class Notification implements Serializable {
 		return status;
 	}
 
-	public void setTime(java.sql.Timestamp value) {
+	public void setTime(Timestamp value) {
 		this.time = value;
 	}
 
 	 
-	public java.sql.Timestamp getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 

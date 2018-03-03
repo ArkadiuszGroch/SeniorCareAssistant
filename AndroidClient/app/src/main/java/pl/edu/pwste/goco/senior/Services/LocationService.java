@@ -5,6 +5,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -21,6 +23,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 import pl.edu.pwste.goco.senior.Entity.Localization;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 
@@ -34,6 +40,7 @@ public class LocationService extends Service {
     public static Double savedLong = 0d;
     public static Double savedLat = 0d;
 
+    public static String locationName;
     Intent intent;
 
     @Override
@@ -162,6 +169,17 @@ public class LocationService extends Service {
 
                 Double longitude = loc.getLongitude();
                 Double latitude = loc.getLatitude();
+
+                //get location name
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                try {
+                    List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+                    if(null!=listAddresses&&listAddresses.size()>0){
+                        locationName = listAddresses.get(0).getAddressLine(0);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 //save location when is different between prev location more than 10m
                 double distance = getDistanceFromHome(savedLat, savedLong, latitude, longitude);

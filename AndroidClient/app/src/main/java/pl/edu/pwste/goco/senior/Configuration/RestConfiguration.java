@@ -12,13 +12,10 @@ public class RestConfiguration {
     private static String LOGIN;
     private static String SECURITY_STRING;
     private static String PORT = "8090";
-//    public static String URL = "https://seniorservice.herokuapp.com";
-    private static String URL = "http://192.168.1.106" + ":" + PORT;
+    //    public static String URL = "https://seniorservice.herokuapp.com";
+    private static String URL = "http://192.168.1.22" + ":" + PORT;
 
     private static String REGISTER = URL + "/account/senior/register";
-
-
-
 
     //Load
 
@@ -35,8 +32,7 @@ public class RestConfiguration {
         return URL + "/account/senior/register";
     }
 
-    public String getURLTologin()
-    {
+    public String getURLTologin() {
         return URL + "/account/senior/login";
     }
 
@@ -68,6 +64,11 @@ public class RestConfiguration {
     public String getURLToGetCareAssistantsPhones() {
         loadLogin();
         return URL + "/care/" + LOGIN + "/getCareAssistants";
+    }
+
+    public String getURLToSaveNotification() {
+        loadSecurityString();
+        return URL + "/notification/" + SECURITY_STRING + "/createNotification";
     }
 
 
