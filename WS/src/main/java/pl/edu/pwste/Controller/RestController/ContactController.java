@@ -40,10 +40,10 @@ public class ContactController {
 			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 		}
 	}
-	
-	
+
+
 	/*
-	 * Get all contacts for selected senior 
+	 * Get all contacts for selected senior
 	 * Method: GET
 	 * URL: address: /contact/getAllContacts/(SeniorLogin)
 	 * Input: -
@@ -51,15 +51,15 @@ public class ContactController {
 	 * 		HTTP Status Ok (200) if getting successful and List of Contacts
 	 */
 	@RequestMapping(value = "/getAllContacts/{seniorLogin}", method = RequestMethod.GET)
-	public ResponseEntity<List<Contact>> getNotifications(
-			@PathVariable(value = "seniorLogin") String seniorLogin) {		
+	public ResponseEntity<List<Contact>> getAllContacts(
+			@PathVariable(value = "seniorLogin") String seniorLogin) {
 		try {
 			List<Contact> listOfContacts = contactService.getAllSeniorContact(seniorLogin);
-			return new ResponseEntity<List<Contact>>(listOfContacts, HttpStatus.OK); 
+			return new ResponseEntity<List<Contact>>(listOfContacts, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<Contact>>(HttpStatus.NO_CONTENT);
 		}
 	}
-	
+
 }
