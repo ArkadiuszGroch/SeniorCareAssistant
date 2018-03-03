@@ -27,6 +27,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.edu.pwste.goco.senior.Adapters.ContactsAdapter;
 import pl.edu.pwste.goco.senior.Entity.Contact;
 import pl.edu.pwste.goco.senior.Entity.Senior;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
@@ -112,11 +113,17 @@ public class CallToActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceAsColor")
     private void addButtonsToLinearLayout(final List<Contact> contactList) {
+        ContactsAdapter contactsAdapter = new ContactsAdapter(this, contactList);
 
-        final ArrayAdapter<Contact> contactAdapter;
+        ListView savedLocationListButton = new ListView(this);
+        setContentView(savedLocationListButton);
+        savedLocationListButton.setAdapter(contactsAdapter);
+
+      /*  final ArrayAdapter<Contact> contactAdapter;
         ScrollView linearLayout = (ScrollView) findViewById(R.id.contactScrollView);
         contactAdapter = new ArrayAdapter<Contact>(this,
-                android.R.layout.simple_list_item_1, contactList);
+                R.layout.contact_row,R.id.contact_name,  contactList);
+
 
         ListView savedLocationListButton = new ListView(this);
         setContentView(savedLocationListButton);
@@ -149,6 +156,6 @@ public class CallToActivity extends AppCompatActivity {
                 startActivity(callIntent);
             }
 
-        });
+        });*/
     }
 }
