@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,7 +42,7 @@ public class SOSActivity extends AppCompatActivity {
                         {
                             tvCounterSOS.setText(String.valueOf(counter));
                         }
-                        
+
                         if (isSend) {
                             sendSos();
                             isSend = false;
