@@ -8,8 +8,6 @@ import pl.edu.pwste.Entity.Notification;
 import pl.edu.pwste.Entity.Senior;
 import pl.edu.pwste.Repository.CareRepository;
 import pl.edu.pwste.Repository.NotificationRepository;
-import pl.edu.pwste.Repository.UserRepository;
-import pl.edu.pwste.Service.AccountService;
 import pl.edu.pwste.Service.NotificationService;
 import pl.edu.pwste.Service.UserService;
 
@@ -43,5 +41,15 @@ public class NotificationServiceImpl implements NotificationService {
     public List<Notification> getNotificationForCare(Care care) {
         List<Notification> listOfNotifications = notificationRepository.getNotificationsByCare(care);
         return listOfNotifications;
+    }
+
+    @Override
+    public void createNotification(Notification notification, String seniorSecurityString) {
+        Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
+        List<Care> careList = careRepository.findBySenior(senior);
+        for (Care care : careList) {
+            notification.setCare(care);
+            notificationRepository.save(notification);
+        }
     }
 }

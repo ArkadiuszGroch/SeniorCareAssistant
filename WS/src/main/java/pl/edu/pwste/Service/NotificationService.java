@@ -10,4 +10,6 @@ public interface NotificationService {
 
     public List<Notification> getNotificationForCare(Care care);
 
+    public void createNotification(Notification notification, String seniorSecurityString);
+
 }
