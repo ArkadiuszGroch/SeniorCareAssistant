@@ -3,6 +3,7 @@ package pl.edu.pwste.goco.senior;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -10,11 +11,13 @@ import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -115,47 +118,39 @@ public class CallToActivity extends AppCompatActivity {
     private void addButtonsToLinearLayout(final List<Contact> contactList) {
         ContactsAdapter contactsAdapter = new ContactsAdapter(this, contactList);
 
-        ListView savedLocationListButton = new ListView(this);
-        setContentView(savedLocationListButton);
-        savedLocationListButton.setAdapter(contactsAdapter);
+        ListView contactsListButton = new ListView(this);
+        setContentView(contactsListButton);
+        contactsListButton.setAdapter(contactsAdapter);
 
-      /*  final ArrayAdapter<Contact> contactAdapter;
-        ScrollView linearLayout = (ScrollView) findViewById(R.id.contactScrollView);
-        contactAdapter = new ArrayAdapter<Contact>(this,
-                R.layout.contact_row,R.id.contact_name,  contactList);
-
-
-        ListView savedLocationListButton = new ListView(this);
-        setContentView(savedLocationListButton);
-        savedLocationListButton.setAdapter(contactAdapter);
-
-
-        savedLocationListButton.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        contactsListButton.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView,
                                     View view, int position, long rowId) {
 
-                String message = "You clicked on " + contactList.get((int) rowId).toString();
+                String phone = contactList.get((int) rowId).getPhone();
 
-                String phoneNumber = contactList.get((int) rowId).getPhone();
-
-                String uri = "tel:" + phoneNumber;
-
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(uri));
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+                Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
+                callIntent.setData(Uri.parse("tel:" + phone));    //this is the phone number calling
+                //check permission
+                //If the device is running Android 6.0 (API level 23) and the app's targetSdkVersion is 23 or higher,
+                //the system asks the user to grant approval.
+                if (ActivityCompat.checkSelfPermission(CallToActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    //request permission from user if the app hasn't got the required permission
+                    ActivityCompat.requestPermissions(CallToActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE},   //request specific permission from user
+                            10);
                     return;
+                } else {     //have got permission
+                    try {
+                        startActivity(callIntent);  //call activity and make phone call
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Toast.makeText(getApplicationContext(), "yourActivity is not founded", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                startActivity(callIntent);
-            }
 
-        });*/
+            }
+        });
+
     }
+
 }

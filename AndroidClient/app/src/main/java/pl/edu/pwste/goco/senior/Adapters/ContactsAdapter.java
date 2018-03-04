@@ -1,13 +1,10 @@
 package pl.edu.pwste.goco.senior.Adapters;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -38,7 +35,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.contact_row, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
+        TextView textView = (TextView) rowView.findViewById(R.id.contact_label);
         textView.setText(contactList.get(position).toString());
         return rowView;
     }

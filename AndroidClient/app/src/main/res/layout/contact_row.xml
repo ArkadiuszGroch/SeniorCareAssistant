@@ -3,13 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
-        style="@style/buttons"
-        android:id="@+id/label"
+    <TextView
+        android:id="@+id/contact_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@+id/contact_name" />
+        android:background="@color/buttonsBackground"
+        android:text="@+id/contact_label"
+        android:textColor="@color/buttonsText"
+        android:padding="5dp"
+        android:textSize="24sp"
+        android:layout_margin = "5dp"
+        android:textAlignment="center"/>
 
 </LinearLayout>
 
