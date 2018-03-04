@@ -3,15 +3,19 @@ package pl.edu.pwste.goco.senior;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,15 +28,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.edu.pwste.goco.senior.Adapters.ContactsAdapter;
+import pl.edu.pwste.goco.senior.Adapters.LocationsAdapter;
 import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 import pl.edu.pwste.goco.senior.Entity.Senior;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
+import pl.edu.pwste.goco.senior.Services.LocationService;
 
 public class NavigateToLocationActivity extends AppCompatActivity {
-
-    public void loadLocations() {
-        new RESTGetLocation().execute();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +86,7 @@ public class NavigateToLocationActivity extends AppCompatActivity {
                 }
 
             } else {
-                String infoTitle = getResources().getString(R.string.messageErrorTitle);
-                String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
+                Log.i("NavigateToLocation", "error during getting saved locations list");
             }
             progressDialog.dismiss();
 
@@ -113,14 +115,21 @@ public class NavigateToLocationActivity extends AppCompatActivity {
     @SuppressLint("ResourceAsColor")
     private void addButtonsToLinearLayout(final List<SavedLocalization> savedLocalizationList) {
 
-        ArrayAdapter<SavedLocalization> savedLocatSavedLocalizationArrayAdapter;
-        ScrollView linearLayout = (ScrollView) findViewById(R.id.scrviewLocation);
+        LocationsAdapter locationsAdapter = new LocationsAdapter(this, savedLocalizationList);
+
+        ListView savedLocationListButton = new ListView(this);
+        setContentView(savedLocationListButton);
+        savedLocationListButton.setAdapter(locationsAdapter);
+
+
+       /* ArrayAdapter<SavedLocalization> savedLocatSavedLocalizationArrayAdapter;
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linlayLocationList);
         savedLocatSavedLocalizationArrayAdapter = new ArrayAdapter<SavedLocalization>(this,
                 android.R.layout.simple_list_item_1, savedLocalizationList);
 
         ListView savedLocationListButton = new ListView(this);
         setContentView(savedLocationListButton);
-        savedLocationListButton.setAdapter(savedLocatSavedLocalizationArrayAdapter);
+        savedLocationListButton.setAdapter(savedLocatSavedLocalizationArrayAdapter);*/
 
 
         savedLocationListButton.setOnItemClickListener(new OnItemClickListener() {
@@ -130,7 +139,7 @@ public class NavigateToLocationActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(NavigateToLocationActivity.this, MapsActivity.class);
                 startActivity(intent);
-/*
+
                 // Generate a message based on the position
                 String message = "You clicked on " + savedLocalizationList.get((int) rowId).toString();
 
@@ -149,12 +158,14 @@ public class NavigateToLocationActivity extends AppCompatActivity {
                 String packageName = "com.google.android.apps.maps";
                 String query = "google.navigation:q=" + destinyLongitude + "," + destinyLattitude;
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
-                intent.setPackage(packageName);
-                startActivity(intent);
-*/
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
+                intent2.setPackage(packageName);
+                startActivity(intent2);
+
 
             }
+
+
 
 
         });
