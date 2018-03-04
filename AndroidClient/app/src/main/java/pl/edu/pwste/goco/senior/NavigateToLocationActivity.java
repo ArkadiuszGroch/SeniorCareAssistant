@@ -121,17 +121,6 @@ public class NavigateToLocationActivity extends AppCompatActivity {
         setContentView(savedLocationListButton);
         savedLocationListButton.setAdapter(locationsAdapter);
 
-
-       /* ArrayAdapter<SavedLocalization> savedLocatSavedLocalizationArrayAdapter;
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linlayLocationList);
-        savedLocatSavedLocalizationArrayAdapter = new ArrayAdapter<SavedLocalization>(this,
-                android.R.layout.simple_list_item_1, savedLocalizationList);
-
-        ListView savedLocationListButton = new ListView(this);
-        setContentView(savedLocationListButton);
-        savedLocationListButton.setAdapter(savedLocatSavedLocalizationArrayAdapter);*/
-
-
         savedLocationListButton.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView,
@@ -140,20 +129,8 @@ public class NavigateToLocationActivity extends AppCompatActivity {
                 Intent intent = new Intent(NavigateToLocationActivity.this, MapsActivity.class);
                 startActivity(intent);
 
-                // Generate a message based on the position
-                String message = "You clicked on " + savedLocalizationList.get((int) rowId).toString();
-
-                double currentLattitude = LocationService.savedLat;
-                double currentLongitude = LocationService.savedLong;
-
                 double destinyLattitude = savedLocalizationList.get((int) rowId).getLatitude();
                 double destinyLongitude = savedLocalizationList.get((int) rowId).getLongitude();
-
-
-//                String uri = "http://maps.google.com/maps?saddr=" + currentLongitude + "," + currentLattitude + "&daddr=" + destinyLongitude + "," + destinyLattitude;
-//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
-//                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-//                startActivity(intent);
 
                 String packageName = "com.google.android.apps.maps";
                 String query = "google.navigation:q=" + destinyLongitude + "," + destinyLattitude;
@@ -161,13 +138,7 @@ public class NavigateToLocationActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse(query));
                 intent2.setPackage(packageName);
                 startActivity(intent2);
-
-
             }
-
-
-
-
         });
     }
 }
