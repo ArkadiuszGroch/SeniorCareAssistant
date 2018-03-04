@@ -22,9 +22,6 @@ import pl.edu.pwste.goco.senior.Services.LocationService;
 
 public class SaveLocationActivity extends AppCompatActivity {
 
-    private String securityString;
-    private double longitude;
-    private double latitude;
     private Bundle bundle;
 
     @Override
@@ -32,9 +29,6 @@ public class SaveLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_location);
         this.bundle = savedInstanceState;
-
-        securityString = DataManager.loadSecurityString();
-
     }
 
     public void saveLocalization(View view) {
