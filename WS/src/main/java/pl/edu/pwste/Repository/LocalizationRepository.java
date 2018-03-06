@@ -19,8 +19,8 @@ public interface LocalizationRepository extends CrudRepository<Localization, Lon
 			+ " AND month(l.time as date) = month(:date)"
 			+ " AND day(l.time as date) = day(:date)"
 			+ " AND l.senior.user = :user")
-	public List<Localization> getLocalizationByDateAndUser(	@Param("date") Date date,
-															@Param("user") User user);
+	List<Localization> getLocalizationByDateAndUser(@Param("date") Date date,
+													@Param("user") User user);
 
-	public List<Localization> getLocalizationBySenior(Senior senior);
+	List<Localization> getLocalizationBySenior(Senior senior);
 }

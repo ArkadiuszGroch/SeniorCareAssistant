@@ -8,8 +8,8 @@ import pl.edu.pwste.Entity.User;
 @Repository
 public interface SeniorRepository extends CrudRepository<Senior, Long> {
 
-    public Senior findSeniorByUser(User user);
+    Senior findSeniorByUser(User user);
 
-    public Senior findSeniorById(int id);
+    Senior findSeniorById(int id);
 
 }

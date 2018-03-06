@@ -7,14 +7,14 @@ import pl.edu.pwste.Entity.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-	public User findUserByLoginAndPassword(String login, String password);
+	User findUserByLoginAndPassword(String login, String password);
 	
-	public User findUserByLogin(String login);
+	User findUserByLogin(String login);
 	
-	public User findUserBySecurityString(String SecurityString);
+	User findUserBySecurityString(String SecurityString);
 
-    public User findByEmail(String email);
+    User findByEmail(String email);
 
-	public User findUserByLoginOrEmail(String login, String email);
+	User findUserByLoginOrEmail(String login, String email);
 
 }

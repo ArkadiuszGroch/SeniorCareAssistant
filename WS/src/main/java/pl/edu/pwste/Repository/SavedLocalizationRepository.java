@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface SavedLocalizationRepository extends CrudRepository<SavedLocalization, Long> {
 
-    public List<SavedLocalization> getSavedLocalizationBySenior(Senior senior);
+    List<SavedLocalization> getSavedLocalizationBySenior(Senior senior);
 
 }

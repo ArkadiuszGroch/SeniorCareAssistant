@@ -12,9 +12,9 @@ import java.util.Set;
 @Repository
 public interface CareRepository extends CrudRepository<Care, Long> {
 
-    public Set<Care> findByCareAssistant(CareAssistant careAssistant);
+    Set<Care> findByCareAssistant(CareAssistant careAssistant);
 
-    public List<Care> findBySenior(Senior senior);
+    List<Care> findBySenior(Senior senior);
 
-    public Care findByCareAssistantAndSenior(CareAssistant careAssistant, Senior senior);
+    Care findByCareAssistantAndSenior(CareAssistant careAssistant, Senior senior);
 }

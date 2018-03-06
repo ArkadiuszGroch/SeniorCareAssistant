@@ -8,6 +8,6 @@ import pl.edu.pwste.Entity.Notification;
 import java.util.List;
 @Repository
 public interface NotificationRepository extends CrudRepository<Notification, Long> {
-    public List<Notification> getNotificationsByCare(Care care);
+    List<Notification> getNotificationsByCare(Care care);
 
 }

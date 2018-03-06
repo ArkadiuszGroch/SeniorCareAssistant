@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends CrudRepository<Contact, Long> {
 	
-	public List<Contact> findBySenior(Senior senior);
+	List<Contact> findBySenior(Senior senior);
 
-	public Contact findById(Integer id);
+	Contact findById(Integer id);
 
 }
