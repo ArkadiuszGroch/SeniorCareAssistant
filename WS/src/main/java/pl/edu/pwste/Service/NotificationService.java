@@ -6,10 +6,10 @@ import pl.edu.pwste.Entity.Notification;
 import java.util.List;
 
 public interface NotificationService {
-    public List<Notification> getNotificationForUser(String userLogin, String seniorLogin) throws Exception;
+    List<Notification> getNotificationForUser(String userLogin, String seniorLogin) throws Exception;
 
-    public List<Notification> getNotificationForCare(Care care);
+    List<Notification> getNotificationForCare(Care care);
 
-    public void createNotification(Notification notification, String seniorSecurityString);
+    void createNotification(Notification notification, String seniorSecurityString);
 
 }

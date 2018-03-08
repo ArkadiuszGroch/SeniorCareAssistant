@@ -7,8 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.pwste.Entity.CareAssistant;
+import pl.edu.pwste.Entity.SavedLocalization;
 import pl.edu.pwste.Entity.Senior;
 import pl.edu.pwste.Service.AccountService;
+import pl.edu.pwste.Service.UserService;
 
 @RequestMapping(value = "/account")
 @RestController
@@ -17,8 +19,10 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    // ====================================================================================================================
-    /* Register senior
+    @Autowired
+    private UserService userService;
+
+    /** Register senior
 	 * 	Method: POST
 	 *  URL: address: /account/senior/register
 	 *  Input: JSON Senior
@@ -49,7 +53,7 @@ public class AccountController {
     }
 
 
-    /* Login senior
+    /** Login senior
      * 	Method: POST
      *  URL: address: /account/senior/login
      *  Input: JSON Senior
@@ -75,7 +79,7 @@ public class AccountController {
         }
     }
 
-    /* Register care assistant
+    /** Register care assistant
      * 	Method: POST
      *  URL: address: /account/careAssistant/register
      *  Input: JSON CareAssistant
@@ -104,7 +108,7 @@ public class AccountController {
         }
     }
 
-    /* Login care assistant
+    /** Login care assistant
      * 	Method: GET
      *  URL: address: /account/careAssistant/login
      *  Input: JSON Senior
@@ -129,4 +133,45 @@ public class AccountController {
         }
     }
 
+    /**  Get safe distance for senior method
+ * 	Method: GET
+ *  URL: address: /account/(seniorSecurityString)/getSafeDistance
+ *  Input: -
+ *  JSON Example:
+        500
+ *  Output: HTTP Status No_CONTENT (204) if exception
+ *  		HTTP Status Ok (200) if home safe distance is ok
+ */
+    @RequestMapping(value = "/{seniorSecurityString}/getSafeDistance", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getSafeDistanceForSenior(@PathVariable(value = "seniorSecurityString") String seniorSecurityString) {
+        try {
+            Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
+            Integer safeDistance = senior.getSafeDistance();
+            return new ResponseEntity<Integer>(safeDistance, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    /**  Get safe distance for senior method
+     * 	Method: GET
+     *  URL: address: /account/(seniorSecurityString)/getLocationUpdateFrequency
+     *  Input: -
+     *  JSON Example:
+            500
+     *  Output: HTTP Status No_CONTENT (204) if exception
+     *  		HTTP Status Ok (200) if no exception
+     */
+    @RequestMapping(value = "/{seniorSecurityString}/getLocationUpdateFrequency", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getLocationUpdateFrequencyForSenior(@PathVariable(value = "seniorSecurityString") String seniorSecurityString) {
+        try {
+            Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
+            Integer locationUpdateFrequency = senior.getLocationUpdateFrequency().getSeconds();
+            return new ResponseEntity<Integer>(locationUpdateFrequency, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

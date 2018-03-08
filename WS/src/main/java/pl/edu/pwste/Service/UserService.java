@@ -5,13 +5,19 @@ import pl.edu.pwste.Entity.Senior;
 import pl.edu.pwste.Entity.User;
 
 public interface UserService {
-    public User findUserByEmail(String email);
-    public User findUserByEmailOrLogin(String email, String login);
-    public void saveUser(User user);
-    public User findUserByLogin(String login);
-    public Senior findSeniorByLogin(String login);
-    public Senior findSeniorById(int id);
-    public CareAssistant findCareAssistantByLogin(String login);
-    public Senior findSeniorByEmail(String email);
-    public Senior findSeniorBySecStr(String securityString);
+    User findUserByEmail(String email);
+
+    User findUserByEmailOrLogin(String email, String login);
+
+    User findUserByLogin(String login);
+
+    Senior findSeniorByLogin(String login);
+
+    Senior findSeniorById(int id);
+
+    CareAssistant findCareAssistantByLogin(String login);
+
+    Senior findSeniorByEmail(String email);
+
+    Senior findSeniorBySecStr(String securityString);
 }

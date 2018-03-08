@@ -9,15 +9,17 @@ import java.util.List;
 
 public interface LocalizationService {
 
-	public void addCurrentLocation(Localization localization, String seniorSecurityString);
+	void addCurrentLocation(Localization localization, String seniorSecurityString);
 
-	public void addSavedLocation(SavedLocalization savedLocalization, String seniorSecurityString);
+	void addSavedLocation(SavedLocalization savedLocalization, String seniorSecurityString);
 
-	public List<Localization> getLocalizationsOfDay(Date date, String seniorSecurityString);
+	List<Localization> getLocalizationsOfDay(Date date, String seniorSecurityString);
 
-	public List<Localization> getLocalizationsForSenior(int seniorId);
+	List<Localization> getLocalizationsForSenior(int seniorId);
 
-	public Double getDistanceFromHome(double latitudeHome, double longitudeHome,double latitudeCurrent,double longitudeCurrent);
+	Double getDistanceFromHome(double latitudeHome, double longitudeHome, double latitudeCurrent, double longitudeCurrent);
 
-	public List<SavedLocalization> getSavedLocalizationsForSenior(int seniorId);
+	List<SavedLocalization> getSavedLocalizationsForSenior(int seniorId);
+
+    SavedLocalization getHomeLocalizationForSenior(int seniorId);
 }

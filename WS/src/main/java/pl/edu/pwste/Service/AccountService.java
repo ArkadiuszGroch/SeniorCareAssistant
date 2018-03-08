@@ -5,17 +5,17 @@ import pl.edu.pwste.Entity.Senior;
 
 public interface AccountService {
 
-	public void registerSenior(Senior senior);
+	void registerSenior(Senior senior);
 
-	public String loginSenior(Senior senior);
+	String loginSenior(Senior senior);
 
-	public void registerCareAssistant(CareAssistant careAssistant);
+	void registerCareAssistant(CareAssistant careAssistant);
 
-	public String loginCareAssistant(CareAssistant careAssistant);
+	String loginCareAssistant(CareAssistant careAssistant);
 
-	public CareAssistant findCareAssistantByLoginOrPassword(String login, String password);
+	CareAssistant findCareAssistantByLoginOrPassword(String login, String password);
 
-	public CareAssistant findCareAssistantByLoginOrEmail(String login, String email);
+	CareAssistant findCareAssistantByLoginOrEmail(String login, String email);
 
-	public void updateSenior(Senior senior);
+	void updateSenior(Senior senior);
 }

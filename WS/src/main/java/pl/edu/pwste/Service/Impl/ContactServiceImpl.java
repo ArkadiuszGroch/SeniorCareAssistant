@@ -34,8 +34,8 @@ public class ContactServiceImpl implements ContactService {
 	}
 
 	@Override
-	public void addContact(Contact contact, Integer seniorId) { ;
-		Senior senior = seniorRepository.findSeniorById(seniorId);
+	public void addContact(Contact contact, Integer seniorId) {
+        Senior senior = seniorRepository.findSeniorById(seniorId);
 
 		contact.setSenior(senior);
 		contactRepository.save(contact);

@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface CareService {
 
-	public void addSeniorToCareAssistant(String seniorLogin, String careAssistantLogin);
+	void addSeniorToCareAssistant(String seniorLogin, String careAssistantLogin);
 
-	public List<Senior> findAllSeniorsForCareAssistant(CareAssistant careAssistant);
+	List<Senior> findAllSeniorsForCareAssistant(CareAssistant careAssistant);
 
-	public Care findCareBySeniorAndCareAssistant(Senior senior, CareAssistant careAssistant);
+	Care findCareBySeniorAndCareAssistant(Senior senior, CareAssistant careAssistant);
 
-	public void removeCare(Care care);
+	void removeCare(Care care);
 
-	public List<String> findCareAssistantsBySenior(String seniorLogin);
+	List<String> findCareAssistantsBySenior(String seniorLogin);
 }

@@ -122,27 +122,27 @@ public class LocalizationController {
         }
     }
 
-/*  Get saved locations for senior
- * 	Method: GET
- *  URL: address: /localization/(seniorSecurityString)/getSavedLocations
- *  Input: JSON SavedLocalization Array
- *  JSON Example: [
-        {
-            "name": "domek",
-            "latitude": 50.0323376,
-            "longitude": 22.0327753
-        },
-        {
-            "name": "sklep",
-            "latitude": 50.0323028,
-            "longitude": 22.032787
-        }]
- *  Output: HTTP Status No_CONTENT (204) if exception
- *  		HTTP Status Ok (200) if ok
- */
+    /*  Get saved locations for senior
+     * 	Method: GET
+     *  URL: address: /localization/(seniorSecurityString)/getSavedLocations
+     *  Input: JSON SavedLocalization Array
+     *  JSON Example: [
+            {
+                "name": "domek",
+                "latitude": 50.0323376,
+                "longitude": 22.0327753
+            },
+            {
+                "name": "sklep",
+                "latitude": 50.0323028,
+                "longitude": 22.032787
+            }]
+     *  Output: HTTP Status No_CONTENT (204) if exception
+     *  		HTTP Status Ok (200) if ok
+     */
     @RequestMapping(value = "/{seniorSecurityString}/getSavedLocations", method = RequestMethod.GET)
     public ResponseEntity<List<SavedLocalization>> getSavedLocalizations(@PathVariable(value = "seniorSecurityString") String seniorSecurityString
-                                                                   ) {
+    ) {
         try {
             Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
             List<SavedLocalization> savedLocalizationList = localizationService.getSavedLocalizationsForSenior(senior.getId());
@@ -154,4 +154,39 @@ public class LocalizationController {
         }
     }
 
+
+    /*  Get home location for senior
+     * 	Method: GET
+     *  URL: address: /localization/(seniorSecurityString)/getHomeLocation
+     *  Input: JSON SavedLocalization Array
+     *  JSON Example: [
+            {
+                "name": "Home",
+                "latitude": 50.0323376,
+                "longitude": 22.0327753
+            }]
+     *  Output: HTTP Status No_CONTENT (204) if exception
+     *  		HTTP Status Ok (200) if home location is not null
+     *  	    HTTP Status NOT_FOUND (404) if home location is null
+     */
+    @RequestMapping(value = "/{seniorSecurityString}/getHomeLocation", method = RequestMethod.GET)
+    public ResponseEntity<SavedLocalization> getHomeLocalization(@PathVariable(value = "seniorSecurityString") String seniorSecurityString
+    ) {
+        try {
+            Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
+            SavedLocalization savedLocalization = localizationService.getHomeLocalizationForSenior(senior.getId());
+           if(savedLocalization != null)
+           {
+               return new ResponseEntity<SavedLocalization>(savedLocalization, HttpStatus.OK);
+           }
+           else
+           {
+               return new ResponseEntity<SavedLocalization>(HttpStatus.NOT_FOUND);
+           }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<SavedLocalization>(HttpStatus.NO_CONTENT);
+        }
+    }
 }

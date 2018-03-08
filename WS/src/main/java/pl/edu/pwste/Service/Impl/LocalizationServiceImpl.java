@@ -91,4 +91,9 @@ public class LocalizationServiceImpl implements LocalizationService {
 		Senior senior = seniorRepository.findSeniorById(seniorId);
 		return savedLocalizationRepository.getSavedLocalizationBySenior(senior);
 	}
+
+	@Override
+	public SavedLocalization getHomeLocalizationForSenior(int seniorId) {
+		return savedLocalizationRepository.getHomeLocalizationBySenior(seniorId);
+	}
 }
