@@ -13,9 +13,8 @@ public class RestConfiguration {
     private static String SECURITY_STRING;
     private static String PORT = "8090";
     //    public static String URL = "https://seniorservice.herokuapp.com";
-    private static String URL = "http://192.168.1.22" + ":" + PORT;
+    private static String URL = "http://192.168.1.9" + ":" + PORT;
 
-    private static String REGISTER = URL + "/account/senior/register";
 
     //Load
 
@@ -34,6 +33,21 @@ public class RestConfiguration {
 
     public String getURLTologin() {
         return URL + "/account/senior/login";
+    }
+
+    public String getURLToGetHomeLocation() {
+        loadSecurityString();
+        return URL + "/localization/" + SECURITY_STRING + "/getHomeLocation";
+    }
+
+    public String getURLToGetSafeDistance() {
+        loadSecurityString();
+        return URL + "/account/" + SECURITY_STRING + "/getSafeDistance";
+    }
+
+    public String getURLToGetLocationUpdateFrequency() {
+        loadSecurityString();
+        return URL + "/account/" + SECURITY_STRING + "/getLocationUpdateFrequency";
     }
 
     public String getURLToAddContact() {

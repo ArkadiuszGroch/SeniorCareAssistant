@@ -17,6 +17,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pl.edu.pwste.goco.senior.Entity.Notification;
 import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 import pl.edu.pwste.goco.senior.Services.LocationService;
 
@@ -43,8 +47,8 @@ public class SaveLocationActivity extends AppCompatActivity {
         } else {
             SavedLocalization savedLocalization = new SavedLocalization();
             savedLocalization.setName(nameOfLocalization);
-            savedLocalization.setLatitude(LocationService.savedLat);
-            savedLocalization.setLongitude(LocationService.savedLong);
+            savedLocalization.setLatitude(LocationService.latitude);
+            savedLocalization.setLongitude(LocationService.longitude);
             new RESTGetSavedLocations().execute(savedLocalization);
         }
     }
@@ -59,7 +63,6 @@ public class SaveLocationActivity extends AppCompatActivity {
     class RESTGetSavedLocations extends AsyncTask<SavedLocalization, String, ResponseEntity<String>> {
 
         String url = new RestConfiguration().getURLToSaveLocation();
-        RestTemplate restTemplate = new RestTemplate();
 
         @Override
         protected ResponseEntity<String> doInBackground(SavedLocalization... params) {
@@ -93,8 +96,6 @@ public class SaveLocationActivity extends AppCompatActivity {
 
     public void showMessage(String title, String message) {
         Log.i("LOCATION", title + " " + message);
-
     }
-
 
 }

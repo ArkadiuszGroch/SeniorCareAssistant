@@ -1,12 +1,10 @@
 package pl.edu.pwste.goco.senior.AsyncTasks;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +16,6 @@ import java.util.List;
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import pl.edu.pwste.goco.senior.Entity.Senior;
-import pl.edu.pwste.goco.senior.LoginActivity;
-import pl.edu.pwste.goco.senior.R;
 
 /**
  * Created by goco on 12.02.2018.
@@ -55,7 +51,7 @@ import pl.edu.pwste.goco.senior.R;
 
             try {
                 List<String> contactsList = convertJsonStringToList(stringResponseEntity.getBody().toString());
-                DataManager.saveCareAssistants(contactsList);
+                DataManager.saveCareAssistantsPhoneNumers(contactsList);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

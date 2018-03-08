@@ -21,6 +21,9 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import pl.edu.pwste.goco.senior.AsyncTasks.ReceiveCareAssistants;
+import pl.edu.pwste.goco.senior.AsyncTasks.ReceiveHomeLocation;
+import pl.edu.pwste.goco.senior.AsyncTasks.ReceiveLocationUpdateFrequency;
+import pl.edu.pwste.goco.senior.AsyncTasks.ReceiverSafeDistance;
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import pl.edu.pwste.goco.senior.Entity.Senior;
@@ -163,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
             if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
                 DataManager.saveSecurityString(stringResponseEntity.getBody().toString());
-                new ReceiveCareAssistants().execute();
+                loadSettingsFromServer();
                 openMainActivity();
             } else if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 204) {
                 String infoMessage = getResources().getString(R.string.invalidLoginOrPassword);
@@ -173,6 +176,13 @@ public class LoginActivity extends AppCompatActivity {
                 showMessage(infoMessage);
             }
             progressDialog.dismiss();
+        }
+
+        private void loadSettingsFromServer() {
+            new ReceiveCareAssistants().execute();
+            new ReceiveHomeLocation().execute();
+            new ReceiverSafeDistance().execute();
+            new ReceiveLocationUpdateFrequency().execute();
         }
     }
 
@@ -206,6 +216,7 @@ public class LoginActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+
 
     }
 }

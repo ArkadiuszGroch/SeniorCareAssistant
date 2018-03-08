@@ -24,11 +24,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Entity.Localization;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
+import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 
 public class LocationService extends Service {
     public static final String BROADCAST_ACTION = "Hello World";
@@ -36,11 +39,11 @@ public class LocationService extends Service {
     public LocationManager locationManager;
     public MyLocationListener listener;
     public Location previousBestLocation = null;
-
-    public static Double savedLong = 0d;
-    public static Double savedLat = 0d;
-
     public static String locationName;
+
+    public static Double longitude = 0d;
+    public static Double latitude = 0d;
+
     Intent intent;
 
     @Override
@@ -69,8 +72,11 @@ public class LocationService extends Service {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 4000, 0, listener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 4000, 0, listener);
+        DataManager dataManager = new DataManager();
+        int locationFreq = dataManager.loadLocationUpdateFreq() * 1000;
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, locationFreq, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationFreq, 0, listener);
     }
 
     @Override
@@ -167,25 +173,29 @@ public class LocationService extends Service {
                 intent.putExtra("Provider", loc.getProvider());
                 Toast.makeText(getApplicationContext(), loc.getLatitude() + "," + loc.getLongitude(), Toast.LENGTH_LONG).show();
 
-                Double longitude = loc.getLongitude();
-                Double latitude = loc.getLatitude();
+                longitude = loc.getLongitude();
+                latitude = loc.getLatitude();
 
                 //get location name
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {
                     List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                    if(null!=listAddresses&&listAddresses.size()>0){
+                    if (null != listAddresses && listAddresses.size() > 0) {
                         locationName = listAddresses.get(0).getAddressLine(0);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                //save location when is different between prev location more than 10m
-                double distance = getDistanceFromHome(savedLat, savedLong, latitude, longitude);
-                if (distance > 10) {
-                    savedLat = latitude;
-                    savedLong = longitude;
+                //get user settings
+                DataManager dataManager = new DataManager();
+                SavedLocalization homeLocalization = dataManager.loadHomeLocation();
+
+                Integer safeDistance = dataManager.loadSafeDistance();
+
+                //save location when distance from home to current location is higher than safe distance from settings
+                double distance = getDistanceFromHome(homeLocalization.getLatitude(), homeLocalization.getLongitude(), latitude, longitude);
+                if (distance > safeDistance) {
                     new SendLocationService().execute(longitude, latitude);
                 }
 
@@ -221,8 +231,9 @@ public class LocationService extends Service {
 
     }
 
-    class SendLocationService extends AsyncTask<Double, String, ResponseEntity<String>> {
-
+    static class SendLocationService extends AsyncTask<Double, String, ResponseEntity<String>> {
+        private static List<Localization> notSavedLocationList = new ArrayList<>();
+        private static Localization currentLocationToSave;
 
         @Override
         protected ResponseEntity<String> doInBackground(Double... params) {
@@ -232,12 +243,12 @@ public class LocationService extends Service {
                 Double longitude = params[0];
                 Double latitude = params[1];
 
-                Localization localization = new Localization();
-                localization.setLatitude(latitude);
-                localization.setLongitude(longitude);
+                currentLocationToSave = new Localization();
+                currentLocationToSave.setLatitude(latitude);
+                currentLocationToSave.setLongitude(longitude);
 
                 RestTemplate restTemplate = new RestTemplate();
-                HttpEntity<Localization> request = new HttpEntity<Localization>(localization);
+                HttpEntity<Localization> request = new HttpEntity<Localization>(currentLocationToSave);
 
                 ResponseEntity<String> response = restTemplate
                         .exchange(url, HttpMethod.POST, request, String.class);
@@ -254,6 +265,10 @@ public class LocationService extends Service {
                 Log.i("loc", "Location saved! ");
             } else {
                 Log.i("loc", "Location not saved! ");
+                notSavedLocationList.add(currentLocationToSave);
+                for (Localization localization : notSavedLocationList) {
+                    this.execute(localization.getLongitude(), localization.getLatitude());
+                }
             }
         }
     }

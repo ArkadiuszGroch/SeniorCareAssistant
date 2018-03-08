@@ -1,7 +1,5 @@
 package pl.edu.pwste.goco.senior.Configuration;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 
@@ -16,7 +14,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.pwste.goco.senior.Entity.CareAssistant;
+import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 import pl.edu.pwste.goco.senior.Entity.Senior;
 import pl.edu.pwste.goco.senior.Entity.User;
 
@@ -37,6 +35,8 @@ public class DataManager {
     private static int SECURITY_DISTANCE_ROW = 2;
     private static int SECURITY_STRING_ROW = 3;
     private static int CARE_ASSISTANTS_ROW = 4;
+    private static int HOME_LOCATION_ROW = 5;
+    private static int LOCATION_UPDATE_FREQ_ROW = 6;
 
     /**
      * Method saves data to file
@@ -113,6 +113,38 @@ public class DataManager {
     }
 
     /**
+     * Methods saves home location to file
+     *
+     * @param savedLocalization
+     */
+    public static void saveHomeLocation(SavedLocalization savedLocalization) {
+        String[] textToSave = load();
+        String savedLocationString = savedLocalization.getLatitude() + "n" + savedLocalization.getLongitude();
+        textToSave[HOME_LOCATION_ROW] = savedLocationString;
+        save(textToSave);
+
+        Log.i("data", "Saved home location - " + savedLocationString);
+    }
+
+    /**
+     * Method load home coordinates from file
+     *
+     * @return SavedLocalization
+     */
+    public static SavedLocalization loadHomeLocation() {
+        String[] dataFromFile = load();
+        String savedLocationString = dataFromFile[HOME_LOCATION_ROW];
+        String[] points = savedLocationString.split("n");
+
+        SavedLocalization savedLocalization = new SavedLocalization();
+        savedLocalization.setLatitude(Double.parseDouble(points[0]));
+        savedLocalization.setLongitude(Double.parseDouble(points[1]));
+        savedLocalization.setName("Home");
+        return savedLocalization;
+    }
+
+
+    /**
      * Method load safe distance from file
      *
      * @return safe distance
@@ -126,6 +158,49 @@ public class DataManager {
             Log.i("data", "Loaded safe distance  - Empty");
             return 0;
         }
+    }
+
+    /**
+     * Method save safe distance to file
+     *
+     * @param safeDistance
+     */
+    public static void saveSafeDistance(int safeDistance) {
+        String[] textToSave = load();
+        textToSave[SECURITY_DISTANCE_ROW] = safeDistance + "";
+        save(textToSave);
+
+        Log.i("data", "Saved safe distance to file - " + safeDistance);
+    }
+
+
+    /**
+     * Method load locationUpdateFreq
+     *
+     * @return slocationUpdateFreq
+     */
+    public static int loadLocationUpdateFreq() {
+        String[] loadText = load();
+        if (loadText[LOCATION_UPDATE_FREQ_ROW] != null) {
+            Log.i("data", "Loaded locationUpdateFreq - " + loadText[LOCATION_UPDATE_FREQ_ROW]);
+            return Integer.parseInt(loadText[LOCATION_UPDATE_FREQ_ROW]);
+        } else {
+            Log.i("data", "Loaded locationUpdateFreq  - Empty");
+            return 0;
+        }
+    }
+
+    /**
+     * Method save locationUpdateFreq
+     *
+     * @param locationUpdateFreq
+     */
+    public static void saveLocationUpdateFreq(int locationUpdateFreq) {
+        String[] textToSave = load();
+        textToSave[LOCATION_UPDATE_FREQ_ROW] = locationUpdateFreq + "";
+        save(textToSave);
+
+        Log.i("data", "Saved locationUpdateFreq - " + locationUpdateFreq);
     }
 
     //todo to compleat
@@ -236,7 +311,7 @@ public class DataManager {
         }
     }
 
-    public static void saveCareAssistants(List<String> careAssistantsPhoneNumbers) {
+    public static void saveCareAssistantsPhoneNumers(List<String> careAssistantsPhoneNumbers) {
         if (careAssistantsPhoneNumbers != null || careAssistantsPhoneNumbers.size() == 0) {
             String[] dataToSave = load();
             String careAssistantsContactsToSave = new String();
@@ -269,4 +344,5 @@ public class DataManager {
         }
         return careAssistantList;
     }
+
 }
