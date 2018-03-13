@@ -15,7 +15,7 @@ public class Senior {
     public Senior() {
         this.lastModification = new Timestamp(System.currentTimeMillis());
         this.lastSynchronization = new Timestamp(System.currentTimeMillis());
-        this.locationUpdateFrequency = new Time(2000);
+        this.locationUpdateFrequency = 60;
     }
 
     @Column(name = "Id", nullable = false, length = 10)
@@ -30,8 +30,8 @@ public class Senior {
     @Column(name = "LastModification", nullable = false)
     private Timestamp lastModification;
 
-    @Column(name = "LocationUpdateFrequency", nullable = false, length = 7)
-    private Time locationUpdateFrequency;
+    @Column(name = "LocationUpdateFrequency", nullable = false)
+    private int locationUpdateFrequency;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
@@ -109,12 +109,12 @@ public class Senior {
         return lastModification;
     }
 
-    public void setLocationUpdateFrequency(Time value) {
+    public void setLocationUpdateFrequency(int value) {
         this.locationUpdateFrequency = value;
     }
 
 
-    public Time getLocationUpdateFrequency() {
+    public int getLocationUpdateFrequency() {
         return locationUpdateFrequency;
     }
 

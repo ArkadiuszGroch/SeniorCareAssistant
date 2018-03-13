@@ -68,7 +68,7 @@ public class DashboardController {
             modelAndView.setViewName("seniorDashboard");
 //Settings
             modelAndView.addObject("safeDistance", senior.getSafeDistance());
-            modelAndView.addObject("locationUpdateFrequency", senior.getLocationUpdateFrequency().getTime());
+            modelAndView.addObject("locationUpdateFrequency", senior.getLocationUpdateFrequency());
             modelAndView.addObject("phone", senior.getUser().getPhone());
 //Contacts
             List<Contact> contacts = contactService.getAllSeniorContact(senior.getUser().getLogin());
@@ -109,7 +109,7 @@ public class DashboardController {
             //chceck locationUpdateFrequncy
             Time locationUpdateFrequencyTime = new Time(locationUpdateFrequency);//convertSecoundToTime(locationUpdateFrequency/1000);
             if (locationUpdateFrequencyTime != null && locationUpdateFrequency > 0) {
-                senior.setLocationUpdateFrequency(locationUpdateFrequencyTime);
+                senior.setLocationUpdateFrequency(locationUpdateFrequency);
             } else {
                 if (errorMessage == null) {
                     errorMessage = new String("Invalid value in locationUpdateFrequency");

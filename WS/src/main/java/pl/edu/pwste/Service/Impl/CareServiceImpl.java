@@ -102,7 +102,6 @@ public class CareServiceImpl implements CareService {
             if (senior.getContacts() != null) senior.setContacts(null);
             if (senior.getLastModification() != null) senior.setLastModification(null);
             if (senior.getLocalization() != null) senior.setLocalization(null);
-            if (senior.getLocationUpdateFrequency() != null) senior.setLocationUpdateFrequency(null);
             if (senior.getMedicine() != null) senior.setMedicine(null);
             if (senior.getSavedLocalization() != null) senior.setSavedLocalization(null);
             if (senior.getLastSynchronization() != null) senior.setLastSynchronization(null);

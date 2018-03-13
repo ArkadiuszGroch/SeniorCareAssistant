@@ -167,7 +167,7 @@ public class AccountController {
     public ResponseEntity<Integer> getLocationUpdateFrequencyForSenior(@PathVariable(value = "seniorSecurityString") String seniorSecurityString) {
         try {
             Senior senior = userService.findSeniorBySecStr(seniorSecurityString);
-            Integer locationUpdateFrequency = senior.getLocationUpdateFrequency().getSeconds();
+            Integer locationUpdateFrequency = senior.getLocationUpdateFrequency();
             return new ResponseEntity<Integer>(locationUpdateFrequency, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
