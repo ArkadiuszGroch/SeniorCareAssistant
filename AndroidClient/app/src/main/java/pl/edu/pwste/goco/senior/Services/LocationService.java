@@ -10,78 +10,142 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-import android.widget.Toast;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import pl.edu.pwste.goco.senior.AsyncTasks.SendLocationService;
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
-import pl.edu.pwste.goco.senior.Entity.Localization;
-import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
+import pl.edu.pwste.goco.senior.Tools.LocationTools;
 
 public class LocationService extends Service {
-    public static final String BROADCAST_ACTION = "Hello World";
-    private static final int TWO_MINUTES = 1000 * 60 * 2;
-    public LocationManager locationManager;
-    public MyLocationListener listener;
-    public Location previousBestLocation = null;
+    public static int UPDATE_FREQUENCY = 120000;
+    public static Boolean isRunning = false;
+    public static double latitude;
+    public static double longitude;
     public static String locationName;
 
-    public static Double longitude = 0d;
-    public static Double latitude = 0d;
+    public LocationManager mLocationManager;
+    public LocationUpdaterListener mLocationListener;
+    public Location previousBestLocation = null;
 
-    Intent intent;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        intent = new Intent(BROADCAST_ACTION);
-
-        //if gps is turned off prompt user to enable gps
-        int off = 0;
-        try {
-            off = Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE);
-            if (off == 0) {
-                Intent onGPS = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(onGPS);
-            }
-        } catch (Settings.SettingNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void onStart(Intent intent, int startId) {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        listener = new MyLocationListener();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        DataManager dataManager = new DataManager();
-        int locationFreq = dataManager.loadLocationUpdateFreq() * 1000;
-
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, locationFreq, 0, listener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationFreq, 0, listener);
-    }
-
+    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onCreate() {
+        UPDATE_FREQUENCY = DataManager.loadLocationUpdateFreq() * 1000;
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mLocationListener = new LocationUpdaterListener();
+        super.onCreate();
+    }
+
+    Handler mHandler = new Handler();
+    Runnable mHandlerTask = new Runnable() {
+        @Override
+        public void run() {
+            if (!isRunning) {
+                startListening();
+            }
+            mHandler.postDelayed(mHandlerTask, UPDATE_FREQUENCY);
+        }
+    };
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        mHandlerTask.run();
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        stopListening();
+        mHandler.removeCallbacks(mHandlerTask);
+        super.onDestroy();
+    }
+
+    private void startListening() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (mLocationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
+
+            if (mLocationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+        }
+        isRunning = true;
+    }
+
+    private void stopListening() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mLocationManager.removeUpdates(mLocationListener);
+        }
+        isRunning = false;
+    }
+
+    public class LocationUpdaterListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (isBetterLocation(location, previousBestLocation)) {
+                previousBestLocation = location;
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+
+                //get place name
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                try {
+                    List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
+                    if (null != listAddresses && listAddresses.size() > 0) {
+                        locationName = listAddresses.get(0).getAddressLine(0);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    //get user settings
+                    DataManager dataManager = new DataManager();
+                    SavedLocalization homeLocalization = dataManager.loadHomeLocation();
+
+                    Integer safeDistance = dataManager.loadSafeDistance();
+
+                    //save location when distance from home to current location is higher than safe distance from settings
+                    double distance = LocationTools.calculateDistanceBetweenLocations(homeLocalization.getLatitude(), homeLocalization.getLongitude(),
+                            previousBestLocation.getLatitude(), previousBestLocation.getLongitude());
+                    if (distance > safeDistance) {
+                        new SendLocationService().execute(longitude, latitude);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    stopListening();
+                }
+            }
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            stopListening();
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 
     protected boolean isBetterLocation(Location location, Location currentBestLocation) {
@@ -92,8 +156,8 @@ public class LocationService extends Service {
 
         // Check whether the new location fix is newer or older
         long timeDelta = location.getTime() - currentBestLocation.getTime();
-        boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
-        boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
+        boolean isSignificantlyNewer = timeDelta > UPDATE_FREQUENCY;
+        boolean isSignificantlyOlder = timeDelta < -UPDATE_FREQUENCY;
         boolean isNewer = timeDelta > 0;
 
         // If it's been more than two minutes since the current location, use the new location
@@ -112,8 +176,7 @@ public class LocationService extends Service {
         boolean isSignificantlyLessAccurate = accuracyDelta > 200;
 
         // Check if the old and new location are from the same provider
-        boolean isFromSameProvider = isSameProvider(location.getProvider(),
-                currentBestLocation.getProvider());
+        boolean isFromSameProvider = isSameProvider(location.getProvider(), currentBestLocation.getProvider());
 
         // Determine location quality using a combination of timeliness and accuracy
         if (isMoreAccurate) {
@@ -126,7 +189,6 @@ public class LocationService extends Service {
         return false;
     }
 
-
     /**
      * Checks whether two providers are the same
      */
@@ -136,142 +198,4 @@ public class LocationService extends Service {
         }
         return provider1.equals(provider2);
     }
-
-
-    @Override
-    public void onDestroy() {
-        // handler.removeCallbacks(sendUpdatesToUI);
-        super.onDestroy();
-        Log.v("STOP_SERVICE", "DONE");
-        locationManager.removeUpdates(listener);
-    }
-
-    public static Thread performOnBackgroundThread(final Runnable runnable) {
-        final Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    runnable.run();
-                } finally {
-                }
-            }
-        };
-        t.start();
-        return t;
-    }
-
-
-    public class MyLocationListener implements LocationListener {
-
-        public void onLocationChanged(final Location loc) {
-            Log.i("loc", "Location changed");
-            if (isBetterLocation(loc, previousBestLocation)) {
-                loc.getLatitude();
-                loc.getLongitude();
-                intent.putExtra("Latitude", loc.getLatitude());
-                intent.putExtra("Longitude", loc.getLongitude());
-                intent.putExtra("Provider", loc.getProvider());
-                Toast.makeText(getApplicationContext(), loc.getLatitude() + "," + loc.getLongitude(), Toast.LENGTH_LONG).show();
-
-                longitude = loc.getLongitude();
-                latitude = loc.getLatitude();
-
-                //get location name
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                try {
-                    List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-                    if (null != listAddresses && listAddresses.size() > 0) {
-                        locationName = listAddresses.get(0).getAddressLine(0);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                //get user settings
-                DataManager dataManager = new DataManager();
-                SavedLocalization homeLocalization = dataManager.loadHomeLocation();
-
-                Integer safeDistance = dataManager.loadSafeDistance();
-
-                //save location when distance from home to current location is higher than safe distance from settings
-                double distance = getDistanceFromHome(homeLocalization.getLatitude(), homeLocalization.getLongitude(), latitude, longitude);
-                if (distance > safeDistance) {
-                    new SendLocationService().execute(longitude, latitude);
-                }
-
-                sendBroadcast(intent);
-            }
-        }
-
-        private Double getDistanceFromHome(double latitudeHome, double longitudeHome, double latitudeCurrent, double longitudeCurrent) {
-            double R = 6378.137; // Radius of earth in KM
-            double dLat = latitudeCurrent * Math.PI / 180 - latitudeHome * Math.PI / 180;
-            double dLon = longitudeCurrent * Math.PI / 180 - longitudeHome * Math.PI / 180;
-            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                    Math.cos(latitudeHome * Math.PI / 180) * Math.cos(latitudeCurrent * Math.PI / 180) *
-                            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            double d = R * c;
-            return d * 1000; // meters
-        }
-
-        public void onProviderDisabled(String provider) {
-            Toast.makeText(getApplicationContext(), "Gps Disabled", Toast.LENGTH_SHORT).show();
-        }
-
-
-        public void onProviderEnabled(String provider) {
-            Toast.makeText(getApplicationContext(), "Gps Enabled", Toast.LENGTH_SHORT).show();
-        }
-
-
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-    }
-
-    static class SendLocationService extends AsyncTask<Double, String, ResponseEntity<String>> {
-        private static List<Localization> notSavedLocationList = new ArrayList<>();
-        private static Localization currentLocationToSave;
-
-        @Override
-        protected ResponseEntity<String> doInBackground(Double... params) {
-            try {
-                //get url with sec str
-                String url = new RestConfiguration().getURLSendLocation();
-                Double longitude = params[0];
-                Double latitude = params[1];
-
-                currentLocationToSave = new Localization();
-                currentLocationToSave.setLatitude(latitude);
-                currentLocationToSave.setLongitude(longitude);
-
-                RestTemplate restTemplate = new RestTemplate();
-                HttpEntity<Localization> request = new HttpEntity<Localization>(currentLocationToSave);
-
-                ResponseEntity<String> response = restTemplate
-                        .exchange(url, HttpMethod.POST, request, String.class);
-                return response;
-            } catch (Exception ex) {
-                Log.i("loc", "error - " + ex.toString());
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(ResponseEntity<String> stringResponseEntity) {
-            if (stringResponseEntity != null && stringResponseEntity.getStatusCode().value() == 200) {
-                Log.i("loc", "Location saved! ");
-            } else {
-                Log.i("loc", "Location not saved! ");
-                notSavedLocationList.add(currentLocationToSave);
-                for (Localization localization : notSavedLocationList) {
-                    this.execute(localization.getLongitude(), localization.getLatitude());
-                }
-            }
-        }
-    }
-
-
 }

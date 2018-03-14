@@ -3,6 +3,7 @@ package pl.edu.pwste.goco.senior;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchTorchLight(View view) {
-  //todo
+        //todo
     }
 
     public void sendSOS(View view) {
