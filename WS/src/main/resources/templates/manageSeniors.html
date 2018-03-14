@@ -16,15 +16,18 @@
                 <span th:text="${messageFail}"/>
             </div>
             <!--ADD SENIOR TO LIST-->
+            <center>
+                <h3>Add senior to care list</h3><br>
                 <form class="form-inline" action="#" th:action="@{/manage/add}" th:object="${seedStarter}" method="post">
                     <div class="form-group">
-                        <label for="seniorLoginOrEmail">Email address:</label>
+                        <label for="seniorLoginOrEmail">Email:</label>
                         <input type="text" name="loginOrEmail" id="seniorLoginOrEmail"/>
                     </div>
                     <button type="submit" class="bg-primary btn"><span class="glyphicon glyphicon-plus"></span>Add
                         senior
                     </button>
                 </form>
+            </center><br>
             <!--LIST OF SENIORS-->
             <table class="table">
                 <thead>
@@ -40,7 +43,7 @@
                     <td th:text="${senior.user.login}">Login</td>
                     <td th:text="${senior.user.firstName}">Firstname</td>
                     <td th:text="${senior.user.lastName}">Lastname</td>
-                    <td>
+                    <td style="text-align: center">
                         <a th:href="${'manage/remove/' + senior.user.login}">
                             <button type="button" class="btn btn-danger btn-block">
                                 <span class="glyphicon glyphicon-remove"></span> Remove
