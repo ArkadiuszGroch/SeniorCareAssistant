@@ -181,13 +181,14 @@ public class DataManager {
      */
     public static int loadLocationUpdateFreq() {
         String[] loadText = load();
-        if (loadText[LOCATION_UPDATE_FREQ_ROW] != null) {
-            Log.i("data", "Loaded locationUpdateFreq - " + loadText[LOCATION_UPDATE_FREQ_ROW]);
-            return Integer.parseInt(loadText[LOCATION_UPDATE_FREQ_ROW]);
-        } else {
+        int ret = 0;
+        try {
+            ret = Integer.parseInt(loadText[LOCATION_UPDATE_FREQ_ROW]);
+            Log.i("data", "Loaded locationUpdateFreq - " + ret);
+        } catch (Exception e) {
             Log.i("data", "Loaded locationUpdateFreq  - Empty");
-            return 0;
         }
+        return ret;
     }
 
     /**

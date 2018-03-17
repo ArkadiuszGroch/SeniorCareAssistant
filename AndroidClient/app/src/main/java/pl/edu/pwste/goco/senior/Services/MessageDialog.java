@@ -6,9 +6,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-
-import pl.edu.pwste.goco.senior.R;
 
 /**
  * Created by goco on 07.01.2018.

@@ -21,7 +21,7 @@ import pl.edu.pwste.goco.senior.Entity.Senior;
  * Created by goco on 12.02.2018.
  */
 
-    public class ReceiveCareAssistants extends AsyncTask<String, String, ResponseEntity<String>> {
+public class ReceiveCareAssistants extends AsyncTask<String, String, ResponseEntity<String>> {
     private String url;
 
     @Override
@@ -65,9 +65,9 @@ import pl.edu.pwste.goco.senior.Entity.Senior;
         JSONArray jsonarray = new JSONArray(jsonStr);
 
         List<String> phoneList = new ArrayList<>();
-        for(int i = 0; i < jsonarray.length(); i++){
+        for (int i = 0; i < jsonarray.length(); i++) {
             String tmp = (String) jsonarray.get(i);
-            tmp.replace("[\"","").replace("\"]","").replace(",","");
+            tmp.replace("[\"", "").replace("\"]", "").replace(",", "");
             phoneList.add(tmp);
         }
         return phoneList;

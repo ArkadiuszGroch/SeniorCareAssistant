@@ -31,6 +31,7 @@
     <string name="saveCurrentLocalization">Save current location</string>
     <string name="navigateToLocation">Navigate to place</string>
     <string name="switchFlashlight">Turn on flashlight</string>
+    <string name="magnifier">Magnifier</string>
     <string name="SOS">SOS</string>
 
     <!--Save localization-->
@@ -55,47 +56,9 @@
     <string name="title_activity_maps">Map</string>
     <string name="cancel">Cancel</string>
 
-    <!---->
-    <!--&lt;!&ndash;Configuration&ndash;&gt;-->
-    <!--&lt;!&ndash;<string name="urlService">https://senior1.herokuapp.com/</string>&ndash;&gt;-->
-    <!--<string name="urlService">http://192.168.1.103:8090/</string>-->
-    <!--&lt;!&ndash;Login screen&ndash;&gt;-->
-    <!--<string name="app_name">Care Assistant</string>-->
-    <!--<string name="register">Zarejestruj</string>-->
-    <!--<string name="signIn">Zaloguj</string>-->
-    <!--<string name="login">Login</string>-->
-    <!--<string name="password">Haslo</string>-->
-    <!--<string name="invalidLoginOrPassword">Nieprawidłowy login lub hasło</string>-->
-    <!--<string name="logout">Wyloguj</string>-->
 
-    <!--&lt;!&ndash;Register screen&ndash;&gt;-->
-    <!--<string name="confirmPassword">Powtórz hasło</string>-->
-    <!--<string name="firstName">Imie</string>-->
-    <!--<string name="lastName">Nazwisko</string>-->
-    <!--<string name="email">Email</string>-->
-    <!--<string name="phoneNumber">Numer telefonu</string>-->
-    <!--<string name="failedRegister">Rejestracja niepomyślna</string>-->
-    <!--<string name="doneRegister">Rejestracja przebiegła pomyślnie</string>-->
-    <!--<string name="passwordNotMatch">Hasła różnią się od siebie</string>-->
-    <!--<string name="compleatAllFields">Uzupełnij wszystkie pola</string>-->
-
-    <!--&lt;!&ndash;Messages&ndash;&gt;-->
-    <!--<string name="messageErrorTitle">Błąd</string>-->
-    <!--<string name="connectionProblem">Błąd połączenia</string>-->
-
-    <!--&lt;!&ndash;Menu&ndash;&gt;-->
-    <!--<string name="saveCurrentLocalization">Zapisz aktualną pozycję</string>-->
-
-    <!--&lt;!&ndash;Save localization&ndash;&gt;-->
-    <!--<string name="nameOfLocalization">Nazwa</string>-->
-    <!--<string name="saveLocalization">Zapisz</string>-->
-
-    <!--<string name="GPSAlertDialogTitle">GPSAlertDialogTitle</string>-->
-    <!--<string name="GPSAlertDialogMessage">GPSAlertDialogMessage</string>-->
-    <!--<string name="action_settings">OK</string>-->
-    <!--<string name="cancel">Cancel</string>-->
-
-    <!--<string name="errorDuringSaveLocation">Błąd podczas zapisywania lokalizacji</string>-->
-    <!--<string name="locationSaved">Lokalizacja zapisana pomyślnie!</string>-->
+    <string name="error_text">latarkka!</string>
+    <string name="error_title">tytul</string>
+    <string name="exit_message">brak latarki</string>
 
 </resources>

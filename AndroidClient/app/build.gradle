@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "pl.edu.pwste.goco.senior"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

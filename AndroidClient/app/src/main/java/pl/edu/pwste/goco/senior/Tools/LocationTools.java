@@ -1,7 +1,5 @@
 package pl.edu.pwste.goco.senior.Tools;
 
-import android.location.LocationManager;
-
 /**
  * Created by goco on 13.03.2018.
  */

@@ -5,17 +5,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,12 +24,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import pl.edu.pwste.goco.senior.Adapters.ContactsAdapter;
 import pl.edu.pwste.goco.senior.Adapters.LocationsAdapter;
+import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 import pl.edu.pwste.goco.senior.Entity.Senior;
-import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
-import pl.edu.pwste.goco.senior.Services.LocationService;
 
 public class NavigateToLocationActivity extends AppCompatActivity {
 

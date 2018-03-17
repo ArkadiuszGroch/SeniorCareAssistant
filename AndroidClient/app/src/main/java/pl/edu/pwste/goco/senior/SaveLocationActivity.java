@@ -2,25 +2,19 @@ package pl.edu.pwste.goco.senior;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import pl.edu.pwste.goco.senior.Configuration.DataManager;
-import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import pl.edu.pwste.goco.senior.Entity.Notification;
+import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
 import pl.edu.pwste.goco.senior.Entity.SavedLocalization;
 import pl.edu.pwste.goco.senior.Services.LocationService;
 

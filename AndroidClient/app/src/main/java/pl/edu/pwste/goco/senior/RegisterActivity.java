@@ -4,8 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,10 +15,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import pl.edu.pwste.goco.senior.Entity.Senior;
-import pl.edu.pwste.goco.senior.Entity.User;
 import pl.edu.pwste.goco.senior.Configuration.DataManager;
 import pl.edu.pwste.goco.senior.Configuration.RestConfiguration;
+import pl.edu.pwste.goco.senior.Entity.Senior;
+import pl.edu.pwste.goco.senior.Entity.User;
 
 public class RegisterActivity extends AppCompatActivity {
 

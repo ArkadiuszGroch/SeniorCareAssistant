@@ -3,8 +3,8 @@ package pl.edu.pwste.goco.senior;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +21,7 @@ public class SOSActivity extends AppCompatActivity {
     private long counter = 10;
     private boolean isSend = false;
     MediaPlayer alarmSoundMP;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,7 @@ public class SOSActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         TextView tvCounterSOS = (TextView) findViewById(R.id.tvCounterSOS);
-                        if(counter >= 0)
-                        {
+                        if (counter >= 0) {
                             tvCounterSOS.setText(String.valueOf(counter));
                         }
 

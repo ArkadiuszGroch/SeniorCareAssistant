@@ -40,8 +40,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
         return rowView;
     }
 
-    private void sortContactsList()
-    {
+    private void sortContactsList() {
         if (contactList.size() > 0) {
             Collections.sort(contactList, new Comparator<Contact>() {
                 @Override
